@@ -7,17 +7,22 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import model.Client;
+
 public class ClientThread extends Thread implements IClientThread {
 	private final Socket socket;
-	private final Client profile;
+	private final Client who;
 	private IClientListener listener;
 	private PrintWriter out;
 	private BufferedReader in;
+	private int id;
 	
-	public ClientThread (Socket socket, IClientListener listener){
+	public ClientThread (Socket socket, int id, IClientListener listener){
 		this.socket = socket;
 		this.listener = listener;
-		this.profile = new Client();
+		this.id = id;
+		this.who = new Client();
+		this.who.setUserName(String.format("User: %d", id));
 	}
 	
 	@Override
@@ -28,24 +33,29 @@ public class ClientThread extends Thread implements IClientThread {
 			out = new PrintWriter(socket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			
+			// Tell client that you have connected
+			String probe = String.format("%s has connected", who.getUserName());
+			System.out.println(probe);
+			listener.sendMessage(probe, id);
+			
 			while(!socket.isClosed()){
 				
 				String message = in.readLine();
 				
 				if (message != null && !message.isEmpty()){
-					message = String.format("%s: ", profile.getUserName());
-					if (listener != null) listener.sendMessage(message);
+					message = String.format("%s: %s", who.getUserName(), message);
+					if (listener != null) listener.sendMessage(message, id);
 				}
 			}
 			
-			exitChat();
-			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		}finally{
+			try {
+				exitChat();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		
-		
 	}
 
 	private void exitChat() throws IOException {
@@ -53,10 +63,11 @@ public class ClientThread extends Thread implements IClientThread {
 		out.flush();
 		out.close();
 		socket.close();
-		
-		if (listener != null){
-			listener.sendMessage(String.format("%s has disconnected", profile.getUserName()));
-		}
+	
+		String msg = String.format("%s has disconnected", who.getUserName());
+		listener.sendMessage(msg, id);
+		listener.removeClient(id);
+		System.out.println(msg);
 	}
 
 	@Override
@@ -64,6 +75,11 @@ public class ClientThread extends Thread implements IClientThread {
 		if (!Util.isNullOrEmpty(message)){
 			out.println(message);
 		}
+	}
+	
+	@Override
+	public int getClientId(){
+		return this.id;
 	}
 
 	@Override

@@ -1,7 +1,5 @@
 package interfaces;
 
-public interface IWriteThread {
-
-	void startThread();
+public interface IWriteThread extends IReadThread {
 
 } 

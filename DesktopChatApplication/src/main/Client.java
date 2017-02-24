@@ -13,32 +13,38 @@ public class Client implements IWriteSocketListener, IReadSocketListener {
 	private final int port;
 	private IReadThread readThread;
 	private IWriteThread writeThread;
+	private Socket socket;
 	
 	public Client(String server, int portNumber) {
-		// TODO Auto-generated constructor stub
 		this.server = server;
 		this.port = portNumber;
+		this.socket = null;
 	}
 
-	public void run() {
+	public void run() throws IOException {
 		
 		try {
-			Socket socket = new Socket(server, port);
+			socket = new Socket(server, port);
 			readThread = new ReadSocketThread(socket, this);
 			writeThread = new WriteSocketThread(socket, this);
-			readThread.startThread();
-			writeThread.startThread();
+			readThread.begin();
+			writeThread.begin();
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			stop();
 		}
+	}
+	
+	public void stop() throws IOException{
+		socket.close();
+		readThread.end();
+		readThread.end();
 	}
 
 	@Override
 	public void printToScreen(String message) {
+		if (!Util.isNullOrEmpty(message))
 		System.out.println(message);
-		
 	}
 
 }

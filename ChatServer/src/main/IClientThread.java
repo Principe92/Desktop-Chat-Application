@@ -6,5 +6,7 @@ public interface IClientThread {
 
 	void startThread();
 
+	int getClientId();
+
 }
 	

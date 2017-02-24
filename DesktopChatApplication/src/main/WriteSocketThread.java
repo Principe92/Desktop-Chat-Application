@@ -14,10 +14,12 @@ public class WriteSocketThread extends Thread implements IWriteThread {
 	private PrintWriter out;
 	private BufferedReader in;
 	private IWriteSocketListener listener;
+	private boolean run;
 	
 	public WriteSocketThread(Socket socket, IWriteSocketListener listener){
 		this.socket = socket;
 		this.listener = listener;
+		this.run = true;
 	}
 	
 	@Override
@@ -27,33 +29,42 @@ public class WriteSocketThread extends Thread implements IWriteThread {
 				out = new PrintWriter(socket.getOutputStream(), true);
 				in = new BufferedReader(new InputStreamReader(System.in));
 				
-				while(!socket.isClosed()){
+				while(!socket.isClosed() && run){
 					
 					String message = in.readLine();
 					
-					if (Util.isNullOrEmpty(message)){
+					if (!Util.isNullOrEmpty(message)){
 						out.println(message);
 					}
 				}
 				
-				exitChat();
-				
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("The server has shutdown unexpectedly");
+			}finally{
+				try {
+					exitChat();
+					return;
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-				
 		}
 
 		private void exitChat() throws IOException {
-			in.close();
-			out.flush();
-			out.close();
-			socket.close();
+			if (in != null) in.close();
+			if (out != null) out.flush();
+			if (out != null) out.close();
+			if (socket != null) socket.close();
 		}
 
 		@Override
-		public void startThread() {
+		public void begin() {
 			this.start();
+		}
+		
+		@Override
+		public void end(){
+			run = false;
 		}
 }

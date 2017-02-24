@@ -2,6 +2,8 @@ package interfaces;
 
 public interface IReadThread {
 
-	void startThread();
+	void end();
+	
+	void begin();
 
 }

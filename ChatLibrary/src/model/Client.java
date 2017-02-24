@@ -1,4 +1,4 @@
-package main;
+package model;
 
 public class Client {
 	private String userName;
@@ -19,3 +19,4 @@ public class Client {
 		this.name = name;
 	}
 }
+
