@@ -42,7 +42,7 @@ public class Client implements IWriteSocketListener, IReadSocketListener {
 	}
 
 	@Override
-	public void printToScreen(String message) {
+	public void printToScreen(String message) { /*This is what we would want displayed on our GUI???*/
 		if (!Util.isNullOrEmpty(message))
 		System.out.println(message);
 	}
