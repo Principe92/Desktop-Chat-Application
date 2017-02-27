@@ -17,6 +17,17 @@ public class Client implements IWriteSocketListener, IReadSocketListener {
 	private gui gui;
 	private Profile profile;
 	
+	/*
+	private static final Client instance = new Client(server, port);
+	
+	//private static final Client instance = new Client(String server, int portNumber)
+	
+	public static Client getInstance() {
+		return Client 
+		//return instance;
+	}
+	*/
+	
 	public Client(String server, int portNumber) {
 		this.server = server;
 		this.port = portNumber;

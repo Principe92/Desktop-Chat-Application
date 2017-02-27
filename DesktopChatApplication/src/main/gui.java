@@ -14,7 +14,16 @@ public class gui {
 
 	private JFrame frame;
 	private JTextField textField;
-
+	private Client client;
+	
+	/*
+	 * Things to add:
+	 * inviteButton
+	 * exitBUtton
+	 * whisper menu
+	 * kicoff menu
+	 * */
+	
 	/**
 	 * Launch the application.
 	 */
@@ -36,11 +45,15 @@ public class gui {
 	 */
 	public gui() {
 		initialize();
+		//client = Client.getInstance();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	
+	
+	
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
