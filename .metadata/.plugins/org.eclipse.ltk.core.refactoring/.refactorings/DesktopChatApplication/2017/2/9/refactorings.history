@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move element &apos;gui.java&apos; to &apos;DesktopChatApplication/src/main&apos;&#x0D;&#x0A;- Original project: &apos;DesktopChatApplication&apos;&#x0D;&#x0A;- Destination element: &apos;DesktopChatApplication/src/main&apos;&#x0D;&#x0A;- Original element: &apos;gui.java&apos;&#x0D;&#x0A;- Update references to refactored element" description="Move compilation unit" destination="/src&lt;main" element1="/src&lt;{gui.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1488233741749" units="1" version="1.0"/>
+</session>

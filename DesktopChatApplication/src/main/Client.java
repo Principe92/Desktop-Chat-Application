@@ -14,6 +14,7 @@ public class Client implements IWriteSocketListener, IReadSocketListener {
 	private IReadThread readThread;
 	private IWriteThread writeThread;
 	private Socket socket;
+	private gui gui;
 	
 	public Client(String server, int portNumber) {
 		this.server = server;
@@ -21,14 +22,17 @@ public class Client implements IWriteSocketListener, IReadSocketListener {
 		this.socket = null;
 	}
 
-	public void run() throws IOException {
-		
+	public void run() throws IOException {	
 		try {
 			socket = new Socket(server, port);
 			readThread = new ReadSocketThread(socket, this);
 			writeThread = new WriteSocketThread(socket, this);
 			readThread.begin();
 			writeThread.begin();
+			
+			//load gui
+			gui = new gui();	
+			//System.out.println("gui is working");
 			
 		} catch (IOException e) {
 			stop();
