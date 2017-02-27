@@ -14,7 +14,6 @@ public class gui {
 
 	private JFrame frame;
 	private JTextField textField;
-	private Client client;
 
 	/**
 	 * Launch the application.
@@ -55,7 +54,9 @@ public class gui {
 				String text = textField.getText();
 				if(text.isEmpty()) return;
 				if(text.startsWith("/w ")){
-					
+				
+				System.out.println("The print: " + text);
+				
 				}
 				
 			}

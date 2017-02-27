@@ -15,6 +15,7 @@ public class Client implements IWriteSocketListener, IReadSocketListener {
 	private IWriteThread writeThread;
 	private Socket socket;
 	private gui gui;
+	private Profile profile;
 	
 	public Client(String server, int portNumber) {
 		this.server = server;
@@ -31,7 +32,8 @@ public class Client implements IWriteSocketListener, IReadSocketListener {
 			writeThread.begin();
 			
 			//load gui
-			gui = new gui();	
+			gui = new gui();
+			
 			//System.out.println("gui is working");
 			
 		} catch (IOException e) {
