@@ -15,7 +15,8 @@ public class Client implements IWriteSocketListener, IReadSocketListener {
 	private IWriteThread writeThread;
 	private Socket socket;
 	private gui gui;
-	private Profile profile;
+	
+	//private Client client;
 	
 	/*
 	private static final Client instance = new Client(server, port);

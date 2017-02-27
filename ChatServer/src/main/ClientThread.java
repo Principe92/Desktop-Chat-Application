@@ -22,7 +22,7 @@ public class ClientThread extends Thread implements IClientThread {
 		this.listener = listener;
 		this.id = id;
 		this.who = new Client();
-		this.who.setUserName(String.format("User: %d", id));
+		this.who.setName(String.format("User: %d", id));
 	}
 	
 	@Override
@@ -34,7 +34,7 @@ public class ClientThread extends Thread implements IClientThread {
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			
 			// Tell client that you have connected
-			String probe = String.format("%s has connected", who.getUserName());
+			String probe = String.format("%s has connected", who.getName());
 			System.out.println(probe);
 			listener.sendMessage(probe, id);
 			
@@ -43,7 +43,7 @@ public class ClientThread extends Thread implements IClientThread {
 				String message = in.readLine();
 				
 				if (message != null && !message.isEmpty()){
-					message = String.format("%s: %s", who.getUserName(), message);
+					message = String.format("%s: %s", who.getName(), message);
 					if (listener != null) listener.sendMessage(message, id);
 				}
 			}
@@ -64,7 +64,7 @@ public class ClientThread extends Thread implements IClientThread {
 		out.close();
 		socket.close();
 	
-		String msg = String.format("%s has disconnected", who.getUserName());
+		String msg = String.format("%s has disconnected", who.getName());
 		listener.sendMessage(msg, id);
 		listener.removeClient(id);
 		System.out.println(msg);
