@@ -36,6 +36,7 @@ public class ReadSocketThread extends Thread implements IReadThread {
 				
 			} catch (IOException e) {
 				System.out.println("The server has shutdown unexpectedly");
+				e.printStackTrace();
 			}finally{
 				try {
 					exitChat();

@@ -14,6 +14,7 @@ public class Main {
 		int portNumber = Integer.parseInt(args[1]);
 		String server = args[0]; 
 		
+		
 		Client client = new Client(server, portNumber);
 		try {
 			client.run();

@@ -8,7 +8,7 @@ import interfaces.IReadThread;
 import interfaces.IWriteSocketListener;
 import interfaces.IWriteThread;
 
-public class Client implements IWriteSocketListener, IReadSocketListener {
+public class Client implements IWriteSocketListener, IReadSocketListener, IGuiListener {
 	private final String server;
 	private final int port;
 	private IReadThread readThread;
@@ -28,13 +28,13 @@ public class Client implements IWriteSocketListener, IReadSocketListener {
 			readThread = new ReadSocketThread(socket, this);
 			writeThread = new WriteSocketThread(socket, this);
 			readThread.begin();
-			writeThread.begin();
 			
 			//load gui
-			gui = new gui();	
+			gui = new gui(this);	
 			//System.out.println("gui is working");
 			
 		} catch (IOException e) {
+			e.printStackTrace();
 			stop();
 		}
 	}
@@ -47,8 +47,15 @@ public class Client implements IWriteSocketListener, IReadSocketListener {
 
 	@Override
 	public void printToScreen(String message) {
-		if (!Util.isNullOrEmpty(message))
+		if (!Util.isNullOrEmpty(message)){
 		System.out.println(message);
+		gui.displayMessage(message);
+		}
+	}
+
+	@Override
+	public void sendText(String text) {
+		writeThread.sendToSocket(text);
 	}
 
 }

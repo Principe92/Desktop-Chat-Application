@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JInternalFrame;
 
@@ -15,6 +16,8 @@ public class gui {
 	private JFrame frame;
 	private JTextField textField;
 	private Client client;
+	private IGuiListener listener;
+	private JTextArea display;
 
 	/**
 	 * Launch the application.
@@ -23,8 +26,8 @@ public class gui {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					gui window = new gui();
-					window.frame.setVisible(true);
+				//	gui window = new gui();
+				//	window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -35,7 +38,8 @@ public class gui {
 	/**
 	 * Create the application.
 	 */
-	public gui() {
+	public gui(IGuiListener listener) {
+		this.listener = listener;
 		initialize();
 	}
 
@@ -54,12 +58,14 @@ public class gui {
 				//send
 				String text = textField.getText();
 				if(text.isEmpty()) return;
-				if(text.startsWith("/w ")){
-					
-				}
+				
+				listener.sendText(text);
+				displayMessage(text);
+				clearText();
 				
 			}
 		});
+		
 		btnSubmit.setBounds(311, 228, 97, 23);
 		frame.getContentPane().add(btnSubmit);
 		
@@ -68,10 +74,21 @@ public class gui {
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(33, 10, 375, 208);
-		frame.getContentPane().add(scrollPane);
+		display = new JTextArea();
+		JScrollPane pane = new JScrollPane(display);
+		display.setBounds(33, 10, 375, 208);
+		frame.getContentPane().add(display);
 		
 		frame.setVisible(true);
+	}
+
+	protected void clearText() {
+		// TODO Auto-generated method stub
+		textField.setText("");
+	}
+
+	public void displayMessage(String message) {
+		// TODO Auto-generated method stub
+		display.append(String.format("%s\n", message));
 	}
 }

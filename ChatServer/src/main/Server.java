@@ -46,9 +46,10 @@ public class Server implements IClientListener {
 			Map.Entry<Integer, IClientThread> entry = it.next();
 			
 			if (entry.getKey() != id)
-			entry.getValue().sendMessageToSocket(message);
+				entry.getValue().sendMessageToSocket(message);
+			else
+				System.out.println(message);
 		}
-		
 	}
 
 	@Override
