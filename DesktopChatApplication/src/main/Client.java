@@ -43,9 +43,8 @@ public class Client implements IWriteSocketListener, IReadSocketListener, IGuiLi
 			readThread.begin();
 			
 			//load gui
-
-			gui = new gui(this);	
-			//System.out.println("gui is working");
+			gui = new gui(this);
+			
 			
 		} catch (IOException e) {
 			e.printStackTrace();
