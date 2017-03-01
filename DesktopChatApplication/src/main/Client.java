@@ -16,6 +16,19 @@ public class Client implements IWriteSocketListener, IReadSocketListener, IGuiLi
 	private Socket socket;
 	private gui gui;
 	
+	//private Client client;
+	
+	/*
+	private static final Client instance = new Client(server, port);
+	
+	//private static final Client instance = new Client(String server, int portNumber)
+	
+	public static Client getInstance() {
+		return Client 
+		//return instance;
+	}
+	*/
+	
 	public Client(String server, int portNumber) {
 		this.server = server;
 		this.port = portNumber;
@@ -30,6 +43,7 @@ public class Client implements IWriteSocketListener, IReadSocketListener, IGuiLi
 			readThread.begin();
 			
 			//load gui
+
 			gui = new gui(this);	
 			//System.out.println("gui is working");
 			
