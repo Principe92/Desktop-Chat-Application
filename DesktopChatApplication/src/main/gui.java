@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JEditorPane;
 
 public class gui {
 
@@ -102,18 +103,19 @@ public class gui {
 		
 		frmChatapp.getContentPane().add(ext_display);
 		
-		JScrollPane usr_online = new JScrollPane();
-		usr_online.setBounds(420, 30, 112, 188);
-		frmChatapp.getContentPane().add(usr_online);
-		
 		JLabel usr_lbl = new JLabel("User Online");
-		usr_lbl.setBounds(420, 10, 112, 21);
+		usr_lbl.setBounds(420, 6, 112, 21);
 		frmChatapp.getContentPane().add(usr_lbl);
 		
 		JLabel chat_lbl = new JLabel("Chat");
 		chat_lbl.setBounds(35, 10, 373, 13);
 		frmChatapp.getContentPane().add(chat_lbl);
-		//frame.getContentPane().add(display);
+		
+		JTextArea usr_account_list = new JTextArea();
+		usr_account_list.setBounds(420, 26, 97, 189);
+		JScrollPane usr_scrpane = new JScrollPane(usr_account_list);
+		usr_scrpane.setBounds(420, 25, 97, 190);
+		frmChatapp.getContentPane().add(usr_scrpane);
 		
 		frmChatapp.setVisible(true);
 	}
