@@ -21,6 +21,7 @@ hs_err_pid*
 *.pydevproject
 .project
 .metadata
+.recommenders
 bin/**
 tmp/**
 tmp/**/*
