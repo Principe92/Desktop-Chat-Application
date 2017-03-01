@@ -67,7 +67,7 @@ public class gui {
 	private void initialize() {
 		frmChatapp = new JFrame();
 		frmChatapp.setTitle("Chatapp");
-		frmChatapp.setBounds(100, 100, 560, 299);
+		frmChatapp.setBounds(100, 100, 580, 299);
 		frmChatapp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmChatapp.getContentPane().setLayout(null);
 		
@@ -114,8 +114,21 @@ public class gui {
 		JTextArea usr_account_list = new JTextArea();
 		usr_account_list.setBounds(420, 26, 97, 189);
 		JScrollPane usr_scrpane = new JScrollPane(usr_account_list);
-		usr_scrpane.setBounds(420, 25, 97, 190);
+		usr_scrpane.setBounds(420, 25, 120, 190);
 		frmChatapp.getContentPane().add(usr_scrpane);
+		
+		JButton exitChatBtn = new JButton("Exit");
+		exitChatBtn.setBounds(420, 228, 62, 23);
+		exitChatBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//exit the chatroom -- leave for now
+			}
+		});
+		frmChatapp.getContentPane().add(exitChatBtn);
+		
+		JButton kickoutBtn = new JButton("Ban");
+		kickoutBtn.setBounds(485, 228, 55, 23);
+		frmChatapp.getContentPane().add(kickoutBtn);
 		
 		frmChatapp.setVisible(true);
 	}
