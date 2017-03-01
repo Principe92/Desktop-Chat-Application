@@ -18,6 +18,8 @@ public class gui {
 
 	private IGuiListener listener;
 	private JTextArea display;
+	
+	private JScrollPane ext_display;
 
 
 	
@@ -47,6 +49,7 @@ public class gui {
 
 	/**
 	 * Create the application.
+	 * @wbp.parser.entryPoint
 	 */
 	public gui(IGuiListener listener) {
 		this.listener = listener;
@@ -88,9 +91,14 @@ public class gui {
 		textField.setColumns(10);
 		
 		display = new JTextArea();
-		JScrollPane pane = new JScrollPane(display);
+		
 		display.setBounds(33, 10, 375, 208);
-		frame.getContentPane().add(display);
+		
+		ext_display = new JScrollPane(display);
+		ext_display.setBounds(33,10,375,208);
+		
+		frame.getContentPane().add(ext_display);
+		//frame.getContentPane().add(display);
 		
 		frame.setVisible(true);
 	}
