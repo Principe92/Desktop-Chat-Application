@@ -10,10 +10,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JInternalFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
 
 public class gui {
 
-	private JFrame frame;
+	private JFrame frmChatapp;
 	private JTextField textField;
 
 	private IGuiListener listener;
@@ -62,10 +64,11 @@ public class gui {
 	 */
 	
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmChatapp = new JFrame();
+		frmChatapp.setTitle("Chatapp");
+		frmChatapp.setBounds(100, 100, 560, 299);
+		frmChatapp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmChatapp.getContentPane().setLayout(null);
 		
 		JButton btnSubmit = new JButton("Send");
 		btnSubmit.addActionListener(new ActionListener() {
@@ -83,11 +86,11 @@ public class gui {
 		});
 		
 		btnSubmit.setBounds(311, 228, 97, 23);
-		frame.getContentPane().add(btnSubmit);
+		frmChatapp.getContentPane().add(btnSubmit);
 		
 		textField = new JTextField();
 		textField.setBounds(33, 229, 254, 21);
-		frame.getContentPane().add(textField);
+		frmChatapp.getContentPane().add(textField);
 		textField.setColumns(10);
 		
 		display = new JTextArea();
@@ -95,12 +98,24 @@ public class gui {
 		display.setBounds(33, 10, 375, 208);
 		
 		ext_display = new JScrollPane(display);
-		ext_display.setBounds(33,10,375,208);
+		ext_display.setBounds(33,25,375,190);
 		
-		frame.getContentPane().add(ext_display);
+		frmChatapp.getContentPane().add(ext_display);
+		
+		JScrollPane usr_online = new JScrollPane();
+		usr_online.setBounds(420, 30, 112, 188);
+		frmChatapp.getContentPane().add(usr_online);
+		
+		JLabel usr_lbl = new JLabel("User Online");
+		usr_lbl.setBounds(420, 10, 112, 21);
+		frmChatapp.getContentPane().add(usr_lbl);
+		
+		JLabel chat_lbl = new JLabel("Chat");
+		chat_lbl.setBounds(35, 10, 373, 13);
+		frmChatapp.getContentPane().add(chat_lbl);
 		//frame.getContentPane().add(display);
 		
-		frame.setVisible(true);
+		frmChatapp.setVisible(true);
 	}
 
 	protected void clearText() {
