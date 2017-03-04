@@ -94,7 +94,7 @@ public class gui {
 
 	private JButton addKickoutButton() {
 		JButton kickoutBtn = new JButton("Ban");
-		kickoutBtn.setBounds(485, 228, 55, 23);
+		kickoutBtn.setBounds(498, 229, 55, 23);
 		return kickoutBtn;
 	}
 
@@ -110,9 +110,7 @@ public class gui {
 	}
 
 	private JScrollPane addAccountList() {
-		JTextArea usr_account_list = new JTextArea();
-		usr_account_list.setBounds(420, 26, 97, 189);
-		JScrollPane usr_scrpane = new JScrollPane(usr_account_list);
+		JScrollPane usr_scrpane = new JScrollPane();
 		usr_scrpane.setBounds(420, 25, 120, 190);
 		return usr_scrpane;
 	}
@@ -191,9 +189,12 @@ public class gui {
 	private JFrame setUpChatFrame() {
 		JFrame frmChatapp = new JFrame();
 		frmChatapp.setTitle("Chatapp");
-		frmChatapp.setBounds(100, 100, 580, 299);
+		frmChatapp.setBounds(100, 100, 593, 299);
 		frmChatapp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmChatapp.getContentPane().setLayout(null);
+		JTextArea usr_account_list = new JTextArea();
+		frmChatapp.getContentPane().add(usr_account_list);
+		usr_account_list.setBounds(420, 26, 133, 188);
 		
 		// make the message box get focus
 		frmChatapp.addWindowListener( new WindowAdapter() {
