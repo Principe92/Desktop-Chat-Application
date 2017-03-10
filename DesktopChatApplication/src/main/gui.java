@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import interfaces.IGuiListener;
+
 public class gui {
 	private JFrame frmChatapp;
 	private JTextArea textField;
@@ -22,31 +24,22 @@ public class gui {
 	
 	private JScrollPane ext_display;
 
-
 	
-	/*
-	 * Things to add:
-	 * inviteButton
-	 * exitBUtton
-	 * whisper menu
-	 * kicoff menu
-	 * */
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-				//	gui window = new gui();
-				//	window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//				//	gui window = new gui();
+//				//	window.frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the application.

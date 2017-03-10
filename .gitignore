@@ -31,6 +31,7 @@ tmp/**/*
 *~.nib
 local.properties
 .classpath
+.bash_profile
 .settings/
 .loadpath
 

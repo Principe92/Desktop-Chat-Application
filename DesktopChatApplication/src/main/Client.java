@@ -3,6 +3,7 @@ package main;
 import java.io.IOException;
 import java.net.Socket;
 
+import interfaces.IGuiListener;
 import interfaces.IReadSocketListener;
 import interfaces.IReadThread;
 import interfaces.IWriteSocketListener;
