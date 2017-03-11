@@ -2,11 +2,16 @@ package main;
 
 import java.io.IOException;
 
+import factory.AbstractFactory;
+import model.ILogger;
+
 public class Main {
 
 	public static void main(String[] args) throws IOException {
+		ILogger logger = AbstractFactory.getLogger();
+		
 		if (args == null || args.length != 2){
-			System.out.println("Port number is missing");
+			logger.logInfo("Port number is missing");
 			System.exit(0);
 		}
 		
@@ -15,11 +20,11 @@ public class Main {
 		String server = args[0]; 
 		
 		
-		Client client = new Client(server, portNumber);
+		Client client = new Client(server, portNumber, logger);
 		try {
 			client.run();
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.logError(e);
 			client.stop();
 		}
 

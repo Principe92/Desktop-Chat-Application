@@ -10,36 +10,42 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import model.Client;
+import model.IClientListener;
+import model.IClientThread;
+import model.ILogger;
+
 public class Server implements IClientListener {
 
-	private int port;
+	private final int port;
+	private final ILogger logger;
 	int counter;
 	private Map<Integer, IClientThread> clients;
+	private ServerSocket socket;
 
-	public Server(int portNumber) {
+	public Server(int portNumber, ILogger logger) {
 		this.port = portNumber;
 		this.clients = new HashMap<>();
+		this.logger = logger;
 	}
 
-	public void run() {
-		try {
-			ServerSocket socket = new ServerSocket(port);
+	public void run() throws IOException {
+		
+			socket = new ServerSocket(port);
 			
-			while (true){
-				IClientThread client = new ClientThread(socket.accept(), counter++, this);
+			while (!socket.isClosed()){
+				IClientThread client = new ClientThread(socket.accept(), counter++, this, logger);
 				client.startThread();
 				clients.put(client.getClientId(), client);
+				
+				Client who = client.getClient();
+				String probe = String.format("%s has connected", who.getName());
+				sendMessage(probe.getBytes(Util.getEncoding()), who.getId());
 			}
-			
-		} catch (IOException e) {
-			
-			System.out.printf(Locale.getDefault(), "An exception has occurred: %s", e.getMessage());
-		}
-		
 	}
 
 	@Override
-	public void sendMessage(String message, int id) {
+	public void sendMessage(byte[] message, int id) {
 		Iterator<Entry<Integer, IClientThread>> it = clients.entrySet().iterator();
 		
 		while(it.hasNext()){
@@ -48,14 +54,17 @@ public class Server implements IClientListener {
 			if (entry.getKey() != id)
 				entry.getValue().sendMessageToSocket(message);
 			else
-				System.out.println(message);
+				logger.logInfo(new String(message, Util.getEncoding()));
 		}
 	}
 
 	@Override
 	public void removeClient(int id) {
 		clients.remove(id);
-		//TODO: Change data storage structure
+	}
+
+	public void close() throws IOException {
+		if (socket != null) socket.close();
 	}
 
 }

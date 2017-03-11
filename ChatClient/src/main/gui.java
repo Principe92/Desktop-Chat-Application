@@ -1,11 +1,11 @@
 package main;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,42 +13,29 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import factory.MessageFactory;
 import interfaces.IGuiListener;
+import model.ILogger;
+import model.IMessage;
 
 public class gui {
 	private JFrame frmChatapp;
 	private JTextArea textField;
-
-	private IGuiListener listener;
+	private final IGuiListener listener;
+	private final ILogger logger;
 	private JTextArea display;
-	
 	private JScrollPane ext_display;
 
-	
-//	/**
-//	 * Launch the application.
-//	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//				//	gui window = new gui();
-//				//	window.frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 
 	/**
 	 * Create the application.
 	 * @wbp.parser.entryPoint
 	 */
-	public gui(IGuiListener listener) {
+	public gui(IGuiListener listener, ILogger logger) {
 		this.listener = listener;
+		this.logger = logger;
 		initialize();
-		//client = Client.getInstance();
+		
 	}
 
 	/**
@@ -96,7 +83,7 @@ public class gui {
 		exitChatBtn.setBounds(420, 228, 62, 23);
 		exitChatBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//exit the chatroom -- leave for now
+				//TODO: Exit chat room
 			}
 		});
 		return exitChatBtn;
@@ -166,14 +153,10 @@ public class gui {
 			}
 
 			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub	
-			}
+			public void keyReleased(KeyEvent e) {}
 
 			@Override
-			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
-			}
+			public void keyTyped(KeyEvent e) {}
 		});
 		
 		return textField;
@@ -201,20 +184,35 @@ public class gui {
 	
 	private void sendText(){
 		String text = textField.getText();
+		
 		if(text.isEmpty()) return;
 
-		listener.sendText(text);
-		displayMessage(text);
+		IMessage message = MessageFactory.getMessage(text);
+		
+		if (message != null){
+			try {
+				listener.sendText(message.getData());
+			} catch (IOException e) {
+				logger.logError(e);
+			}
+			
+			displayMessage(new String(message.getData(), Util.getEncoding()));
+		}
+		
 		clearText();
 	}
 
+
 	protected void clearText() {
-		// TODO Auto-generated method stub
 		textField.setText(null);
 	}
 
 	public void displayMessage(String message) {
-		// TODO Auto-generated method stub
 		display.append(String.format("%s\n", message));
+	}
+	
+	public void close() {
+		frmChatapp.dispatchEvent(new WindowEvent(frmChatapp, WindowEvent.WINDOW_CLOSING));
+		
 	}
 }

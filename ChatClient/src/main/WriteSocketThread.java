@@ -8,18 +8,17 @@ import java.net.Socket;
 
 import interfaces.IWriteSocketListener;
 import interfaces.IWriteThread;
+import model.ILogger;
 
 public class WriteSocketThread implements IWriteThread {
 	private final Socket socket;
 	private PrintWriter out;
 	private BufferedReader in;
-	private IWriteSocketListener listener;
-	private boolean run;
+	private final ILogger logger;
 	
-	public WriteSocketThread(Socket socket, IWriteSocketListener listener){
+	public WriteSocketThread(Socket socket, ILogger logger){
 		this.socket = socket;
-		this.listener = listener;
-		this.run = true;
+		this.logger = logger;
 		setUp();
 	}
 	
@@ -30,14 +29,12 @@ public class WriteSocketThread implements IWriteThread {
 				in = new BufferedReader(new InputStreamReader(System.in));
 				
 			} catch (IOException e) {
-				e.printStackTrace();
-				System.out.println("The server has shutdown unexpectedly");
+				logger.logError(e);
+				logger.logInfo("The server has shutdown unexpectedly");
 				try {
 					exitChat();
-					return;
 				} catch (IOException f) {
-					// TODO Auto-generated catch block
-					f.printStackTrace();
+					logger.logError(e);
 				}
 			}
 		}
@@ -50,20 +47,13 @@ public class WriteSocketThread implements IWriteThread {
 		}
 		
 		@Override
-		public void end(){
-			try {
-				exitChat();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		public void end() throws IOException{
+			exitChat();
 		}
 
 		@Override
-		public void sendToSocket(String text) {
-			if (!Util.isNullOrEmpty(text)){
-				out.println(text);
-			}
-			
+		public void sendToSocket(byte[] msg) throws IOException {
+			if (msg != null)
+				socket.getOutputStream().write(msg);
 		}
 }

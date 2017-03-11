@@ -1,8 +1,10 @@
 package interfaces;
 
+import java.io.IOException;
+
 public interface IWriteThread {
-	void end();
+	void end() throws IOException;
 	
-	void sendToSocket(String text);
+	void sendToSocket(byte[] msg) throws IOException;
 
 } 

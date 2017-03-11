@@ -8,6 +8,7 @@ import interfaces.IReadSocketListener;
 import interfaces.IReadThread;
 import interfaces.IWriteSocketListener;
 import interfaces.IWriteThread;
+import model.ILogger;
 
 public class Client implements IWriteSocketListener, IReadSocketListener, IGuiListener {
 	private final String server;
@@ -16,41 +17,24 @@ public class Client implements IWriteSocketListener, IReadSocketListener, IGuiLi
 	private IWriteThread writeThread;
 	private Socket socket;
 	private gui gui;
+	private final ILogger logger;
 	
-	//private Client client;
 	
-	/*
-	private static final Client instance = new Client(server, port);
-	
-	//private static final Client instance = new Client(String server, int portNumber)
-	
-	public static Client getInstance() {
-		return Client 
-		//return instance;
-	}
-	*/
-	
-	public Client(String server, int portNumber) {
+	public Client(String server, int portNumber, ILogger logger) {
 		this.server = server;
 		this.port = portNumber;
+		this.logger = logger;
 		this.socket = null;
 	}
 
 	public void run() throws IOException {	
-		try {
 			socket = new Socket(server, port);
-			readThread = new ReadSocketThread(socket, this);
-			writeThread = new WriteSocketThread(socket, this);
+			readThread = new ReadSocketThread(socket, this, logger);
+			writeThread = new WriteSocketThread(socket, logger);
 			readThread.begin();
 			
-			//load gui
-			gui = new gui(this);
-			
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-			stop();
-		}
+			//load GUI
+			gui = new gui(this, logger);
 	}
 	
 	public void stop() throws IOException{
@@ -59,17 +43,23 @@ public class Client implements IWriteSocketListener, IReadSocketListener, IGuiLi
 		readThread.end();
 	}
 
+	//TODO: Account for different types of messages
 	@Override
-	public void printToScreen(String message) {
-		if (!Util.isNullOrEmpty(message)){
-		System.out.println(message);
-		gui.displayMessage(message);
+	public void printToScreen(byte[] msg) {
+		if (msg != null){
+		gui.displayMessage(new String(msg, Util.getEncoding()));
 		}
 	}
 
 	@Override
-	public void sendText(String text) {
-		writeThread.sendToSocket(text);
+	public void sendText(byte[] msg) throws IOException {
+		writeThread.sendToSocket(msg);
+	}
+
+	@Override
+	public void close() {
+		gui.close();
+		
 	}
 
 }

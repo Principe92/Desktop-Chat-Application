@@ -1,21 +1,21 @@
 package model;
 
 public class Client {
-	private String id;
+	private int id;
 	private String pwd;
 	private String name;
 	private String nick;
 	private String email;
 	
-	public Client(){
-		this.id = "";
+	public Client(int id){
+		this.id = id;
 		this.pwd = "";
 		this.name = "";
 		this.nick = "";
 		this.email = "";
 	}
 	
-	public Client(String id, String pwd, String name, String nick, String email) {
+	public Client(int id, String pwd, String name, String nick, String email) {
 		this.id = id;
 		this.pwd = pwd;
 		this.name = name;
@@ -24,18 +24,18 @@ public class Client {
 	}
 
 	public Client(String[] info) {
-		id = info[0];
+		id = Integer.parseInt(info[0]);
 		pwd = info[1];
 		name = info[2];
 		nick = info[3];
 		email = info[4];
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -72,7 +72,7 @@ public class Client {
 	}
 
 	public void setAll(String[] tmp) {
-		id = tmp[0];
+		id = Integer.parseInt(tmp[0]);
 		pwd = tmp[1];
 		name = tmp[2];
 		nick = tmp[3];

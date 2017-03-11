@@ -1,8 +1,9 @@
 package interfaces;
 
+import java.io.IOException;
+
 public interface IGuiListener {
 
-	void sendText(String text);
+	void sendText(byte[] msg) throws IOException;
 
-	//void exitChat();
 }

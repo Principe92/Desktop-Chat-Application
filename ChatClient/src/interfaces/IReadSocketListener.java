@@ -1,5 +1,7 @@
 package interfaces;
 
 public interface IReadSocketListener {
-	public void printToScreen(String message);
+	public void printToScreen(byte[] msg);
+
+	public void close();
 }
