@@ -1,0 +1,69 @@
+﻿Requirements Document
+
+
+Desktop Chat Application
+by
+
+
+Princewill Okorie
+Mary Hogan
+Roberto Ayuso
+Woo Seo Yang
+
+
+
+
+February 12, 2017
+________________
+
+
+1. Introduction
+
+
+1.1 Purpose
+                The main aim of the project is to design a desktop chat application that will enable a group of people communicate feasibly with each other.
+
+
+1.2 Design map
+               The algorithm for this project will be implemented using C and Java. Using C libraries, a client and server application will be developed for the chat program, while Java will be used to design the graphical user interface. The target operating system will be linux, with the hope of porting the application to other operating system like Windows.
+        The features of the application will include the following:
+1. The ability to join/create a chat room (ip/password)
+2. The ability to create a user profile
+3. The ability to send/delete text and images
+4. The ability for the host to invite users via email.
+5. The ability to moderate a chat room.
+6. The ability to customize the background of the 
+7. The ability to notify a user when a message has arrived
+8. The ability to show availability(online/away/offline/busy)
+
+
+
+
+2. Product Description
+
+
+2.1 User Characteristics
+        The potential users of our product would be general internet users and the users shall use the program to chat, read/write messages across the network. They will also be able to set up and modify profiles and send packets of files across. The administrators will manage the system to ensure the finest connection, software operation, and the convenient user interface for the best quality.
+ 
+2.2 Assumptions & Dependencies
+        It is assumed that users will have access to an internet connection. It is also assumed that those with accounts will contribute accurate information. 
+
+
+2.3 Constraints
+        The users do not have access to the server and only the administrators can intervene/modify the contents stored in the server. Also when the sender finished sending a multimedia packet with big sizes it is impossible for the sender to cancel the transmission once the server saved it. The good internet connection under the accurate IP address is vital for the application to operate on network
+
+
+
+
+3. Requirements
+3.1 Functional Requirements
+        3.2 Usability
+        In order to use the interface, the users must have their own accounts and have basic knowledge of how chatting programs work. 
+        3.3 Security
+        Login information should be encrypted and accounts are password protected which would be used for verification of the accuracy of the user information to the profile being accessed. 
+        3.4 Data
+        The chat log would be saved in a .txt file and the profile info would be saved in .profile, a new extension. 
+
+
+4. User Scenarios
+Scenario: Creating a room with inviting people
