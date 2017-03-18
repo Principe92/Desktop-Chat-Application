@@ -18,7 +18,7 @@ public class Client implements IWriteSocketListener, IReadSocketListener, IGuiLi
 	private IReadThread readThread;
 	private IWriteThread writeThread;
 	private Socket socket;
-	private Gui gui;
+	private gui gui;
 	private final ILogger logger;
 	private final ISocketProtocol protocol;
 	
@@ -38,7 +38,7 @@ public class Client implements IWriteSocketListener, IReadSocketListener, IGuiLi
 			readThread.begin();
 			
 			//load GUI
-			gui = new Gui(this, logger);
+			gui = new gui(this, logger);
 	}
 	
 	public void stop() throws IOException{

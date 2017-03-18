@@ -18,7 +18,7 @@ import interfaces.IGuiListener;
 import type.ILogger;
 import type.IMessage;
 
-public class Gui {
+public class gui {
 	private JFrame frmChatapp;
 	private JTextArea textField;
 	private final IGuiListener listener;
@@ -31,7 +31,7 @@ public class Gui {
 	 * Create the application.
 	 * @wbp.parser.entryPoint
 	 */
-	public Gui(IGuiListener listener, ILogger logger) {
+	public gui(IGuiListener listener, ILogger logger) {
 		this.listener = listener;
 		this.logger = logger;
 		initialize();
