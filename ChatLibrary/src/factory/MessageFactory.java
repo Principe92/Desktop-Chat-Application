@@ -3,9 +3,10 @@ package factory;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.IMessage;
 import model.ImageMessage;
 import model.TextMessage;
+import type.IMessage;
+import type.MessageType;
 
 public class MessageFactory {
 
@@ -19,13 +20,24 @@ public class MessageFactory {
 	}
 
 	public static IMessage getMessage(String text) {
-		// TODO Auto-generated method stub
 		
 		List<IMessage> list = getMessages();
 		
 		for (IMessage msg : list){
 			if (msg.IsType(text)){
 				msg.setData(text);
+				return msg;
+			}
+		}
+		
+		return null;
+	}
+
+	public static IMessage getMessage(MessageType messageType) {
+		List<IMessage> list = getMessages();
+		
+		for (IMessage msg : list){
+			if (msg.getType() == messageType){
 				return msg;
 			}
 		}

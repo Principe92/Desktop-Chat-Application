@@ -3,7 +3,7 @@ package main;
 import java.io.IOException;
 
 import factory.AbstractFactory;
-import model.ILogger;
+import type.ILogger;
 
 public class Main {
 	

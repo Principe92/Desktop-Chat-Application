@@ -2,7 +2,9 @@ package model;
 
 import java.io.File;
 
-import factory.IImageHandler;
+import type.IImageHandler;
+import type.IMessage;
+import type.MessageType;
 
 public class ImageMessage implements IMessage {
 	private byte[] data;
@@ -30,8 +32,17 @@ public class ImageMessage implements IMessage {
 
 	@Override
 	public byte[] getData() {
-		// TODO Auto-generated method stub
-		return null;
+		return data;
+	}
+
+	@Override
+	public MessageType getType() {
+		return MessageType.IMAGE;
+	}
+
+	@Override
+	public void setData(byte[] data) {
+		this.data = data;
 	}
 
 }

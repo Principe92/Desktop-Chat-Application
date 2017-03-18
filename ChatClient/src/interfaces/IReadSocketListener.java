@@ -1,7 +1,9 @@
 package interfaces;
 
+import type.IMessage;
+
 public interface IReadSocketListener {
-	public void printToScreen(byte[] msg);
+	public void printToScreen(IMessage msg);
 
 	public void close();
 }

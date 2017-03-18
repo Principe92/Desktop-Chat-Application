@@ -2,6 +2,8 @@ package model;
 
 import java.io.IOException;
 
+import type.ILogger;
+
 public class SystemLogger implements ILogger {
 
 	@Override

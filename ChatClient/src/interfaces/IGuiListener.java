@@ -2,8 +2,10 @@ package interfaces;
 
 import java.io.IOException;
 
+import type.IMessage;
+
 public interface IGuiListener {
 
-	void sendText(byte[] msg) throws IOException;
+	void sendText(IMessage message) throws IOException;
 
 }

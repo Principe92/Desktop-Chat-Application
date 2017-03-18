@@ -1,4 +1,4 @@
-package model;
+package type;
 
 public interface IMessage {
 
@@ -7,5 +7,9 @@ public interface IMessage {
 	boolean IsType(String text);
 
 	byte[] getData();
+	
+	MessageType getType();
+
+	void setData(byte[] data);
 
 }

@@ -8,17 +8,21 @@ import java.net.Socket;
 
 import interfaces.IWriteSocketListener;
 import interfaces.IWriteThread;
-import model.ILogger;
+import type.ILogger;
+import type.IMessage;
+import type.ISocketProtocol;
 
 public class WriteSocketThread implements IWriteThread {
 	private final Socket socket;
 	private PrintWriter out;
 	private BufferedReader in;
 	private final ILogger logger;
+	private final ISocketProtocol protocol;
 	
-	public WriteSocketThread(Socket socket, ILogger logger){
+	public WriteSocketThread(Socket socket, ILogger logger, ISocketProtocol protocol){
 		this.socket = socket;
 		this.logger = logger;
+		this.protocol = protocol;
 		setUp();
 	}
 	
@@ -52,8 +56,14 @@ public class WriteSocketThread implements IWriteThread {
 		}
 
 		@Override
-		public void sendToSocket(byte[] msg) throws IOException {
-			if (msg != null)
-				socket.getOutputStream().write(msg);
+		public void sendToSocket(IMessage msg) throws IOException {
+			if (msg != null){
+				byte[] handshake = protocol.getHandShake(msg);
+				
+				if (handshake != null){
+					socket.getOutputStream().write(handshake);
+					socket.getOutputStream().write(msg.getData());
+				}
+			}
 		}
 }

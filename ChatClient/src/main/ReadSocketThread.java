@@ -6,20 +6,25 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
+import factory.MessageFactory;
 import interfaces.IReadSocketListener;
 import interfaces.IReadThread;
-import model.ILogger;
+import type.ILogger;
+import type.IMessage;
+import type.ISocketProtocol;
 
 public class ReadSocketThread extends Thread implements IReadThread {
 	private final Socket socket;
 	private BufferedReader in;
 	private final IReadSocketListener listener;
+	private final ISocketProtocol protocol;
 	private final ILogger logger;
 	private boolean run;
 	
-	public ReadSocketThread(Socket socket, IReadSocketListener listener, ILogger logger){
+	public ReadSocketThread(Socket socket, IReadSocketListener listener, ILogger logger, ISocketProtocol protocol){
 		this.socket = socket;
 		this.listener = listener;
+		this.protocol = protocol;
 		this.logger = logger;
 		this.run = true;
 	}
@@ -29,27 +34,25 @@ public class ReadSocketThread extends Thread implements IReadThread {
 			try {
 				
 				in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-				ByteArrayOutputStream bs = new ByteArrayOutputStream();
-				byte[] buffer = new byte[4096];
+				
+				IMessage msg = null;
 				
 				while(!socket.isClosed() && run){
 					
-					int offset = 0;
+					byte[] data = fetch();
 					
-					while(true){
-						int bytes = socket.getInputStream().read(buffer);
-						if (bytes < 0) break;
-						bs.write(buffer, offset, bytes);
-						offset = bytes;
+					if (protocol.isHandShake(data)){
 						
-						if (bytes < 4096) break;
+						msg = MessageFactory.getMessage(protocol.getMessageType(data));
+						
+					}else{
+						
+						if (msg != null){
+							msg.setData(data);
+							listener.printToScreen(msg);
+							msg = null;
+						}
 					}
-					
-					logger.logInfo("Size of array: " + bs.size());
-					if (bs.size() > 0)
-					listener.printToScreen(bs.toByteArray());
-					
-					bs.reset();
 				}
 				
 			} catch (IOException e) {
@@ -63,6 +66,22 @@ public class ReadSocketThread extends Thread implements IReadThread {
 				}
 			}
 		}
+	
+	private byte[] fetch() throws IOException {
+		ByteArrayOutputStream bs = new ByteArrayOutputStream();
+		byte[] data = new byte[Constant.BUFFER_SIZE];
+		int off = 0;
+		
+		while(true){
+			int bytes = socket.getInputStream().read(data);
+			if (bytes < 0) break;
+			bs.write(data, off, bytes);
+			
+			if (bytes < Constant.BUFFER_SIZE) break;
+		}
+		
+		return bs.toByteArray();
+	}
 
 		private void exitChat() throws IOException {
 			in.close();

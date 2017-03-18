@@ -11,12 +11,13 @@ import java.net.Socket;
 import model.Client;
 import model.IClientListener;
 import model.IClientThread;
-import model.ILogger;
+import type.ILogger;
+import type.ISocketProtocol;
 
 public class ClientThread extends Thread implements IClientThread {
 	private final Socket socket;
 	private final Client who;
-	private IClientListener listener;
+	private final IClientListener listener;
 	private ILogger logger;
 	private PrintWriter out;
 	private BufferedReader in;
@@ -37,25 +38,11 @@ public class ClientThread extends Thread implements IClientThread {
 			out = new PrintWriter(socket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			
-			ByteArrayOutputStream bs = new ByteArrayOutputStream();
-			byte[] data = new byte[4096];
-			
 			while(!socket.isClosed()){
 				
-			//	String message = in.readLine();
-				int off = 0;
+			byte[]	data = fetch();
 				
-				while(true){
-					int bytes = socket.getInputStream().read(data);
-					if (bytes < 0) break;
-					bs.write(data, off, bytes);
-					off = bytes;
-					
-					if (bytes < 4096) break;
-				}
-				
-				listener.sendMessage(bs.toByteArray(), who.getId());
-				bs.reset();
+			listener.sendMessage(data, who.getId());
 			}
 			
 		} catch (IOException e) {
@@ -66,6 +53,22 @@ public class ClientThread extends Thread implements IClientThread {
 				logger.logError(e);
 			}
 		}
+	}
+
+	private byte[] fetch() throws IOException {
+		ByteArrayOutputStream bs = new ByteArrayOutputStream();
+		byte[] data = new byte[Constant.BUFFER_SIZE];
+		int off = 0;
+		
+		while(true){
+			int bytes = socket.getInputStream().read(data);
+			if (bytes < 0) break;
+			bs.write(data, off, bytes);
+			
+			if (bytes < Constant.BUFFER_SIZE) break;
+		}
+		
+		return bs.toByteArray();
 	}
 
 	private void exitChat() throws IOException {

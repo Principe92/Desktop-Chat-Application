@@ -1,4 +1,4 @@
-package factory;
+package type;
 
 public interface IImageHandler {
 

@@ -3,6 +3,8 @@ package model;
 import java.io.File;
 
 import main.Util;
+import type.IMessage;
+import type.MessageType;
 
 public class TextMessage implements IMessage {
 	private String data;
@@ -22,5 +24,15 @@ public class TextMessage implements IMessage {
 	@Override
 	public byte[] getData() {
 		return data != null ? data.getBytes(Util.getEncoding()) : null;
+	}
+
+	@Override
+	public MessageType getType() {
+		return MessageType.TEXT;
+	}
+
+	@Override
+	public void setData(byte[] data) {
+		this.data = new String(data, Util.getEncoding());
 	}
 }

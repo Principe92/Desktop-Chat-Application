@@ -8,7 +8,9 @@ import interfaces.IReadSocketListener;
 import interfaces.IReadThread;
 import interfaces.IWriteSocketListener;
 import interfaces.IWriteThread;
-import model.ILogger;
+import type.ILogger;
+import type.IMessage;
+import type.ISocketProtocol;
 
 public class Client implements IWriteSocketListener, IReadSocketListener, IGuiListener {
 	private final String server;
@@ -16,25 +18,27 @@ public class Client implements IWriteSocketListener, IReadSocketListener, IGuiLi
 	private IReadThread readThread;
 	private IWriteThread writeThread;
 	private Socket socket;
-	private gui gui;
+	private Gui gui;
 	private final ILogger logger;
+	private final ISocketProtocol protocol;
 	
 	
-	public Client(String server, int portNumber, ILogger logger) {
+	public Client(String server, int portNumber, ILogger logger, ISocketProtocol protocol) {
 		this.server = server;
 		this.port = portNumber;
 		this.logger = logger;
+		this.protocol = protocol;
 		this.socket = null;
 	}
 
 	public void run() throws IOException {	
 			socket = new Socket(server, port);
-			readThread = new ReadSocketThread(socket, this, logger);
-			writeThread = new WriteSocketThread(socket, logger);
+			readThread = new ReadSocketThread(socket, this, logger, protocol);
+			writeThread = new WriteSocketThread(socket, logger, protocol);
 			readThread.begin();
 			
 			//load GUI
-			gui = new gui(this, logger);
+			gui = new Gui(this, logger);
 	}
 	
 	public void stop() throws IOException{
@@ -45,14 +49,14 @@ public class Client implements IWriteSocketListener, IReadSocketListener, IGuiLi
 
 	//TODO: Account for different types of messages
 	@Override
-	public void printToScreen(byte[] msg) {
+	public void printToScreen(IMessage msg) {
 		if (msg != null){
-		gui.displayMessage(new String(msg, Util.getEncoding()));
+			gui.displayMessage(msg);
 		}
 	}
 
 	@Override
-	public void sendText(byte[] msg) throws IOException {
+	public void sendText(IMessage msg) throws IOException {
 		writeThread.sendToSocket(msg);
 	}
 

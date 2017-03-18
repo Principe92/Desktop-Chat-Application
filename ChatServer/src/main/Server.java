@@ -13,7 +13,7 @@ import java.util.Map.Entry;
 import model.Client;
 import model.IClientListener;
 import model.IClientThread;
-import model.ILogger;
+import type.ILogger;
 
 public class Server implements IClientListener {
 

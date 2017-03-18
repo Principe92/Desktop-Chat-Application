@@ -15,10 +15,10 @@ import javax.swing.JTextArea;
 
 import factory.MessageFactory;
 import interfaces.IGuiListener;
-import model.ILogger;
-import model.IMessage;
+import type.ILogger;
+import type.IMessage;
 
-public class gui {
+public class Gui {
 	private JFrame frmChatapp;
 	private JTextArea textField;
 	private final IGuiListener listener;
@@ -31,7 +31,7 @@ public class gui {
 	 * Create the application.
 	 * @wbp.parser.entryPoint
 	 */
-	public gui(IGuiListener listener, ILogger logger) {
+	public Gui(IGuiListener listener, ILogger logger) {
 		this.listener = listener;
 		this.logger = logger;
 		initialize();
@@ -191,12 +191,12 @@ public class gui {
 		
 		if (message != null){
 			try {
-				listener.sendText(message.getData());
+				listener.sendText(message);
 			} catch (IOException e) {
 				logger.logError(e);
 			}
 			
-			displayMessage(new String(message.getData(), Util.getEncoding()));
+			displayMessage(message);
 		}
 		
 		clearText();
@@ -207,8 +207,8 @@ public class gui {
 		textField.setText(null);
 	}
 
-	public void displayMessage(String message) {
-		display.append(String.format("%s\n", message));
+	public void displayMessage(IMessage msg) {
+		display.append(String.format("%s\n", new String(msg.getData(), Util.getEncoding())));
 	}
 	
 	public void close() {

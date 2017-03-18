@@ -8,6 +8,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import type.IImageHandler;
+
 public class ImageHandler implements IImageHandler {
 	
 	private BufferedImage image;
