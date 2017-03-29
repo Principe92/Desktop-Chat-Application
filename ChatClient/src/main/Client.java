@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Component;
 import java.io.IOException;
 import java.net.Socket;
 
@@ -51,7 +52,7 @@ public class Client implements IWriteSocketListener, IReadSocketListener, IGuiLi
 	@Override
 	public void printToScreen(IMessage msg) {
 		if (msg != null){
-			gui.displayMessage(msg);
+			gui.displayMessage(msg, Component.LEFT_ALIGNMENT);
 		}
 	}
 

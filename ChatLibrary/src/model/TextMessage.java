@@ -1,6 +1,10 @@
 package model;
 
+import java.awt.Dimension;
 import java.io.File;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import main.Util;
 import type.IMessage;
@@ -34,5 +38,12 @@ public class TextMessage implements IMessage {
 	@Override
 	public void setData(byte[] data) {
 		this.data = new String(data, Util.getEncoding());
+	}
+
+	@Override
+	public JPanel getMessagePanel(int x, int y) {
+		TextPanel panel = new TextPanel(this.data, this.data.length(), 20);
+		panel.setMaximumSize(new Dimension(this.data.length() + 20, 50));
+		return panel;
 	}
 }

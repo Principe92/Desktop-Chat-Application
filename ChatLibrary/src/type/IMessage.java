@@ -1,5 +1,7 @@
 package type;
 
+import javax.swing.JPanel;
+
 public interface IMessage {
 
 	void setData(String text);
@@ -12,4 +14,6 @@ public interface IMessage {
 
 	void setData(byte[] data);
 
+	JPanel getMessagePanel(int x, int y);
 }
+ 

@@ -53,8 +53,8 @@ public class Server implements IClientListener {
 			
 			if (entry.getKey() != id)
 				entry.getValue().sendMessageToSocket(message);
-			else
-				logger.logInfo(new String(message, Util.getEncoding()));
+			//else
+				//logger.logInfo(new String(message, Util.getEncoding()));
 		}
 	}
 

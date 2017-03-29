@@ -41,4 +41,14 @@ public class ImageHandler implements IImageHandler {
 		return null;
 	}
 
+	@Override
+	public int getImageWidth() {
+		return image != null ? image.getWidth() : 0;
+	}
+
+	@Override
+	public int getImageHeight() {
+		return image != null ? image.getHeight() : 0;
+	}
+
 }
