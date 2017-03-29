@@ -6,4 +6,8 @@ public interface IImageHandler {
 
 	byte[] getImageAsBytes();
 
+	int getImageWidth();
+
+	int getImageHeight();
+
 }
