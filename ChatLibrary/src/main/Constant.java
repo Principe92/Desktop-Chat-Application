@@ -10,4 +10,7 @@ public class Constant {
 	 public final static String tiff = "tiff";
 	 public final static String tif = "tif";
 	 public final static String png = "png";
+	public static final String EMPTY = "";
+	public static final int MIN_HEIGHT = 800;
+	public static final int MIN_WIDTH = 800;
 }
