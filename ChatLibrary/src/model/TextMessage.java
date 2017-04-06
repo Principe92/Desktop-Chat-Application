@@ -1,18 +1,30 @@
 package model;
 
+import factory.RoundedBorder;
+import main.Constant;
 import main.Util;
 import type.IMessage;
 import type.MessageType;
 
 import javax.swing.*;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.io.File;
 
 public class TextMessage implements IMessage {
     private String data;
 
+    public TextMessage() {
+
+    }
+
+    public TextMessage(String text) {
+        setData(text);
+    }
+
     @Override
     public void setData(String text) {
-        // TODO Auto-generated method stub
         this.data = text;
 
     }
@@ -38,9 +50,12 @@ public class TextMessage implements IMessage {
     }
 
     @Override
-    public JPanel getMessagePanel(int x, int y) {
-        TextPanel panel = new TextPanel(this.data, this.data.length(), 20);
-        // panel.setMaximumSize(new Dimension(this.data.length() + 20, 50));
-        return panel;
+    public Component getMessagePanel(float alignment, Color color) {
+        JLabel label = new JLabel(this.data);
+        label.setBorder(new CompoundBorder(new RoundedBorder(10), new EmptyBorder(Constant.MSG_PADDING, Constant.MSG_PADDING, Constant.MSG_PADDING, Constant.MSG_PADDING)));
+        label.setBackground(color);
+        label.setOpaque(true);
+        //  label.setAlignmentX(alignment);
+        return label;
     }
 }

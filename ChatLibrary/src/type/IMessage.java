@@ -1,19 +1,19 @@
 package type;
 
-import javax.swing.JPanel;
+import java.awt.*;
 
 public interface IMessage {
 
-	void setData(String text);
+    void setData(String text);
 
-	boolean IsType(String text);
+    boolean IsType(String text);
 
-	byte[] getData();
-	
-	MessageType getType();
+    byte[] getData();
 
-	void setData(byte[] data);
+    void setData(byte[] data);
 
-	JPanel getMessagePanel(int x, int y);
+    MessageType getType();
+
+    Component getMessagePanel(float alignment, Color color);
 }
  
