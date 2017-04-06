@@ -50,12 +50,11 @@ public class TextMessage implements IMessage {
     }
 
     @Override
-    public Component getMessagePanel(float alignment, Color color) {
+    public Component getMessagePanel(Color color) {
         JLabel label = new JLabel(this.data);
         label.setBorder(new CompoundBorder(new RoundedBorder(10), new EmptyBorder(Constant.MSG_PADDING, Constant.MSG_PADDING, Constant.MSG_PADDING, Constant.MSG_PADDING)));
         label.setBackground(color);
         label.setOpaque(true);
-        //  label.setAlignmentX(alignment);
         return label;
     }
 }

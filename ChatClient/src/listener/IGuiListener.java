@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public interface IGuiListener {
 
-	void sendText(IMessage message) throws IOException;
+    void sendMessage(IMessage message) throws IOException;
 
     boolean joinChat(String ip, String port);
 

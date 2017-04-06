@@ -3,7 +3,6 @@ package gui;
 import factory.MessageFactory;
 import listener.IGuiListener;
 import main.Constant;
-import main.Util;
 import model.ImageFilter;
 import net.miginfocom.swing.MigLayout;
 import type.ILogger;
@@ -115,7 +114,7 @@ public class ChatPanel extends JPanel {
 
     private JScrollPane addMessageWindow() {
         msgWindow = new JPanel();
-        msgWindow.setLayout(new MigLayout("fillx"));
+        msgWindow.setLayout(new MigLayout("fillx", "[grow]"));
         msgWindow.setBackground(Constant.MSG_BG);
         msgWindow.setBorder(new CompoundBorder(msgWindow.getBorder(), new EmptyBorder(Constant.MAG_16, Constant.MAG_16, Constant.MAG_16, Constant.MAG_16)));
 
@@ -169,12 +168,12 @@ public class ChatPanel extends JPanel {
 
         if (message != null) {
             try {
-                listener.sendText(message);
+                listener.sendMessage(message);
             } catch (IOException e) {
                 logger.logError(e);
             }
 
-            displayMessage(message, GridBagConstraints.NORTHEAST, Constant.USER_BG);
+            displayMessage(message, Constant.DOCK_EAST, Constant.USER_BG);
         }
     }
 
@@ -182,21 +181,12 @@ public class ChatPanel extends JPanel {
         msgBox.setText(null);
     }
 
-    public void displayMessage(IMessage msg, int alignment, Color color) {
-        GridBagConstraints gs = Util.getNoFill(alignment);
-        gs.insets = new Insets(Constant.MAG_2, Constant.MAG_16, Constant.MAG_2, Constant.MAG_16);
-        gs.gridx = xcord;
-        gs.gridy = ycord;
-        gs.weightx = 1;
-        //gs.weighty = 0.01;
+    public void displayMessage(IMessage msg, String alignment, Color color) {
+        JPanel panel = new JPanel(new MigLayout("fill", "[grow]", "[]"));
+        panel.add(msg.getMessagePanel(color), alignment);
+        panel.setOpaque(false);
+        msgWindow.add(panel, "wrap, spanx, growx");
 
-        String align = ycord % 2 == 0 ? "wrap, dock east" : "wrap, dock west";
-        Component ct = msg.getMessagePanel(alignment, color);
-        msgWindow.add(ct, "wrap");
-
-        gs.weightx = 1;
-        gs.weighty = 1;
-        //  msgWindow.add(Box.createVerticalStrut(2), gs);
         msgWindow.revalidate();
         ycord++;
     }

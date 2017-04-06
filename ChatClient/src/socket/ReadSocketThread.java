@@ -2,7 +2,9 @@ package socket;
 
 import factory.MessageFactory;
 import listener.IReadSocketListener;
+import main.Constant;
 import model.BaseThread;
+import model.TextMessage;
 import type.ILogger;
 import type.IMessage;
 import type.ISocketProtocol;
@@ -54,6 +56,8 @@ public class ReadSocketThread extends BaseThread implements IReadSocket {
             }
 
         } catch (IOException e) {
+            listener.printToScreen(new TextMessage(Constant.SERVER_ERROR));
+            listener.printToScreen(new TextMessage("Chat closed"));
             logger.logInfo("The server has shutdown unexpectedly");
             logger.logError(e);
         } finally {

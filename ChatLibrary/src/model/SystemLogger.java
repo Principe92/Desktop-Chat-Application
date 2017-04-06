@@ -1,8 +1,8 @@
 package model;
 
-import java.io.IOException;
-
 import type.ILogger;
+
+import java.io.IOException;
 
 public class SystemLogger implements ILogger {
 
@@ -15,7 +15,6 @@ public class SystemLogger implements ILogger {
 	@Override
 	public void logInfo(String msg) {
 		System.out.println(msg);
-		
 	}
 
 }

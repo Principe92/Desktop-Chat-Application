@@ -14,6 +14,6 @@ public interface IMessage {
 
     MessageType getType();
 
-    Component getMessagePanel(float alignment, Color color);
+    Component getMessagePanel(Color color);
 }
  

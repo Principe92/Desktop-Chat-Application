@@ -79,7 +79,7 @@ public class gui implements ChatListPanelListener {
     }
 
     public void displayMessage(IMessage msg) {
-        chatPanel.displayMessage(msg, GridBagConstraints.NORTHWEST, Constant.OTHERS_BG);
+        chatPanel.displayMessage(msg, Constant.DOCK_WEST, Constant.OTHERS_BG);
     }
 
     void close() {

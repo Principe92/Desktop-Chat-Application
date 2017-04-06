@@ -23,4 +23,7 @@ public class Constant {
     public static final Color MSG_BG = new Color(249, 251, 231);
     public static final Color USER_BG = new Color(79, 195, 247);
     public static final Color OTHERS_BG = new Color(102, 187, 106);
+    public static final String DOCK_EAST = "dock east";
+    public static final String DOCK_WEST = "dock west";
+    public static final String SERVER_ERROR = "The server has shutdown unexpectedly";
 }

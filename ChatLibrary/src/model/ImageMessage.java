@@ -1,10 +1,16 @@
 package model;
 
+import factory.RoundedBorder;
+import main.Constant;
 import main.Util;
 import type.IImageHandler;
 import type.IMessage;
 import type.MessageType;
 
+import javax.swing.*;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.io.File;
 
 public class ImageMessage extends TextMessage implements IMessage {
@@ -49,5 +55,14 @@ public class ImageMessage extends TextMessage implements IMessage {
     @Override
     public MessageType getType() {
         return MessageType.IMAGE;
+    }
+
+    @Override
+    public Component getMessagePanel(Color color) {
+        JLabel label = new JLabel(this.path);
+        label.setBorder(new CompoundBorder(new RoundedBorder(10), new EmptyBorder(Constant.MSG_PADDING, Constant.MSG_PADDING, Constant.MSG_PADDING, Constant.MSG_PADDING)));
+        label.setBackground(color);
+        label.setOpaque(true);
+        return label;
     }
 }
