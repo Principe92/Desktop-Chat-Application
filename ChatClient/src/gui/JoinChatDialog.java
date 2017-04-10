@@ -6,6 +6,7 @@ import main.Util;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,9 +18,10 @@ public class JoinChatDialog extends BaseDialog {
     private JTextField ip;
     private JTextField port;
 
-    public JoinChatDialog(JFrame parent, JoinChatDialogListener listener) {
+    public JoinChatDialog(JFrame parent, Point point, JoinChatDialogListener listener) {
         super(parent, "ChatApp | Join a chat room");
         this.listener = listener;
+        this.setLocation(point);
     }
 
 

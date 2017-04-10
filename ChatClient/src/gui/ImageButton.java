@@ -14,6 +14,8 @@ public class ImageButton extends JButton {
         super(Constant.EMPTY);
         setForeground(Color.blue);
         setToolTipText(hoverText);
+//        setRolloverEnabled(true);
+//        setRolloverIcon(new ImageIcon(this.getClass().getResource(Util.fillIconPath("ic_add_white_24dp.png"))));
         setCursor(new Cursor(Cursor.HAND_CURSOR));
         setBorderPainted(false);
         setContentAreaFilled(false);

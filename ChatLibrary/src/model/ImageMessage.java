@@ -17,9 +17,11 @@ public class ImageMessage extends TextMessage implements IMessage {
     private byte[] image;
     private IImageHandler imageHandler;
     private String path;
+    private String sender;
 
     public ImageMessage(IImageHandler imageHandler) {
         this.imageHandler = imageHandler;
+        this.sender = Constant.EMPTY;
     }
 
     @Override
@@ -64,5 +66,15 @@ public class ImageMessage extends TextMessage implements IMessage {
         label.setBackground(color);
         label.setOpaque(true);
         return label;
+    }
+
+    @Override
+    public String getSender() {
+        return this.sender;
+    }
+
+    @Override
+    public void setSender(String name) {
+        this.sender = name;
     }
 }

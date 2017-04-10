@@ -6,6 +6,7 @@ import main.Util;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,9 +18,10 @@ public class NewChatDialog extends BaseDialog {
     private JTextField port;
     private JTextField title;
 
-    public NewChatDialog(JFrame parent, NewChatDialogListener listener) {
+    public NewChatDialog(JFrame parent, Point point, NewChatDialogListener listener) {
         super(parent, "ChatApp | Create a chat room");
         this.listener = listener;
+        this.setLocation(point);
     }
 
 

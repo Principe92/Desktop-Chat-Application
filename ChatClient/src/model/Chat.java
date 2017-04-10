@@ -46,10 +46,11 @@ public class Chat implements IChat, IReadSocketListener {
         return true;
     }
 
-    public void stop() throws IOException {
+    @Override
+    public void close() throws IOException {
+        writeThread.end();
+        readThread.end();
         socket.close();
-        readThread.end();
-        readThread.end();
     }
 
     @Override
@@ -67,9 +68,8 @@ public class Chat implements IChat, IReadSocketListener {
     }
 
     @Override
-    public void close() throws IOException {
+    public void onChatExit() throws IOException {
+        sendToUsers(new TextMessage("Quit chat room unexpectedly"));
         socket.close();
-        readThread.end();
-        readThread.end();
     }
 }

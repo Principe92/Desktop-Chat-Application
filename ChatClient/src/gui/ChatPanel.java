@@ -16,7 +16,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.IOException;
 
 @SuppressWarnings("serial")
 public class ChatPanel extends JPanel {
@@ -31,54 +30,26 @@ public class ChatPanel extends JPanel {
     public ChatPanel(IGuiListener listener, ILogger logger) {
         this.listener = listener;
         this.logger = logger;
-        this.setLayout(new GridBagLayout());
+        this.setLayout(new MigLayout("insets 0 0 4 0"));
 
-        GridBagConstraints a = new GridBagConstraints();
-        GridBagConstraints b = new GridBagConstraints();
-        GridBagConstraints c = new GridBagConstraints();
+        this.add(addMenuBar(), "growx, pushx, wrap");
+        this.add(addMessageWindow(), "push, grow, wrap");
+        this.add(addMessageField(), "growx, pushx, split");
+        this.add(addSendButton());
 
-        // menu bar
-        a.fill = GridBagConstraints.HORIZONTAL;
-        this.add(addMenuBar(), a);
-
-        // message window
-        b.weightx = 1;
-        b.weighty = 1;
-        b.gridx = 0;
-        b.gridy = 1;
-        b.fill = GridBagConstraints.BOTH;
-        this.add(addMessageWindow(), b);
-
-        // base panel
-        c.gridx = 0;
-        c.gridy = 2;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        this.add(addBasePanel(), c);
-
-    }
-
-    private JPanel addBasePanel() {
-        JPanel panel = new JPanel(new GridBagLayout());
-        GridBagConstraints a = new GridBagConstraints();
-        a.weightx = 1;
-        a.fill = GridBagConstraints.HORIZONTAL;
-
-        msgBox = addMessageField();
-        panel.add(msgBox, a);
-        panel.add(addSendButton());
-
-        return panel;
     }
 
     private JMenuBar addMenuBar() {
-        JMenuBar bar = new JMenuBar();
-        bar.add(Box.createHorizontalGlue());
-        bar.setBorder(BorderFactory.createCompoundBorder(bar.getBorder(), BorderFactory.createEmptyBorder(4, 4, 4, 4)));
-        bar.setBackground(Color.LIGHT_GRAY);
-
+        JMenuBar bar = new MenuBar(Constant.MENU_BG);
 
         // exit
         JButton item = new ImageButton("Exit", "ic_power_settings_new_black_24dp.png");
+        item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listener.quitChat();
+            }
+        });
         bar.add(item);
 
         item = new ImageButton("Menu", "ic_more_horiz_black_24dp.png");
@@ -125,11 +96,10 @@ public class ChatPanel extends JPanel {
     }
 
     private JTextArea addMessageField() {
-        JTextArea textArea = new JTextArea();
-        textArea.setColumns(10);
-        textArea.setLineWrap(true);
-        textArea.setWrapStyleWord(true);
-        textArea.addKeyListener(new KeyListener() {
+        msgBox = new JTextArea();
+        msgBox.setLineWrap(false);
+        msgBox.setWrapStyleWord(true);
+        msgBox.addKeyListener(new KeyListener() {
 
             @Override
             public void keyPressed(KeyEvent e) {
@@ -157,7 +127,7 @@ public class ChatPanel extends JPanel {
             }
         });
 
-        return textArea;
+        return msgBox;
     }
 
     private void sendText(String text) {
@@ -167,13 +137,8 @@ public class ChatPanel extends JPanel {
         IMessage message = MessageFactory.getMessage(text.trim());
 
         if (message != null) {
-            try {
-                listener.sendMessage(message);
-            } catch (IOException e) {
-                logger.logError(e);
-            }
-
             displayMessage(message, Constant.DOCK_EAST, Constant.USER_BG);
+            listener.sendMessage(message);
         }
     }
 

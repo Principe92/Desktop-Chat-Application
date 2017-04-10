@@ -14,16 +14,22 @@ public class Constant {
     public final static String png = "png";
     public static final String EMPTY = "";
     public static final int MIN_HEIGHT = 800;
-    public static final int MIN_WIDTH = 800;
+    public static final int MIN_WIDTH = 1000;
     public static final int MIN_CHAR_WIDTH = 30;
     public static final int MIN_CHAR_HEIGHT = 100;
     public static final int MAG_2 = 2;
     public static final int MSG_PADDING = 12;
     public static final int MAG_16 = 16;
-    public static final Color MSG_BG = new Color(249, 251, 231);
-    public static final Color USER_BG = new Color(79, 195, 247);
+    public static final Color MSG_BG = new Color(244, 244, 244);
+    public static final Color USER_BG = new Color(255, 255, 255);
     public static final Color OTHERS_BG = new Color(102, 187, 106);
     public static final String DOCK_EAST = "dock east";
     public static final String DOCK_WEST = "dock west";
-    public static final String SERVER_ERROR = "The server has shutdown unexpectedly";
+    public static final String SERVER_ERROR = "Chat room has closed unexpectedly";
+    public static final Color CHAT_BG = Color.WHITE;
+    public static final Color MENU_BG = new Color(229, 72, 25);
+    public static final int MAG_32 = 32;
+    public static final Color CHAT_LIST_BG = new Color(255, 162, 112);
+    public static final int MAG_24 = 24;
+    public static final int HANDSHAKE_MSG_SIZE = 4;
 }

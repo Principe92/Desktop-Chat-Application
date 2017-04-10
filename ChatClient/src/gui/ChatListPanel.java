@@ -1,50 +1,40 @@
 package gui;
 
 import listener.ChatListPanelListener;
+import main.Constant;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-import java.awt.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 
 @SuppressWarnings("serial")
 public class ChatListPanel extends JPanel {
 
-    public static final int MIN_WIDTH = 500;
     private final ChatListPanelListener listener;
-    private JPanel chatList;
+    private JPanel chatListPanel;
+    private Map<Integer, String> chatList;
 
     public ChatListPanel(ChatListPanelListener listener) {
         this.listener = listener;
-        this.setLayout(new GridBagLayout());
+        this.chatList = new HashMap<>();
+        this.setLayout(new MigLayout("fill, insets 0 0 4 0, wrap 1"));
 
-        GridBagConstraints a = new GridBagConstraints();
-        GridBagConstraints b = new GridBagConstraints();
-
-        a.fill = GridBagConstraints.HORIZONTAL;
-        a.gridx = 0;
-        a.gridy = 0;
-        a.anchor = GridBagConstraints.NORTH;
-        this.add(addMenuBar(), a);
-
-        b.fill = GridBagConstraints.BOTH;
-        b.gridx = 0;
-        b.gridy = 1;
-        b.weighty = 1;
-        this.add(addChatList(), b);
+        this.add(addMenuBar(), "growx");
+        this.add(addChatList(), "grow, push");
     }
 
     private JPanel addChatList() {
-        chatList = new JPanel(new MigLayout("fillx"));
-        return chatList;
+        chatListPanel = new JPanel(new MigLayout("fillx, wrap 1, inset 0"));
+        chatListPanel.setBackground(Constant.CHAT_LIST_BG);
+        return chatListPanel;
     }
 
     private JMenuBar addMenuBar() {
-        JMenuBar bar = new JMenuBar();
-        bar.add(Box.createHorizontalGlue());
-        bar.setBorder(BorderFactory.createCompoundBorder(bar.getBorder(), BorderFactory.createEmptyBorder(4, 4, 4, 4)));
-        bar.setBackground(Color.LIGHT_GRAY);
+        JMenuBar bar = new MenuBar(Constant.MENU_BG);
 
         // join chat room
         JButton item = new ImageButton("Join a chat", "ic_group_add_black_24dp.png");
@@ -72,10 +62,20 @@ public class ChatListPanel extends JPanel {
         return bar;
     }
 
-    public void addChat(String title) {
+    public void addChat(Integer id, String title) {
+        chatList.put(id, title);
         JLabel label = new JLabel(title);
-        chatList.add(label, "spanx, wrap");
+        label.setBackground(Constant.CHAT_BG);
+        label.setOpaque(true);
+        label.setBorder(BorderFactory.createCompoundBorder(label.getBorder(), new EmptyBorder(Constant.MAG_24, Constant.MAG_16, Constant.MAG_24, Constant.MAG_16)));
+        chatListPanel.add(label, "growx");
 
-        chatList.revalidate();
+        chatListPanel.revalidate();
+    }
+
+    public void removeChat(Integer id) {
+        chatList.remove(id);
+        chatListPanel.remove(id);
+        chatListPanel.revalidate();
     }
 }

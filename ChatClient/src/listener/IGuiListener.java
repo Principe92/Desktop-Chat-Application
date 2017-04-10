@@ -2,13 +2,13 @@ package listener;
 
 import type.IMessage;
 
-import java.io.IOException;
-
 public interface IGuiListener {
 
-    void sendMessage(IMessage message) throws IOException;
+    void sendMessage(IMessage message);
 
     boolean joinChat(String ip, String port);
 
     boolean createChat(String title, String port);
+
+    void quitChat();
 }

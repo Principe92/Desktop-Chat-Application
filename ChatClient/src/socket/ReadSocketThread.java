@@ -45,6 +45,10 @@ public class ReadSocketThread extends BaseThread implements IReadSocket {
 
                     msg = MessageFactory.getMessage(protocol.getMessageType(data));
 
+                    if (msg != null) {
+                        msg.setSender(protocol.getSender(data));
+                    }
+
                 } else {
 
                     if (msg != null) {
@@ -57,7 +61,6 @@ public class ReadSocketThread extends BaseThread implements IReadSocket {
 
         } catch (IOException e) {
             listener.printToScreen(new TextMessage(Constant.SERVER_ERROR));
-            listener.printToScreen(new TextMessage("Chat closed"));
             logger.logInfo("The server has shutdown unexpectedly");
             logger.logError(e);
         } finally {
@@ -71,10 +74,9 @@ public class ReadSocketThread extends BaseThread implements IReadSocket {
 
     private void exitChat() throws IOException {
         in.close();
-        socket.close();
         end();
 
-        listener.close();
+        listener.onChatExit();
     }
 
     @Override

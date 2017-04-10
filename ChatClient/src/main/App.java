@@ -66,12 +66,15 @@ public class App implements IGuiListener, IChatListener {
      * Send a message to other users
      *
      * @param message - Message
-     * @throws IOException - Throws an exception on error
      */
     @Override
-    public void sendMessage(IMessage message) throws IOException {
+    public void sendMessage(IMessage message) {
         if (activeChat != null) {
-            activeChat.sendToUsers(message);
+            try {
+                activeChat.sendToUsers(message);
+            } catch (IOException e) {
+                logger.logError(e);
+            }
         }
     }
 
@@ -90,7 +93,7 @@ public class App implements IGuiListener, IChatListener {
 
         if (started) {
             activeChat = chat;
-            gui.addChatToList(String.format("%s | %s", ip, port));
+            gui.addChatToGui(chat.getId(), String.format("%s | %s", ip, port));
         }
         return started;
     }
@@ -134,9 +137,23 @@ public class App implements IGuiListener, IChatListener {
 
         if (added) {
             activeChat = chat;
-            gui.addChatToList(title);
+            gui.addChatToGui(chat.getId(), String.format("%s | %s", title, port));
         }
 
         return added;
+    }
+
+    @Override
+    public void quitChat() {
+        if (activeChat != null) {
+            try {
+                activeChat.close();
+                chatMap.remove(activeChat.getId());
+                gui.removeChatFromGui(activeChat.getId());
+                activeChat = null;
+            } catch (IOException e) {
+                logger.logError(e);
+            }
+        }
     }
 }

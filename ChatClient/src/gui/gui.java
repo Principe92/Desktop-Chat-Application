@@ -5,6 +5,7 @@ import listener.IGuiListener;
 import listener.JoinChatDialogListener;
 import listener.NewChatDialogListener;
 import main.Constant;
+import net.miginfocom.swing.MigLayout;
 import type.ILogger;
 import type.IMessage;
 
@@ -52,8 +53,8 @@ public class gui implements ChatListPanelListener {
         b.gridy = 0;
 
 
-        frmChatApp.getContentPane().add(chatListPanel, a);
-        frmChatApp.getContentPane().add(chatPanel, b);
+        frmChatApp.getContentPane().add(chatListPanel, "grow, shrink 25");
+        frmChatApp.getContentPane().add(chatPanel, "grow, shrink 75");
         frmChatApp.pack();
         frmChatApp.setVisible(true);
     }
@@ -63,10 +64,11 @@ public class gui implements ChatListPanelListener {
         frmChatApp.setTitle("ChatApp");
         frmChatApp.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        frmChatApp.getContentPane().setLayout(new GridBagLayout());
+//        frmChatApp.getContentPane().setLayout(new GridBagLayout());
+        frmChatApp.getContentPane().setLayout(new MigLayout("fill, insets 0", "[grow 25][grow 75]"));
 
         frmChatApp.setMinimumSize(new Dimension(Constant.MIN_WIDTH, Constant.MIN_HEIGHT));
-        frmChatApp.setMaximumSize(Toolkit.getDefaultToolkit().getScreenSize());
+//        frmChatApp.setMaximumSize(Toolkit.getDefaultToolkit().getScreenSize());
 
         // make the message box get focus
         frmChatApp.addWindowListener(new WindowAdapter() {
@@ -86,9 +88,12 @@ public class gui implements ChatListPanelListener {
         frmChatApp.dispatchEvent(new WindowEvent(frmChatApp, WindowEvent.WINDOW_CLOSING));
     }
 
+    /**
+     * Open a dialog to join a chat
+     */
     @Override
     public void joinChatRoom() {
-        new JoinChatDialog(frmChatApp, new JoinChatDialogListener() {
+        new JoinChatDialog(frmChatApp, new Point(frmChatApp.getX(), frmChatApp.getY()), new JoinChatDialogListener() {
             @Override
             public boolean joinChat(String ip, String port) {
                 if (!ip.isEmpty() && !port.isEmpty()) {
@@ -100,9 +105,12 @@ public class gui implements ChatListPanelListener {
         });
     }
 
+    /**
+     * Open dialog to create a chat
+     */
     @Override
     public void createChatRoom() {
-        new NewChatDialog(frmChatApp, new NewChatDialogListener() {
+        new NewChatDialog(frmChatApp, new Point(frmChatApp.getX(), frmChatApp.getY()), new NewChatDialogListener() {
             @Override
             public boolean createChat(String title, String port) {
                 if (!title.isEmpty() && !port.isEmpty()) {
@@ -114,7 +122,11 @@ public class gui implements ChatListPanelListener {
         });
     }
 
-    public void addChatToList(String title) {
-        chatListPanel.addChat(title);
+    public void addChatToGui(Integer id, String title) {
+        chatListPanel.addChat(id, title);
+    }
+
+    public void removeChatFromGui(Integer id) {
+        chatListPanel.removeChat(id);
     }
 }

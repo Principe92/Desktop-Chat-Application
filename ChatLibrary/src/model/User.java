@@ -10,8 +10,8 @@ public class User {
     public User(int id) {
         this.id = id;
 		this.pwd = "";
-		this.name = "";
-		this.nick = "";
+        this.name = String.format("User %d", id);
+        this.nick = "";
 		this.email = "";
 	}
 

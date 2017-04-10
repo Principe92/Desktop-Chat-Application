@@ -14,12 +14,14 @@ import java.io.File;
 
 public class TextMessage implements IMessage {
     private String data;
+    private String sender;
 
     public TextMessage() {
-
+        this.sender = Constant.EMPTY;
     }
 
     public TextMessage(String text) {
+        this.sender = Constant.EMPTY;
         setData(text);
     }
 
@@ -51,10 +53,21 @@ public class TextMessage implements IMessage {
 
     @Override
     public Component getMessagePanel(Color color) {
-        JLabel label = new JLabel(this.data);
+        String msg = !this.sender.isEmpty() ? String.format("<html>%s<br>%s</html>", this.sender, this.data) : this.data;
+        JLabel label = new JLabel(msg);
         label.setBorder(new CompoundBorder(new RoundedBorder(10), new EmptyBorder(Constant.MSG_PADDING, Constant.MSG_PADDING, Constant.MSG_PADDING, Constant.MSG_PADDING)));
         label.setBackground(color);
         label.setOpaque(true);
         return label;
+    }
+
+    @Override
+    public String getSender() {
+        return sender;
+    }
+
+    @Override
+    public void setSender(String name) {
+        this.sender = name;
     }
 }

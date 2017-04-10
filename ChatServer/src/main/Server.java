@@ -21,10 +21,11 @@ public class Server implements IClientListener, IChat {
     private final ILogger logger;
     private final IChatListener listener;
     private final ISocketProtocol protocol;
-    int counter;
+    private int counter;
     private Map<Integer, IClient> clients;
     private ServerSocket socket;
     private Integer id;
+    private User who;
 
     public Server(Integer id, ILogger logger, IChatListener listener, ISocketProtocol protocol) {
         this.id = id;
@@ -32,6 +33,7 @@ public class Server implements IClientListener, IChat {
         this.protocol = protocol;
         this.clients = new HashMap<>();
         this.logger = logger;
+        this.who = new User(counter++);
     }
 
     void run(int port) throws IOException {
@@ -83,11 +85,14 @@ public class Server implements IClientListener, IChat {
 
     @Override
     public void close() throws IOException {
+        sendToUsers(new TextMessage("Closing chat room"));
+
         if (socket != null) socket.close();
     }
 
     @Override
     public void sendToUsers(IMessage msg) throws IOException {
+        msg.setSender(who.getName());
 
         for (Entry<Integer, IClient> entry : clients.entrySet()) {
             entry.getValue().sendToSocket(msg);

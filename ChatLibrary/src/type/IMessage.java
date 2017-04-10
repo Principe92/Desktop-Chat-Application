@@ -15,5 +15,9 @@ public interface IMessage {
     MessageType getType();
 
     Component getMessagePanel(Color color);
+
+    String getSender();
+
+    void setSender(String name);
 }
  

@@ -31,7 +31,6 @@ class Client extends BaseThread implements IClient {
         this.logger = logger;
         this.who = new User(id);
         this.protocol = protocol;
-        this.who.setName(String.format("User: %d", id));
     }
 
     @Override
@@ -56,6 +55,7 @@ class Client extends BaseThread implements IClient {
 
                     if (msg != null) {
                         msg.setData(data);
+                        msg.setSender(who.getName());
                         listener.msgFromUser(msg, who.getId());
                         msg = null;
                     }

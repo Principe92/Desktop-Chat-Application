@@ -12,14 +12,12 @@ import java.net.Socket;
 
 public class WriteSocketThread extends BaseThread implements IWriteSocket {
     private final ILogger logger;
-    private final ISocketProtocol protocol;
     private PrintWriter out;
     private BufferedReader in;
 
     public WriteSocketThread(Socket socket, ILogger logger, ISocketProtocol protocol) {
         super(socket, protocol);
         this.logger = logger;
-        this.protocol = protocol;
         setUp();
     }
 
@@ -31,7 +29,7 @@ public class WriteSocketThread extends BaseThread implements IWriteSocket {
 
         } catch (IOException e) {
             logger.logError(e);
-            logger.logInfo("The server has shutdown unexpectedly");
+            logger.logInfo("Unable to get right to write to socket");
             try {
                 exitChat();
             } catch (IOException f) {
@@ -44,7 +42,6 @@ public class WriteSocketThread extends BaseThread implements IWriteSocket {
         if (in != null) in.close();
         if (out != null) out.flush();
         if (out != null) out.close();
-        if (socket != null) socket.close();
     }
 
     @Override
