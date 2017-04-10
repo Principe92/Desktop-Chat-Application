@@ -1,4 +1,4 @@
-package interfaces;
+package listener;
 
 public interface IWriteSocketListener {
 	

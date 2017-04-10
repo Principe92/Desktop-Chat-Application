@@ -8,4 +8,5 @@ public interface ISocketProtocol {
 
 	MessageType getMessageType(byte[] data);
 
+    String getSender(byte[] data);
 }
