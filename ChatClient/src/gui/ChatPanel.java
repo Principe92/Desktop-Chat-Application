@@ -97,7 +97,7 @@ public class ChatPanel extends JPanel {
 
     private JTextArea addMessageField() {
         msgBox = new JTextArea();
-        msgBox.setLineWrap(false);
+        msgBox.setLineWrap(true);
         msgBox.setWrapStyleWord(true);
         msgBox.addKeyListener(new KeyListener() {
 

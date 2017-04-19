@@ -105,7 +105,7 @@ public class Server implements IClientListener, IChat {
     }
 
     @Override
-    public boolean start(String[] args) throws IOException {
+    public boolean start(final String[] args) throws IOException {
 
         Thread td = new Thread(new Runnable() {
             @Override

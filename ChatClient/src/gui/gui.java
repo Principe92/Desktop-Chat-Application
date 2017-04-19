@@ -53,8 +53,8 @@ public class gui implements ChatListPanelListener {
         b.gridy = 0;
 
 
-        frmChatApp.getContentPane().add(chatListPanel, "grow, shrink 25");
-        frmChatApp.getContentPane().add(chatPanel, "grow, shrink 75");
+        frmChatApp.getContentPane().add(chatListPanel, "grow");
+        frmChatApp.getContentPane().add(chatPanel, "grow");
         frmChatApp.pack();
         frmChatApp.setVisible(true);
     }
