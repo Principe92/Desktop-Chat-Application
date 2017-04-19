@@ -37,7 +37,7 @@ public class ChatListPanel extends JPanel {
     }
 
     private JMenuBar addMenuBar() {
-        JMenuBar bar = new MenuBar(Constant.MENU_BG);
+        JMenuBar bar = new ChatMenuBar(Constant.MENU_BG);
 
         // join chat room
         JButton item = new ImageButton("Join a chat", "ic_group_add_black_24dp.png");

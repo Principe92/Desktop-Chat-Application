@@ -40,7 +40,7 @@ public class ChatPanel extends JPanel {
     }
 
     private JMenuBar addMenuBar() {
-        JMenuBar bar = new MenuBar(Constant.MENU_BG);
+        JMenuBar bar = new ChatMenuBar(Constant.MENU_BG);
 
         // exit
         JButton item = new ImageButton("Exit", "ic_power_settings_new_black_24dp.png");

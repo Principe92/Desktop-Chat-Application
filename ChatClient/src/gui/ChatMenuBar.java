@@ -8,9 +8,9 @@ import java.awt.*;
 /**
  * Created by okori on 07-Apr-17.
  */
-public class MenuBar extends JMenuBar {
+public class ChatMenuBar extends JMenuBar {
 
-    public MenuBar(Color bg) {
+    public ChatMenuBar(Color bg) {
         add(Box.createHorizontalGlue());
         setBorder(BorderFactory.createCompoundBorder(getBorder(), new EmptyBorder(4, 4, 4, 4)));
         setUI(new BasicMenuBarUI() {

@@ -31,5 +31,5 @@ public class Constant {
     public static final int MAG_32 = 32;
     public static final Color CHAT_LIST_BG = new Color(255, 162, 112);
     public static final int MAG_24 = 24;
-    public static final int HANDSHAKE_MSG_SIZE = 4;
+    public static final int HANDSHAKE_MSG_SIZE = 3;
 }

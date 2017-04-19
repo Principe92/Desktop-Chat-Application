@@ -104,6 +104,8 @@ public class App implements IGuiListener, IChatListener {
         if (started) {
             Point pos = gui.addChatToGui(chat.getId(), String.format("%s | %s", ip, port));
             chat.setGuiPosition(pos);
+            db.createChat(chat);
+            chatManager.addChat(chat);
             chatManager.setActiveChat(chat);
         }
         return started;
@@ -118,14 +120,7 @@ public class App implements IGuiListener, IChatListener {
      */
     private boolean startChat(String[] args, IChat chat) {
         try {
-            boolean started = chat.start(args);
-
-            if (started) {
-                chatManager.addChat(chat);
-                db.createChat(chat);
-            }
-
-            return started;
+            return chat.start(args);
         } catch (IOException e) {
             logger.logError(e);
         }
@@ -149,6 +144,8 @@ public class App implements IGuiListener, IChatListener {
         if (added) {
             Point pos = gui.addChatToGui(chat.getId(), String.format("%s | %s", title, port));
             chat.setGuiPosition(pos);
+            db.createChat(chat);
+            chatManager.addChat(chat);
             chatManager.setActiveChat(chat);
         }
 

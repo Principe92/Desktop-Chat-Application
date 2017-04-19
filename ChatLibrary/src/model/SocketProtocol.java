@@ -29,7 +29,7 @@ public class SocketProtocol implements ISocketProtocol {
         String val = new String(data, Util.getEncoding());
         String[] format = val.split(Constant.DELIMITER);
 
-        if (format.length == Constant.HANDSHAKE_MSG_SIZE) {
+        if (format.length >= Constant.HANDSHAKE_MSG_SIZE) {
             ProtocolStateType type = ProtocolStateType.UNKNOWN;
 
             try {
@@ -67,7 +67,7 @@ public class SocketProtocol implements ISocketProtocol {
         String msg = new String(data, Util.getEncoding());
         String[] format = msg.split(Constant.DELIMITER);
 
-        if (format.length < Constant.HANDSHAKE_MSG_SIZE) return Constant.EMPTY;
+        if (format.length <= Constant.HANDSHAKE_MSG_SIZE) return Constant.EMPTY;
 
         return format[3];
     }
