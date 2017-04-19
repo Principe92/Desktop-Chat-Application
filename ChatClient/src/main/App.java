@@ -3,30 +3,36 @@ package main;
 import gui.gui;
 import listener.IChatListener;
 import listener.IGuiListener;
-import model.Chat;
+import model.IChatDb;
+import model.IChatManager;
+import model.LoadChatThread;
 import type.IChat;
 import type.ILogger;
 import type.IMessage;
 import type.ISocketProtocol;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class App implements IGuiListener, IChatListener {
     private final ILogger logger;
     private final ISocketProtocol protocol;
+    private final IChatDb db;
+    private final IChatManager chatManager;
     private gui gui;
-    private Map<Integer, IChat> chatMap;
-    private IChat activeChat;
-    private int chatIndex;
+    private LoadChatThread loadChatThread;
+    //private Map<Integer, IChat> chatMap;
+    // private IChat activeChat;
+    // private int chatIndex;
 
 
-    App(ILogger logger, ISocketProtocol protocol) {
+    App(ILogger logger, ISocketProtocol protocol, IChatDb db, IChatManager chatManager) {
         this.logger = logger;
         this.protocol = protocol;
-        chatMap = new HashMap<>();
+        this.db = db;
+        this.chatManager = chatManager;
+        //  chatMap = new HashMap<>();
 
         loadUI();
     }
@@ -59,6 +65,7 @@ public class App implements IGuiListener, IChatListener {
     public void printToScreen(IMessage msg) {
         if (msg != null) {
             gui.displayMessage(msg);
+            db.saveMessage(chatManager.getActiveChat(), msg);
         }
     }
 
@@ -69,9 +76,12 @@ public class App implements IGuiListener, IChatListener {
      */
     @Override
     public void sendMessage(IMessage message) {
+        IChat activeChat = chatManager.getActiveChat();
+
         if (activeChat != null) {
             try {
                 activeChat.sendToUsers(message);
+                db.saveMessage(activeChat, message);
             } catch (IOException e) {
                 logger.logError(e);
             }
@@ -88,12 +98,13 @@ public class App implements IGuiListener, IChatListener {
     @Override
     public boolean joinChat(String ip, String port) {
         String[] args = {ip, port};
-        IChat chat = new Chat(chatIndex, logger, protocol, this);
+        IChat chat = chatManager.getNewClientChat(logger, protocol, this);
         boolean started = startChat(args, chat);
 
         if (started) {
-            activeChat = chat;
-            gui.addChatToGui(chat.getId(), String.format("%s | %s", ip, port));
+            Point pos = gui.addChatToGui(chat.getId(), String.format("%s | %s", ip, port));
+            chat.setGuiPosition(pos);
+            chatManager.setActiveChat(chat);
         }
         return started;
     }
@@ -110,8 +121,8 @@ public class App implements IGuiListener, IChatListener {
             boolean started = chat.start(args);
 
             if (started) {
-                chatMap.put(chat.getId(), chat);
-                chatIndex++;
+                chatManager.addChat(chat);
+                db.createChat(chat);
             }
 
             return started;
@@ -131,29 +142,56 @@ public class App implements IGuiListener, IChatListener {
      */
     @Override
     public boolean createChat(String title, String port) {
-        String[] args = {port, String.valueOf(chatIndex)};
-        IChat chat = new Server(chatIndex, logger, this, protocol);
+        IChat chat = chatManager.getNewServerChat(logger, this, protocol);
+        String[] args = {port, String.valueOf(chat.getId())};
         boolean added = startChat(args, chat);
 
         if (added) {
-            activeChat = chat;
-            gui.addChatToGui(chat.getId(), String.format("%s | %s", title, port));
+            Point pos = gui.addChatToGui(chat.getId(), String.format("%s | %s", title, port));
+            chat.setGuiPosition(pos);
+            chatManager.setActiveChat(chat);
         }
 
         return added;
     }
 
+    /**
+     * Quit from chat
+     */
     @Override
     public void quitChat() {
+        IChat activeChat = chatManager.getActiveChat();
+
         if (activeChat != null) {
             try {
                 activeChat.close();
-                chatMap.remove(activeChat.getId());
                 gui.removeChatFromGui(activeChat.getId());
-                activeChat = null;
+                db.deleteChat(activeChat);
+                chatManager.removeChat(activeChat);
+                chatManager.setActiveChat((IChat) null);
             } catch (IOException e) {
                 logger.logError(e);
             }
+        }
+    }
+
+    /**
+     * Load new chat data to the gui
+     *
+     * @param point - Location of chat in window
+     */
+    @Override
+    public void loadChat(Point point) {
+
+        if (!chatManager.isCurrentChat(point)) {
+            chatManager.setActiveChat(point);
+
+            if (loadChatThread != null && loadChatThread.isAlive()) {
+                loadChatThread.cancel();
+            }
+
+            loadChatThread = new LoadChatThread(chatManager, db, gui, point);
+            loadChatThread.run();
         }
     }
 }

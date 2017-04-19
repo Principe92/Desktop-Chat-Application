@@ -10,8 +10,10 @@ import type.ILogger;
 import type.IMessage;
 import type.ISocketProtocol;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -21,11 +23,13 @@ public class Server implements IClientListener, IChat {
     private final ILogger logger;
     private final IChatListener listener;
     private final ISocketProtocol protocol;
+    private final Date date;
     private int counter;
     private Map<Integer, IClient> clients;
     private ServerSocket socket;
     private Integer id;
     private User who;
+    private Point position;
 
     public Server(Integer id, ILogger logger, IChatListener listener, ISocketProtocol protocol) {
         this.id = id;
@@ -34,6 +38,7 @@ public class Server implements IClientListener, IChat {
         this.clients = new HashMap<>();
         this.logger = logger;
         this.who = new User(counter++);
+        this.date = new Date();
     }
 
     void run(int port) throws IOException {
@@ -120,5 +125,15 @@ public class Server implements IClientListener, IChat {
 
         td.start();
         return td.isAlive();
+    }
+
+    @Override
+    public void setGuiPosition(Point point) {
+        this.position = point;
+    }
+
+    @Override
+    public Point getPosition() {
+        return position;
     }
 }

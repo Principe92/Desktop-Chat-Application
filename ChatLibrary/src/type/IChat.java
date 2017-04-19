@@ -1,5 +1,6 @@
 package type;
 
+import java.awt.*;
 import java.io.IOException;
 
 /**
@@ -13,4 +14,8 @@ public interface IChat {
     Integer getId();
 
     boolean start(String[] args) throws IOException;
+
+    void setGuiPosition(Point point);
+
+    Point getPosition();
 }

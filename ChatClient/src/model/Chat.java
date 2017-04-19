@@ -11,8 +11,10 @@ import type.ILogger;
 import type.IMessage;
 import type.ISocketProtocol;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Date;
 
 /**
  * Created by okori on 06-Apr-17.
@@ -21,16 +23,20 @@ public class Chat implements IChat, IReadSocketListener {
     private final ILogger logger;
     private final ISocketProtocol protocol;
     private final IChatListener listener;
+    private final Date date;
     private Socket socket;
     private IReadSocket readThread;
     private IWriteSocket writeThread;
     private Integer id;
+    private Point position;
 
     public Chat(int id, ILogger logger, ISocketProtocol protocol, IChatListener listener) {
         this.logger = logger;
         this.id = id;
         this.protocol = protocol;
         this.listener = listener;
+        this.date = new Date();
+
     }
 
     @Override
@@ -44,6 +50,16 @@ public class Chat implements IChat, IReadSocketListener {
         readThread.begin();
 
         return true;
+    }
+
+    @Override
+    public void setGuiPosition(Point point) {
+        this.position = point;
+    }
+
+    @Override
+    public Point getPosition() {
+        return position;
     }
 
     @Override

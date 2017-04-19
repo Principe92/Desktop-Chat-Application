@@ -159,4 +159,8 @@ public class ChatPanel extends JPanel {
     public void setFocusToChatWindow() {
         msgBox.requestFocus();
     }
+
+    public void clearMessageWindow() {
+        msgWindow.removeAll();
+    }
 }

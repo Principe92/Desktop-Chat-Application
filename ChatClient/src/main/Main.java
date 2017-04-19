@@ -1,6 +1,8 @@
 package main;
 
 import factory.AbstractFactory;
+import model.ChatDb;
+import model.ChatManager;
 import type.ILogger;
 import type.ISocketProtocol;
 
@@ -12,7 +14,7 @@ public class Main {
         ILogger logger = AbstractFactory.getLogger();
         ISocketProtocol protocol = AbstractFactory.getProtocol();
 
-        new App(logger, protocol);
+        new App(logger, protocol, ChatDb.Instance(), ChatManager.instance());
     }
 
 }

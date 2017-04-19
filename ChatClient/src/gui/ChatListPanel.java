@@ -6,8 +6,11 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,15 +65,43 @@ public class ChatListPanel extends JPanel {
         return bar;
     }
 
-    public void addChat(Integer id, String title) {
+    public Point addChat(Integer id, String title) {
         chatList.put(id, title);
-        JLabel label = new JLabel(title);
+        JButton label = new JButton(title);
         label.setBackground(Constant.CHAT_BG);
         label.setOpaque(true);
+        label.setCursor(new Cursor(Cursor.HAND_CURSOR));
         label.setBorder(BorderFactory.createCompoundBorder(label.getBorder(), new EmptyBorder(Constant.MAG_24, Constant.MAG_16, Constant.MAG_24, Constant.MAG_16)));
-        chatListPanel.add(label, "growx");
+        label.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                listener.loadChat(new Point(e.getComponent().getX(), e.getComponent().getY()));
+            }
 
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+        chatListPanel.add(label, "growx");
         chatListPanel.revalidate();
+
+        return new Point(label.getX(), label.getY());
     }
 
     public void removeChat(Integer id) {

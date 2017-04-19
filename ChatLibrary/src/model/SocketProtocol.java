@@ -71,5 +71,4 @@ public class SocketProtocol implements ISocketProtocol {
 
         return format[3];
     }
-
 }

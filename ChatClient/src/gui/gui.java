@@ -63,12 +63,8 @@ public class gui implements ChatListPanelListener {
         JFrame frmChatApp = new JFrame();
         frmChatApp.setTitle("ChatApp");
         frmChatApp.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-//        frmChatApp.getContentPane().setLayout(new GridBagLayout());
         frmChatApp.getContentPane().setLayout(new MigLayout("fill, insets 0", "[grow 25][grow 75]"));
-
         frmChatApp.setMinimumSize(new Dimension(Constant.MIN_WIDTH, Constant.MIN_HEIGHT));
-//        frmChatApp.setMaximumSize(Toolkit.getDefaultToolkit().getScreenSize());
 
         // make the message box get focus
         frmChatApp.addWindowListener(new WindowAdapter() {
@@ -122,11 +118,20 @@ public class gui implements ChatListPanelListener {
         });
     }
 
-    public void addChatToGui(Integer id, String title) {
-        chatListPanel.addChat(id, title);
+    @Override
+    public void loadChat(Point point) {
+        listener.loadChat(point);
+    }
+
+    public Point addChatToGui(Integer id, String title) {
+        return chatListPanel.addChat(id, title);
     }
 
     public void removeChatFromGui(Integer id) {
         chatListPanel.removeChat(id);
+    }
+
+    public void clearMessageWindow() {
+        chatPanel.clearMessageWindow();
     }
 }
