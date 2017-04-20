@@ -4,7 +4,6 @@ import listener.IChatListener;
 import listener.IClientListener;
 import model.IClient;
 import model.TextMessage;
-import model.User;
 import type.IChat;
 import type.ILogger;
 import type.IMessage;
@@ -27,17 +26,15 @@ public class Server implements IClientListener, IChat {
     private int counter;
     private Map<Integer, IClient> clients;
     private ServerSocket socket;
-    private Integer id;
-    private User who;
+    private Integer chatId;
     private Point position;
 
     public Server(Integer id, ILogger logger, IChatListener listener, ISocketProtocol protocol) {
-        this.id = id;
+        this.chatId = id;
         this.listener = listener;
         this.protocol = protocol;
         this.clients = new HashMap<>();
         this.logger = logger;
-        this.who = new User(counter++);
         this.date = new Date();
     }
 
@@ -46,26 +43,30 @@ public class Server implements IClientListener, IChat {
 
         while (!socket.isClosed()) {
             IClient client = new Client(socket.accept(), counter++, this, logger, protocol);
-            client.startThread();
-            clients.put(client.getClientId(), client);
+            client.setUp();
+            client.start();
+            clients.put(client.getChatId(), client);
 
-            User who = client.getClient();
-            String probe = String.format("%s has connected", who.getName());
-            String connected = "Connected to chat";
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-
-                    try {
-                        client.sendToSocket(new TextMessage(connected));
-                        msgFromUser(new TextMessage(probe), who.getId());
-                    } catch (IOException e) {
-                        logger.logError(e);
-                    }
-                }
-            }).start();
+            advertise(client);
         }
+    }
+
+    private void advertise(IClient client) {
+        String probe = String.format("%s has connected", client.getUserName());
+        String connected = "Connected to chat";
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    client.sendToSocket(new TextMessage(connected));
+                    msgFromUser(new TextMessage(probe), client.getChatId());
+                } catch (IOException e) {
+                    logger.logError(e);
+                }
+            }
+        }).start();
     }
 
     @Override
@@ -97,7 +98,6 @@ public class Server implements IClientListener, IChat {
 
     @Override
     public void sendToUsers(IMessage msg) throws IOException {
-        msg.setSender(who.getName());
 
         for (Entry<Integer, IClient> entry : clients.entrySet()) {
             entry.getValue().sendToSocket(msg);
@@ -105,8 +105,8 @@ public class Server implements IClientListener, IChat {
     }
 
     @Override
-    public Integer getId() {
-        return id;
+    public Integer getChatId() {
+        return chatId;
     }
 
     @Override

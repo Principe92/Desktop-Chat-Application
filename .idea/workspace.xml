@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="baef064f-b917-474e-bf90-b95835a114f0" name="Default" comment="">
+    <list default="true" id="baef064f-b917-474e-bf90-b95835a114f0" name="Default" comment="fixed chat errors">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatClient/.classpath" afterPath="$PROJECT_DIR$/ChatClient/.classpath" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatClient/src/gui/ChatListPanel.java" afterPath="$PROJECT_DIR$/ChatClient/src/gui/ChatListPanel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatClient/src/gui/ChatPanel.java" afterPath="$PROJECT_DIR$/ChatClient/src/gui/ChatPanel.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatClient/src/main/App.java" afterPath="$PROJECT_DIR$/ChatClient/src/main/App.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatClient/src/main/Main.java" afterPath="$PROJECT_DIR$/ChatClient/src/main/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatLibrary/src/main/Constant.java" afterPath="$PROJECT_DIR$/ChatLibrary/src/main/Constant.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatLibrary/src/model/SocketProtocol.java" afterPath="$PROJECT_DIR$/ChatLibrary/src/model/SocketProtocol.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ChatClient/.classpath" afterPath="$PROJECT_DIR$/out/production/ChatClient/.classpath" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/ChatClient/src/gui/MenuBar.java" afterPath="$PROJECT_DIR$/ChatClient/src/gui/ChatMenuBar.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatClient/src/model/Chat.java" afterPath="$PROJECT_DIR$/ChatClient/src/model/Chat.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatClient/src/model/ChatManager.java" afterPath="$PROJECT_DIR$/ChatClient/src/model/ChatManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatClient/src/socket/IWriteSocket.java" afterPath="$PROJECT_DIR$/ChatClient/src/socket/IWriteSocket.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatClient/src/socket/ReadSocketThread.java" afterPath="$PROJECT_DIR$/ChatClient/src/socket/ReadSocketThread.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatClient/src/socket/WriteSocketThread.java" afterPath="$PROJECT_DIR$/ChatClient/src/socket/WriteSocketThread.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatLibrary/src/type/IChat.java" afterPath="$PROJECT_DIR$/ChatLibrary/src/type/IChat.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatServer/src/main/Client.java" afterPath="$PROJECT_DIR$/ChatServer/src/main/Client.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatServer/src/main/Server.java" afterPath="$PROJECT_DIR$/ChatServer/src/main/Server.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatServer/src/model/IClient.java" afterPath="$PROJECT_DIR$/ChatServer/src/model/IClient.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,11 +25,21 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="Server.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Server.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ChatServer/src/main/Server.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1536">
-              <caret line="122" column="13" lean-forward="true" selection-start-line="122" selection-start-column="13" selection-end-line="122" selection-end-column="13" />
+            <state relative-caret-position="504">
+              <caret line="69" column="5" lean-forward="true" selection-start-line="69" selection-start-column="5" selection-end-line="69" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IClient.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ChatServer/src/model/IClient.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="126">
+              <caret line="8" column="59" lean-forward="false" selection-start-line="8" selection-start-column="59" selection-end-line="8" selection-end-column="59" />
               <folding />
             </state>
           </provider>
@@ -37,18 +48,21 @@
       <file leaf-file-name="Client.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ChatServer/src/main/Client.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="246">
-              <caret line="49" column="34" lean-forward="false" selection-start-line="49" selection-start-column="34" selection-end-line="49" selection-end-column="34" />
-              <folding />
+            <state relative-caret-position="361">
+              <caret line="32" column="0" lean-forward="true" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+              <folding>
+                <element signature="e#2172#2173#0" expanded="true" />
+                <element signature="e#2198#2199#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ISocketProtocol.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ChatLibrary/src/type/ISocketProtocol.java">
+      <file leaf-file-name="Chat.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ChatClient/src/model/Chat.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="6" column="17" lean-forward="false" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+            <state relative-caret-position="693">
+              <caret line="47" column="31" lean-forward="false" selection-start-line="47" selection-start-column="31" selection-end-line="47" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -57,48 +71,18 @@
       <file leaf-file-name="ReadSocketThread.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ChatClient/src/socket/ReadSocketThread.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="218">
-              <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+            <state relative-caret-position="1281">
+              <caret line="71" column="0" lean-forward="true" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MessageFactory.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ChatLibrary/src/factory/MessageFactory.java">
+      <file leaf-file-name="IWriteSocket.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ChatClient/src/socket/IWriteSocket.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="172">
-              <caret line="35" column="27" lean-forward="false" selection-start-line="35" selection-start-column="27" selection-end-line="35" selection-end-column="27" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SocketProtocol.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ChatLibrary/src/model/SocketProtocol.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="445">
-              <caret line="70" column="0" lean-forward="true" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Constant.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ChatLibrary/src/main/Constant.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="598">
-              <caret line="29" column="62" lean-forward="false" selection-start-line="29" selection-start-column="62" selection-end-line="29" selection-end-column="62" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Chat.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ChatClient/src/model/Chat.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="445">
-              <caret line="87" column="0" lean-forward="false" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+            <state relative-caret-position="126">
+              <caret line="8" column="4" lean-forward="true" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -107,18 +91,45 @@
       <file leaf-file-name="WriteSocketThread.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ChatClient/src/socket/WriteSocketThread.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="84">
-              <caret line="12" column="44" lean-forward="true" selection-start-line="12" selection-start-column="44" selection-end-line="12" selection-end-column="44" />
+            <state relative-caret-position="357">
+              <caret line="22" column="78" lean-forward="true" selection-start-line="22" selection-start-column="78" selection-end-line="22" selection-end-column="78" />
+              <folding>
+                <element signature="e#290#291#0" expanded="true" />
+                <element signature="e#329#330#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="App.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ChatClient/src/main/App.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="151">
+              <caret line="99" column="35" lean-forward="false" selection-start-line="99" selection-start-column="35" selection-end-line="99" selection-end-column="35" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BaseThread.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ChatManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ChatClient/src/model/ChatManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="735">
+              <caret line="43" column="26" lean-forward="true" selection-start-line="43" selection-start-column="26" selection-end-line="43" selection-end-column="26" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#908#909#0" expanded="true" />
+                <element signature="e#941#942#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BaseThread.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ChatLibrary/src/model/BaseThread.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="344">
-              <caret line="34" column="0" lean-forward="true" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+            <state relative-caret-position="283">
+              <caret line="22" column="21" lean-forward="false" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -151,7 +162,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/ChatClient/src/gui/BaseDialog.java" />
         <option value="$PROJECT_DIR$/ChatClient/src/main/ReadSocketThread.java" />
         <option value="$PROJECT_DIR$/ChatServer/src/model/IClientThread.java" />
         <option value="$PROJECT_DIR$/ChatClient/src/main/WriteSocketThread.java" />
@@ -162,7 +172,6 @@
         <option value="$PROJECT_DIR$/ChatClient/src/interfaces/IReadSocket.java" />
         <option value="$PROJECT_DIR$/ChatClient/src/interfaces/IWriteThread.java" />
         <option value="$PROJECT_DIR$/ChatClient/src/interfaces/IWriteSocket.java" />
-        <option value="$PROJECT_DIR$/ChatClient/src/socket/IWriteSocket.java" />
         <option value="$PROJECT_DIR$/ChatServer/src/main/ServerMain.java" />
         <option value="$PROJECT_DIR$/ChatClient/src/main/Client.java" />
         <option value="$PROJECT_DIR$/ChatServer/src/listener/IClientListener.java" />
@@ -170,12 +179,9 @@
         <option value="$PROJECT_DIR$/ChatLibrary/src/model/Client.java" />
         <option value="$PROJECT_DIR$/ChatLibrary/src/main/Util.java" />
         <option value="$PROJECT_DIR$/ChatLibrary/src/model/SystemLogger.java" />
-        <option value="$PROJECT_DIR$/ChatClient/src/socket/WriteSocketThread.java" />
         <option value="$PROJECT_DIR$/ChatClient/src/gui/MenuBar.java" />
         <option value="$PROJECT_DIR$/ChatLibrary/src/factory/MessageFactory.java" />
         <option value="$PROJECT_DIR$/ChatLibrary/src/type/ISocketProtocol.java" />
-        <option value="$PROJECT_DIR$/ChatClient/src/socket/ReadSocketThread.java" />
-        <option value="$PROJECT_DIR$/ChatServer/src/main/Client.java" />
         <option value="$PROJECT_DIR$/ChatLibrary/src/model/User.java" />
         <option value="$PROJECT_DIR$/ChatLibrary/src/type/IMessage.java" />
         <option value="$PROJECT_DIR$/ChatLibrary/src/model/ImageMessage.java" />
@@ -191,17 +197,22 @@
         <option value="$PROJECT_DIR$/ChatClient/src/gui/gui.java" />
         <option value="$PROJECT_DIR$/ChatDb/src/model/ChatDb.java" />
         <option value="$PROJECT_DIR$/ChatClient/src/model/LoadChatThread.java" />
-        <option value="$PROJECT_DIR$/ChatClient/src/model/IChatManager.java" />
-        <option value="$PROJECT_DIR$/ChatClient/src/model/ChatManager.java" />
-        <option value="$PROJECT_DIR$/ChatClient/src/model/Chat.java" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/ChatClient/src/gui/ChatListPanel.java" />
         <option value="$PROJECT_DIR$/ChatClient/src/gui/ChatPanel.java" />
-        <option value="$PROJECT_DIR$/ChatServer/src/main/Server.java" />
-        <option value="$PROJECT_DIR$/ChatClient/src/main/App.java" />
         <option value="$PROJECT_DIR$/ChatLibrary/src/model/BaseThread.java" />
         <option value="$PROJECT_DIR$/ChatLibrary/src/main/Constant.java" />
         <option value="$PROJECT_DIR$/ChatLibrary/src/model/SocketProtocol.java" />
+        <option value="$PROJECT_DIR$/ChatClient/src/model/ChatManager.java" />
+        <option value="$PROJECT_DIR$/ChatClient/src/model/IChatManager.java" />
+        <option value="$PROJECT_DIR$/ChatClient/src/main/App.java" />
+        <option value="$PROJECT_DIR$/ChatClient/src/model/Chat.java" />
+        <option value="$PROJECT_DIR$/ChatClient/src/socket/IWriteSocket.java" />
+        <option value="$PROJECT_DIR$/ChatClient/src/socket/WriteSocketThread.java" />
+        <option value="$PROJECT_DIR$/ChatServer/src/model/IClient.java" />
+        <option value="$PROJECT_DIR$/ChatClient/src/socket/ReadSocketThread.java" />
+        <option value="$PROJECT_DIR$/ChatServer/src/main/Client.java" />
+        <option value="$PROJECT_DIR$/ChatServer/src/main/Server.java" />
       </list>
     </option>
   </component>
@@ -1043,7 +1054,7 @@
       <workItem from="1491971572350" duration="654000" />
       <workItem from="1491972904127" duration="2440000" />
       <workItem from="1492611700893" duration="10462000" />
-      <workItem from="1492630113929" duration="3419000" />
+      <workItem from="1492630113929" duration="11920000" />
     </task>
     <task id="LOCAL-00001" summary="First try to new window">
       <created>1490990518533</created>
@@ -1087,15 +1098,21 @@
       <option name="project" value="LOCAL" />
       <updated>1492629500880</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="fixed chat errors">
+      <created>1492633743439</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1492633743439</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="131460000" />
+    <option name="totallyTimeSpent" value="139961000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1107,13 +1124,14 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22392975" sideWeight="0.50208336" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.49583334" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21405049" sideWeight="0.49791667" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21405049" sideWeight="0.49791667" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1125,7 +1143,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1174,7 +1191,8 @@
     <MESSAGE value="now showing user name in messages" />
     <MESSAGE value="temporary fix to textfield auto growth" />
     <MESSAGE value="added lib file" />
-    <option name="LAST_COMMIT_MESSAGE" value="added lib file" />
+    <MESSAGE value="fixed chat errors" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed chat errors" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1190,7 +1208,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/ChatServer/src/main/Client.java</url>
-          <line>49</line>
+          <line>41</line>
           <properties />
           <option name="timeStamp" value="21" />
         </line-breakpoint>
@@ -1204,13 +1222,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ChatClient/src/gui/BaseDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="535">
-          <caret line="32" column="24" lean-forward="false" selection-start-line="32" selection-start-column="24" selection-end-line="32" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ChatLibrary/src/listener/IChatListener.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
@@ -1253,13 +1264,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
           <caret line="16" column="32" lean-forward="false" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ChatServer/src/model/IClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="10" column="9" lean-forward="false" selection-start-line="10" selection-start-column="9" selection-end-line="10" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -1345,8 +1349,8 @@
         <state relative-caret-position="126">
           <caret line="9" column="26" lean-forward="false" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
           <folding>
-            <element signature="e#191#192#0" expanded="true" />
-            <element signature="e#223#224#0" expanded="true" />
+            <element signature="e#191#192#0" expanded="false" />
+            <element signature="e#223#224#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1377,6 +1381,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="399">
           <caret line="19" column="19" lean-forward="true" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1387,23 +1394,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ChatClient/src/gui/gui.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="703">
-          <caret line="134" column="28" lean-forward="false" selection-start-line="134" selection-start-column="28" selection-end-line="134" selection-end-column="28" />
-          <folding>
-            <element signature="e#3540#3541#0" expanded="false" />
-            <element signature="e#3580#3581#0" expanded="false" />
-            <element signature="e#3827#3828#0" expanded="false" />
-            <element signature="e#3873#3874#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ChatDb/src/model/ChatDb.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="630">
           <caret line="32" column="5" lean-forward="false" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#618#619#0" expanded="false" />
+            <element signature="e#658#659#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1412,19 +1411,9 @@
         <state relative-caret-position="598">
           <caret line="41" column="13" lean-forward="false" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1021#1022#0" expanded="true" />
-            <element signature="e#1055#1056#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ChatClient/src/model/IChatManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="30" column="36" lean-forward="false" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#1021#1022#0" expanded="false" />
+            <element signature="e#1055#1056#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1501,34 +1490,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ChatClient/src/model/ChatManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="43" column="23" lean-forward="false" selection-start-line="43" selection-start-column="23" selection-end-line="43" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1003#1004#0" expanded="true" />
-            <element signature="e#1053#1054#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ChatClient/src/socket/IWriteSocket.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="6" column="17" lean-forward="false" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ChatClient/src/main/App.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="88" column="0" lean-forward="false" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ChatClient/src/gui/ChatPanel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
@@ -1537,30 +1498,6 @@
             <element signature="imports" expanded="true" />
             <element signature="e#3875#3876#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ChatClient/src/socket/WriteSocketThread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="12" column="44" lean-forward="true" selection-start-line="12" selection-start-column="44" selection-end-line="12" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ChatServer/src/main/Server.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1536">
-          <caret line="122" column="13" lean-forward="true" selection-start-line="122" selection-start-column="13" selection-end-line="122" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ChatServer/src/main/Client.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="49" column="34" lean-forward="false" selection-start-line="49" selection-start-column="34" selection-end-line="49" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1596,26 +1533,121 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ChatClient/src/model/Chat.java">
+    <entry file="file://$PROJECT_DIR$/ChatClient/src/gui/gui.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="445">
-          <caret line="87" column="0" lean-forward="false" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="2058">
+          <caret line="116" column="13" lean-forward="true" selection-start-line="116" selection-start-column="13" selection-end-line="116" selection-end-column="13" />
+          <folding>
+            <element signature="e#3827#3828#0" expanded="false" />
+            <element signature="e#3873#3874#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ChatClient/src/socket/ReadSocketThread.java">
+    <entry file="file://$PROJECT_DIR$/ChatClient/src/model/IChatManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+        <state relative-caret-position="508">
+          <caret line="28" column="4" lean-forward="true" selection-start-line="28" selection-start-column="4" selection-end-line="28" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChatClient/src/main/App.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="99" column="35" lean-forward="false" selection-start-line="99" selection-start-column="35" selection-end-line="99" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ChatLibrary/src/model/BaseThread.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="34" column="0" lean-forward="true" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+        <state relative-caret-position="283">
+          <caret line="22" column="21" lean-forward="false" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChatClient/src/socket/WriteSocketThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="22" column="78" lean-forward="true" selection-start-line="22" selection-start-column="78" selection-end-line="22" selection-end-column="78" />
+          <folding>
+            <element signature="e#290#291#0" expanded="true" />
+            <element signature="e#329#330#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChatClient/src/socket/IWriteSocket.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="8" column="4" lean-forward="true" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChatClient/src/model/ChatManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="735">
+          <caret line="43" column="26" lean-forward="true" selection-start-line="43" selection-start-column="26" selection-end-line="43" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#908#909#0" expanded="true" />
+            <element signature="e#941#942#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_111/src.zip!/java/lang/Thread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="695" column="29" lean-forward="false" selection-start-line="695" selection-start-column="29" selection-end-line="695" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChatServer/src/model/IClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="8" column="59" lean-forward="false" selection-start-line="8" selection-start-column="59" selection-end-line="8" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChatServer/src/main/Client.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="32" column="0" lean-forward="true" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+          <folding>
+            <element signature="e#2172#2173#0" expanded="true" />
+            <element signature="e#2198#2199#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChatClient/src/model/Chat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="693">
+          <caret line="47" column="31" lean-forward="false" selection-start-line="47" selection-start-column="31" selection-end-line="47" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChatClient/src/socket/ReadSocketThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1281">
+          <caret line="71" column="0" lean-forward="true" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChatServer/src/main/Server.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="69" column="5" lean-forward="true" selection-start-line="69" selection-start-column="5" selection-end-line="69" selection-end-column="5" />
           <folding />
         </state>
       </provider>

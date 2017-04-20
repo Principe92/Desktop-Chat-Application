@@ -9,16 +9,13 @@ import type.ILogger;
 import type.IMessage;
 import type.ISocketProtocol;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.Socket;
 
 public class ReadSocketThread extends BaseThread implements IReadSocket {
     private final IReadSocketListener listener;
     private final ISocketProtocol protocol;
     private final ILogger logger;
-    private BufferedReader in;
     private boolean run;
 
     public ReadSocketThread(Socket socket, IReadSocketListener listener, ILogger logger, ISocketProtocol protocol) {
@@ -32,8 +29,6 @@ public class ReadSocketThread extends BaseThread implements IReadSocket {
     @Override
     public void run() {
         try {
-
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             IMessage msg = null;
 
@@ -61,19 +56,15 @@ public class ReadSocketThread extends BaseThread implements IReadSocket {
 
         } catch (IOException e) {
             listener.printToScreen(new TextMessage(Constant.SERVER_ERROR));
-            logger.logInfo("The server has shutdown unexpectedly");
-            logger.logError(e);
         } finally {
             try {
                 exitChat();
-            } catch (IOException e) {
-                logger.logError(e);
+            } catch (IOException ignored) {
             }
         }
     }
 
     private void exitChat() throws IOException {
-        in.close();
         end();
 
         listener.onChatExit();

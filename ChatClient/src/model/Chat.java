@@ -27,12 +27,12 @@ public class Chat implements IChat, IReadSocketListener {
     private Socket socket;
     private IReadSocket readThread;
     private IWriteSocket writeThread;
-    private Integer id;
+    private Integer chatId;
     private Point position;
 
-    public Chat(int id, ILogger logger, ISocketProtocol protocol, IChatListener listener) {
+    public Chat(int chatId, ILogger logger, ISocketProtocol protocol, IChatListener listener) {
         this.logger = logger;
-        this.id = id;
+        this.chatId = chatId;
         this.protocol = protocol;
         this.listener = listener;
         this.date = new Date();
@@ -46,7 +46,8 @@ public class Chat implements IChat, IReadSocketListener {
 
         socket = new Socket(server, port);
         readThread = new ReadSocketThread(socket, this, logger, protocol);
-        writeThread = new WriteSocketThread(socket, logger, protocol);
+        writeThread = new WriteSocketThread(socket, protocol);
+        writeThread.sendUserName(arg[2]);
         readThread.begin();
 
         return true;
@@ -74,8 +75,8 @@ public class Chat implements IChat, IReadSocketListener {
         writeThread.sendToSocket(msg);
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getChatId() {
+        return chatId;
     }
 
     @Override

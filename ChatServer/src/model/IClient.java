@@ -8,10 +8,11 @@ public interface IClient {
 
     void sendToSocket(IMessage message) throws IOException;
 
-    void startThread();
+    void setUp() throws IOException;
 
-    int getClientId();
+    int getChatId();
 
-    User getClient();
+    String getUserName();
 
+    void start();
 }

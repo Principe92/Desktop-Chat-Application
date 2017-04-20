@@ -11,7 +11,7 @@ public interface IChat {
 
     void sendToUsers(IMessage msg) throws IOException;
 
-    Integer getId();
+    Integer getChatId();
 
     boolean start(String[] args) throws IOException;
 

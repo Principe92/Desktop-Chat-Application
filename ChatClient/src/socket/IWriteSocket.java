@@ -8,4 +8,6 @@ public interface IWriteSocket {
     void end() throws IOException;
 	
 	void sendToSocket(IMessage msg) throws IOException;
-} 
+
+    void sendUserName(String userName) throws IOException;
+}

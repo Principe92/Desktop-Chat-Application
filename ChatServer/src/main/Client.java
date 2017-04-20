@@ -6,30 +6,25 @@ import listener.IClientListener;
 import model.BaseThread;
 import model.IClient;
 import model.TextMessage;
-import model.User;
 import type.ILogger;
 import type.IMessage;
 import type.ISocketProtocol;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.Socket;
 
 class Client extends BaseThread implements IClient {
-    private final User who;
     private final IClientListener listener;
     private final ISocketProtocol protocol;
+    private final int chatId;
     private ILogger logger;
-    private PrintWriter out;
-    private BufferedReader in;
+    private String who;
 
     Client(Socket socket, int id, IClientListener listener, ILogger logger, ISocketProtocol protocol) {
         super(socket, protocol);
         this.listener = listener;
         this.logger = logger;
-        this.who = new User(id);
+        this.chatId = id;
         this.protocol = protocol;
     }
 
@@ -37,9 +32,6 @@ class Client extends BaseThread implements IClient {
     public void run() {
 
         try {
-
-            out = new PrintWriter(socket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             IMessage msg = null;
 
@@ -51,19 +43,21 @@ class Client extends BaseThread implements IClient {
 
                     msg = MessageFactory.getMessage(protocol.getMessageType(data));
 
+                    if (msg != null) {
+                        msg.setSender(protocol.getSender(data));
+                    }
+
                 } else {
 
                     if (msg != null) {
                         msg.setData(data);
-                        msg.setSender(who.getName());
-                        listener.msgFromUser(msg, who.getId());
+                        listener.msgFromUser(msg, chatId);
                         msg = null;
                     }
                 }
             }
 
         } catch (IOException ignored) {
-        } finally {
             try {
                 exitChat();
             } catch (IOException e) {
@@ -72,30 +66,29 @@ class Client extends BaseThread implements IClient {
         }
     }
 
+    @Override
+    public void setUp() throws IOException {
+        byte[] data = fetch();
+        who = new String(data, Util.getEncoding());
+    }
+
     private void exitChat() throws IOException {
-        in.close();
-        out.flush();
-        out.close();
         socket.close();
 
-        String msg = String.format("%s has disconnected", who.getName());
-        listener.msgFromUser(new TextMessage(msg), who.getId());
-        listener.removeClient(who.getId());
+        String msg = String.format("%s has disconnected", who);
+        listener.msgFromUser(new TextMessage(msg), chatId);
+        listener.removeClient(chatId);
     }
 
 
     @Override
-    public int getClientId() {
-        return this.who.getId();
+    public int getChatId() {
+        return this.chatId;
     }
 
-    @Override
-    public void startThread() {
-        this.start();
-    }
 
     @Override
-    public User getClient() {
+    public String getUserName() {
         return who;
     }
 

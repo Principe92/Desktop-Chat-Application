@@ -6,6 +6,7 @@ import listener.IGuiListener;
 import model.IChatDb;
 import model.IChatManager;
 import model.LoadChatThread;
+import model.User;
 import type.IChat;
 import type.ILogger;
 import type.IMessage;
@@ -22,9 +23,7 @@ public class App implements IGuiListener, IChatListener {
     private final IChatManager chatManager;
     private gui gui;
     private LoadChatThread loadChatThread;
-    //private Map<Integer, IChat> chatMap;
-    // private IChat activeChat;
-    // private int chatIndex;
+    private User who;
 
 
     App(ILogger logger, ISocketProtocol protocol, IChatDb db, IChatManager chatManager) {
@@ -32,8 +31,8 @@ public class App implements IGuiListener, IChatListener {
         this.protocol = protocol;
         this.db = db;
         this.chatManager = chatManager;
-        //  chatMap = new HashMap<>();
 
+        this.who = new User(Math.toIntExact(System.nanoTime() % 100));
         loadUI();
     }
 
@@ -76,6 +75,7 @@ public class App implements IGuiListener, IChatListener {
      */
     @Override
     public void sendMessage(IMessage message) {
+        message.setSender(who.getName());
         IChat activeChat = chatManager.getActiveChat();
 
         if (activeChat != null) {
@@ -97,35 +97,33 @@ public class App implements IGuiListener, IChatListener {
      */
     @Override
     public boolean joinChat(String ip, String port) {
-        String[] args = {ip, port};
+        String[] args = {ip, port, who.getName()};
         IChat chat = chatManager.getNewClientChat(logger, protocol, this);
-        boolean started = startChat(args, chat);
-
-        if (started) {
-            Point pos = gui.addChatToGui(chat.getId(), String.format("%s | %s", ip, port));
-            chat.setGuiPosition(pos);
-            db.createChat(chat);
-            chatManager.addChat(chat);
-            chatManager.setActiveChat(chat);
+        boolean started = false;
+        try {
+            started = chat.start(args);
+            if (started) {
+                Point pos = gui.addChatToGui(chat.getChatId(), String.format("%s | %s", ip, port));
+                onChatStarted(pos, chat);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
         return started;
     }
 
     /**
      * Start new chat and add to the list of chats
      *
-     * @param args - Parameters
+     * @param pos  - Gui position
      * @param chat - Chat
-     * @return True if chat was started
      */
-    private boolean startChat(String[] args, IChat chat) {
-        try {
-            return chat.start(args);
-        } catch (IOException e) {
-            logger.logError(e);
-        }
-
-        return false;
+    private void onChatStarted(Point pos, IChat chat) {
+        chat.setGuiPosition(pos);
+        db.createChat(chat);
+        chatManager.addChat(chat);
+        chatManager.setActiveChat(chat);
     }
 
     /**
@@ -138,18 +136,20 @@ public class App implements IGuiListener, IChatListener {
     @Override
     public boolean createChat(String title, String port) {
         IChat chat = chatManager.getNewServerChat(logger, this, protocol);
-        String[] args = {port, String.valueOf(chat.getId())};
-        boolean added = startChat(args, chat);
-
-        if (added) {
-            Point pos = gui.addChatToGui(chat.getId(), String.format("%s | %s", title, port));
-            chat.setGuiPosition(pos);
-            db.createChat(chat);
-            chatManager.addChat(chat);
-            chatManager.setActiveChat(chat);
+        String[] args = {port, String.valueOf(chat.getChatId())};
+        boolean started = false;
+        try {
+            started = chat.start(args);
+            if (started) {
+                Point pos = gui.addChatToGui(chat.getChatId(), String.format("%s | %s", title, port));
+                onChatStarted(pos, chat);
+            }
+        } catch (IOException e) {
+            logger.logError(e);
         }
 
-        return added;
+
+        return started;
     }
 
     /**
@@ -162,7 +162,7 @@ public class App implements IGuiListener, IChatListener {
         if (activeChat != null) {
             try {
                 activeChat.close();
-                gui.removeChatFromGui(activeChat.getId());
+                gui.removeChatFromGui(activeChat.getChatId());
                 db.deleteChat(activeChat);
                 chatManager.removeChat(activeChat);
                 chatManager.setActiveChat((IChat) null);

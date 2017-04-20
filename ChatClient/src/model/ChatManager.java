@@ -35,18 +35,18 @@ public class ChatManager implements IChatManager {
     }
 
     @Override
-    public void setActiveChat(Point point) {
-        activeChat = getChat(point);
-    }
-
-    @Override
     public void setActiveChat(IChat chat) {
         activeChat = chat;
     }
 
     @Override
+    public void setActiveChat(Point point) {
+        activeChat = getChat(point);
+    }
+
+    @Override
     public void removeChat(IChat activeChat) {
-        chatMap.remove(activeChat.getId());
+        chatMap.remove(activeChat.getChatId());
     }
 
     @Override
@@ -61,7 +61,7 @@ public class ChatManager implements IChatManager {
 
     @Override
     public void addChat(IChat chat) {
-        chatMap.put(chat.getId(), chat);
+        chatMap.put(chat.getChatId(), chat);
         chatIndex++;
     }
 
