@@ -29,6 +29,9 @@ public class Chat implements IChat, IReadSocketListener {
     private IWriteSocket writeThread;
     private Integer chatId;
     private Point position;
+    private String title;
+    private String user;
+    private int port;
 
     public Chat(int chatId, ILogger logger, ISocketProtocol protocol, IChatListener listener) {
         this.logger = logger;
@@ -42,13 +45,13 @@ public class Chat implements IChat, IReadSocketListener {
     @Override
     public boolean start(String[] arg) throws IOException {
         String server = arg[0];
-        int port = Integer.parseInt(arg[1]);
+        this.port = Integer.parseInt(arg[1]);
 
         socket = new Socket(server, port);
         readThread = new ReadSocketThread(socket, this, logger, protocol);
         writeThread = new WriteSocketThread(socket, protocol);
-        writeThread.sendUserName(arg[2]);
-        readThread.begin();
+        writeThread.sendUserName(listener.getUser().getName());
+        readThread.start();
 
         return true;
     }
@@ -61,6 +64,26 @@ public class Chat implements IChat, IReadSocketListener {
     @Override
     public Point getPosition() {
         return position;
+    }
+
+    @Override
+    public void onChatStarted() {
+        listener.onChatStarted(this);
+    }
+
+    @Override
+    public String getChatTitle() {
+        return title;
+    }
+
+    @Override
+    public void setChatTitle(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public int getPort() {
+        return port;
     }
 
     @Override
@@ -86,7 +109,7 @@ public class Chat implements IChat, IReadSocketListener {
 
     @Override
     public void onChatExit() throws IOException {
-        sendToUsers(new TextMessage("Quit chat room unexpectedly"));
+        sendToUsers(new TextMessage(String.format("%s Quit chat room unexpectedly", listener.getUser().getName())));
         socket.close();
     }
 }

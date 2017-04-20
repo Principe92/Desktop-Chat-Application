@@ -28,6 +28,8 @@ public class Server implements IClientListener, IChat {
     private ServerSocket socket;
     private Integer chatId;
     private Point position;
+    private String title;
+    private int port;
 
     public Server(Integer id, ILogger logger, IChatListener listener, ISocketProtocol protocol) {
         this.chatId = id;
@@ -39,11 +41,13 @@ public class Server implements IClientListener, IChat {
     }
 
     void run(int port) throws IOException {
+        this.port = port;
         socket = new ServerSocket(port);
+        listener.onChatStarted(this);
 
         while (!socket.isClosed()) {
             IClient client = new Client(socket.accept(), counter++, this, logger, protocol);
-            client.setUp();
+            client.setUp(title);
             client.start();
             clients.put(client.getChatId(), client);
 
@@ -116,7 +120,9 @@ public class Server implements IClientListener, IChat {
             @Override
             public void run() {
                 try {
+
                     Server.this.run(Integer.parseInt(args[0]));
+
                 } catch (IOException e) {
                     logger.logError(e);
                 }
@@ -135,5 +141,20 @@ public class Server implements IClientListener, IChat {
     @Override
     public Point getPosition() {
         return position;
+    }
+
+    @Override
+    public String getChatTitle() {
+        return title;
+    }
+
+    @Override
+    public void setChatTitle(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public int getPort() {
+        return port;
     }
 }

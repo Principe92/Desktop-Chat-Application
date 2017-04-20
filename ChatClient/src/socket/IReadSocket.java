@@ -4,6 +4,6 @@ public interface IReadSocket {
 
     void end();
 
-    void begin();
+    void start();
 
 }

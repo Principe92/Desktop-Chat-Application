@@ -36,7 +36,6 @@ public class ChatPanel extends JPanel {
         this.add(addMessageWindow(), "push, grow, wrap");
         this.add(addMessageField(), "growx, pushx, split");
         this.add(addSendButton());
-
     }
 
     private JMenuBar addMenuBar() {

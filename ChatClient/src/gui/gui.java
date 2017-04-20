@@ -5,7 +5,10 @@ import listener.IGuiListener;
 import listener.JoinChatDialogListener;
 import listener.NewChatDialogListener;
 import main.Constant;
+import main.Util;
+import model.IDialog;
 import net.miginfocom.swing.MigLayout;
+import type.IChat;
 import type.ILogger;
 import type.IMessage;
 
@@ -20,6 +23,7 @@ public class gui implements ChatListPanelListener {
     private JFrame frmChatApp;
     private ChatListPanel chatListPanel;
     private ChatPanel chatPanel;
+    private IDialog currentDialog;
 
     public gui(IGuiListener listener, ILogger logger) {
         this.listener = listener;
@@ -53,7 +57,7 @@ public class gui implements ChatListPanelListener {
         b.gridy = 0;
 
 
-        frmChatApp.getContentPane().add(chatListPanel, "grow");
+        frmChatApp.getContentPane().add(chatListPanel, "grow, shrink 0");
         frmChatApp.getContentPane().add(chatPanel, "grow");
         frmChatApp.pack();
         frmChatApp.setVisible(true);
@@ -65,6 +69,7 @@ public class gui implements ChatListPanelListener {
         frmChatApp.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frmChatApp.getContentPane().setLayout(new MigLayout("fill, insets 0", "[grow 25][grow 75]"));
         frmChatApp.setMinimumSize(new Dimension(Constant.MIN_WIDTH, Constant.MIN_HEIGHT));
+        frmChatApp.setIconImage(new ImageIcon(this.getClass().getResource(Util.fillIconPath("join.png"))).getImage());
 
         // make the message box get focus
         frmChatApp.addWindowListener(new WindowAdapter() {
@@ -89,11 +94,14 @@ public class gui implements ChatListPanelListener {
      */
     @Override
     public void joinChatRoom() {
-        new JoinChatDialog(frmChatApp, new Point(frmChatApp.getX(), frmChatApp.getY()), new JoinChatDialogListener() {
+        currentDialog = new JoinChatDialog(frmChatApp, new Point(frmChatApp.getX(), frmChatApp.getY()), new JoinChatDialogListener() {
             @Override
             public boolean joinChat(String ip, String port) {
                 if (!ip.isEmpty() && !port.isEmpty()) {
                     return listener.joinChat(ip, port);
+                } else {
+                    if (ip.isEmpty()) alert("IP is missing");
+                    else if (port.isEmpty()) alert("Port is missing");
                 }
 
                 return false;
@@ -106,11 +114,14 @@ public class gui implements ChatListPanelListener {
      */
     @Override
     public void createChatRoom() {
-        new NewChatDialog(frmChatApp, new Point(frmChatApp.getX(), frmChatApp.getY()), new NewChatDialogListener() {
+        currentDialog = new NewChatDialog(frmChatApp, new Point(frmChatApp.getX(), frmChatApp.getY()), new NewChatDialogListener() {
             @Override
             public boolean createChat(String title, String port) {
                 if (!title.isEmpty() && !port.isEmpty()) {
                     return listener.createChat(title, port);
+                } else {
+                    if (title.isEmpty()) alert("Title is missing");
+                    else if (port.isEmpty()) alert("Port is missing");
                 }
 
                 return false;
@@ -127,11 +138,23 @@ public class gui implements ChatListPanelListener {
         return chatListPanel.addChat(id, title);
     }
 
-    public void removeChatFromGui(Integer id) {
-        chatListPanel.removeChat(id);
+    public void removeChatFromGui(IChat chat) {
+        chatListPanel.removeChat(chat);
     }
 
     public void clearMessageWindow() {
         chatPanel.clearMessageWindow();
+    }
+
+    public void changeChatTitle(String title, Point position) {
+        chatListPanel.changeChatTitle(title, position);
+    }
+
+    public void closeDialog() {
+        currentDialog.close();
+    }
+
+    public void alert(String msg) {
+        JOptionPane.showMessageDialog(frmChatApp, msg);
     }
 }

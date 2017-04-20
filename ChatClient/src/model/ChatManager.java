@@ -35,13 +35,13 @@ public class ChatManager implements IChatManager {
     }
 
     @Override
-    public void setActiveChat(IChat chat) {
-        activeChat = chat;
+    public void setActiveChat(Point point) {
+        activeChat = getChat(point);
     }
 
     @Override
-    public void setActiveChat(Point point) {
-        activeChat = getChat(point);
+    public void setActiveChat(IChat chat) {
+        activeChat = chat;
     }
 
     @Override
@@ -83,5 +83,17 @@ public class ChatManager implements IChatManager {
     public boolean isCurrentChat(Point point) {
         Point activeChatPosition = activeChat.getPosition();
         return activeChatPosition.getX() == point.getX() && activeChatPosition.getY() == activeChatPosition.getY();
+    }
+
+    @Override
+    public boolean chatExists(String port) {
+        for (Map.Entry<Integer, IChat> entry : chatMap.entrySet()) {
+            int pt = entry.getValue().getPort();
+            if (pt == Integer.parseInt(port)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

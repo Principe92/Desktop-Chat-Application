@@ -41,6 +41,11 @@ public class NewChatDialog extends BaseDialog {
         return panel;
     }
 
+    @Override
+    protected void onEnterKeyPressed() {
+        create();
+    }
+
     private JLabel buildPortLabel() {
         return new JLabel("# Port");
     }
@@ -54,14 +59,18 @@ public class NewChatDialog extends BaseDialog {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                boolean created = listener.createChat(title.getText(), port.getText());
-
-                if (created) {
-                    close();
-                }
+                create();
             }
         });
         return button;
+    }
+
+    private void create() {
+        boolean created = listener.createChat(title.getText(), port.getText());
+
+        if (created) {
+            // close();
+        }
     }
 
     private JTextField buildTitleBox() {

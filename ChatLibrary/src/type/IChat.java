@@ -18,4 +18,10 @@ public interface IChat {
     void setGuiPosition(Point point);
 
     Point getPosition();
+
+    String getChatTitle();
+
+    void setChatTitle(String title);
+
+    int getPort();
 }

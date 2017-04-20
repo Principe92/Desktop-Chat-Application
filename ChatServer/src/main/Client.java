@@ -67,9 +67,13 @@ class Client extends BaseThread implements IClient {
     }
 
     @Override
-    public void setUp() throws IOException {
+    public void setUp(String title) throws IOException {
+        // get client's name
         byte[] data = fetch();
         who = new String(data, Util.getEncoding());
+
+        // send the chat title
+        socket.getOutputStream().write(title.getBytes(Util.getEncoding()));
     }
 
     private void exitChat() throws IOException {

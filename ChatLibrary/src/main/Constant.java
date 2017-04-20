@@ -18,7 +18,7 @@ public class Constant {
     public static final int MIN_CHAR_WIDTH = 30;
     public static final int MIN_CHAR_HEIGHT = 100;
     public static final int MAG_2 = 2;
-    public static final int MSG_PADDING = 12;
+    public static final int MSG_PADDING = 8;
     public static final int MAG_16 = 16;
     public static final Color MSG_BG = new Color(244, 244, 244);
     public static final Color USER_BG = new Color(255, 255, 255);

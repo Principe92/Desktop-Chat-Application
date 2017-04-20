@@ -14,9 +14,9 @@ import java.awt.*;
 public interface IChatManager {
     IChat getActiveChat();
 
-    void setActiveChat(Point point);
-
     void setActiveChat(IChat chat);
+
+    void setActiveChat(Point point);
 
     void removeChat(IChat activeChat);
 
@@ -30,4 +30,6 @@ public interface IChatManager {
     IChat getChat(Point point);
 
     boolean isCurrentChat(Point point);
+
+    boolean chatExists(String port);
 }
