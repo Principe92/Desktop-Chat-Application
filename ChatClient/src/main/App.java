@@ -79,7 +79,7 @@ public class App implements IGuiListener, IChatListener {
 
     @Override
     public void onChatStarted(IChat chat) {
-        Point pos = gui.addChatToGui(chat.getChatId(), String.format("%s | %s", chat.getChatTitle(), chat.getPort()));
+        Point pos = gui.addChatToGui(chat.getChatId(), String.format("%s (Port: %s)", chat.getChatTitle(), chat.getPort()));
         chat.setGuiPosition(pos);
         gui.closeDialog();
         db.createChat(chat);

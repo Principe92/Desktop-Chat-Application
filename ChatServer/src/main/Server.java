@@ -30,6 +30,7 @@ public class Server implements IClientListener, IChat {
     private Point position;
     private String title;
     private int port;
+    private boolean triggeredClose;
 
     public Server(Integer id, ILogger logger, IChatListener listener, ISocketProtocol protocol) {
         this.chatId = id;
@@ -67,7 +68,8 @@ public class Server implements IClientListener, IChat {
                     client.sendToSocket(new TextMessage(connected));
                     msgFromUser(new TextMessage(probe), client.getChatId());
                 } catch (IOException e) {
-                    logger.logError(e);
+
+                    if (!triggeredClose) logger.logError(e);
                 }
             }
         }).start();
@@ -96,7 +98,7 @@ public class Server implements IClientListener, IChat {
     @Override
     public void close() throws IOException {
         sendToUsers(new TextMessage("Closing chat room"));
-
+        this.triggeredClose = true;
         if (socket != null) socket.close();
     }
 

@@ -32,4 +32,7 @@ public class Constant {
     public static final Color CHAT_LIST_BG = new Color(255, 162, 112);
     public static final int MAG_24 = 24;
     public static final int HANDSHAKE_MSG_SIZE = 3;
+    public static final int ROUNDED_CORNER_RADIUS = 4;
+    public static final String MSG_FORMAT = "<html><span style=\"font-weight: bold\">%s</span><br>%s</html>";
+
 }

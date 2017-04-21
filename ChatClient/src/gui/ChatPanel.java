@@ -3,7 +3,9 @@ package gui;
 import factory.MessageFactory;
 import listener.IGuiListener;
 import main.Constant;
+import main.Util;
 import model.ImageFilter;
+import model.ImageMessage;
 import net.miginfocom.swing.MigLayout;
 import type.ILogger;
 import type.IMessage;
@@ -12,10 +14,7 @@ import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 
 @SuppressWarnings("serial")
 public class ChatPanel extends JPanel {
@@ -149,10 +148,44 @@ public class ChatPanel extends JPanel {
         JPanel panel = new JPanel(new MigLayout("fill", "[grow]", "[]"));
         panel.add(msg.getMessagePanel(color), alignment);
         panel.setOpaque(false);
+        addListener(msg, panel);
         msgWindow.add(panel, "wrap, spanx, growx");
 
         msgWindow.revalidate();
         ycord++;
+    }
+
+    private void addListener(IMessage msg, Component ct) {
+        if (msg instanceof ImageMessage) {
+            ct.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            ct.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    String path = new String(msg.getData(), Util.getEncoding());
+                    new ImageDialog(path);
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+
+                }
+            });
+        }
     }
 
     public void setFocusToChatWindow() {
