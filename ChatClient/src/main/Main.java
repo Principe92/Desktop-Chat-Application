@@ -14,7 +14,7 @@ public class Main {
         ILogger logger = AbstractFactory.getLogger();
         ISocketProtocol protocol = AbstractFactory.getProtocol();
 
-        new App(logger, protocol, ChatDb.Instance(), ChatManager.instance());
+        new App(logger, protocol, ChatDb.Instance(logger), ChatManager.instance());
     }
 
 }

@@ -11,7 +11,6 @@ import type.ILogger;
 import type.IMessage;
 import type.ISocketProtocol;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Date;
@@ -28,10 +27,11 @@ public class Chat implements IChat, IReadSocketListener {
     private IReadSocket readThread;
     private IWriteSocket writeThread;
     private Integer chatId;
-    private Point position;
+    private int guiId;
     private String title;
     private String user;
     private int port;
+    private String ip;
 
     public Chat(int chatId, ILogger logger, ISocketProtocol protocol, IChatListener listener) {
         this.logger = logger;
@@ -46,6 +46,7 @@ public class Chat implements IChat, IReadSocketListener {
     public boolean start(String[] arg) throws IOException {
         String server = arg[0];
         this.port = Integer.parseInt(arg[1]);
+        this.ip = server;
 
         socket = new Socket(server, port);
         readThread = new ReadSocketThread(socket, this, logger, protocol);
@@ -57,13 +58,13 @@ public class Chat implements IChat, IReadSocketListener {
     }
 
     @Override
-    public void setGuiPosition(Point point) {
-        this.position = point;
+    public int getGuiId() {
+        return guiId;
     }
 
     @Override
-    public Point getPosition() {
-        return position;
+    public void setGuiId(int guiId) {
+        this.guiId = guiId;
     }
 
     @Override
@@ -87,6 +88,11 @@ public class Chat implements IChat, IReadSocketListener {
     }
 
     @Override
+    public Date getCreationDate() {
+        return date;
+    }
+
+    @Override
     public void close() throws IOException {
         writeThread.end();
         readThread.end();
@@ -104,12 +110,17 @@ public class Chat implements IChat, IReadSocketListener {
 
     @Override
     public void printToScreen(IMessage msg) {
-        listener.printToScreen(msg);
+        listener.printToScreen(msg, port);
     }
 
     @Override
     public void onChatExit() throws IOException {
         sendToUsers(new TextMessage(String.format("%s Quit chat room unexpectedly", listener.getUser().getName())));
         socket.close();
+    }
+
+    @Override
+    public String getIp() {
+        return ip;
     }
 }

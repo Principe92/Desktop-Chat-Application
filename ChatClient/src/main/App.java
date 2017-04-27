@@ -57,13 +57,18 @@ public class App implements IGuiListener, IChatListener {
     /**
      * Display an incoming message to this user's screen
      *
-     * @param msg - A message
+     * @param msg  - A message
+     * @param port
      */
     @Override
-    public void printToScreen(IMessage msg) {
+    public void printToScreen(IMessage msg, int port) {
         if (msg != null) {
-            gui.displayMessage(msg);
-            db.saveMessage(chatManager.getActiveChat(), msg);
+            if (chatManager.belongsToActiveChat(port)) {
+                gui.displayMessage(msg);
+                db.saveMessage(chatManager.getActiveChat(), msg);
+            } else {
+                db.saveMessage(chatManager.getChatByPort(port), msg);
+            }
         }
     }
 
@@ -79,8 +84,8 @@ public class App implements IGuiListener, IChatListener {
 
     @Override
     public void onChatStarted(IChat chat) {
-        Point pos = gui.addChatToGui(chat.getChatId(), String.format("%s (Port: %s)", chat.getChatTitle(), chat.getPort()));
-        chat.setGuiPosition(pos);
+        int pos = gui.addChatToGui(chat.getChatId(), String.format("%s (Port: %s)", chat.getChatTitle(), chat.getPort()));
+        chat.setGuiId(pos);
         gui.closeDialog();
         db.createChat(chat);
         chatManager.addChat(chat);
@@ -94,16 +99,18 @@ public class App implements IGuiListener, IChatListener {
      */
     @Override
     public void sendMessage(IMessage message) {
-        message.setSender(user.getName());
         IChat activeChat = chatManager.getActiveChat();
 
         if (activeChat != null) {
             try {
+                message.setSender(user.getName());
                 activeChat.sendToUsers(message);
                 db.saveMessage(activeChat, message);
             } catch (IOException e) {
                 logger.logError(e);
             }
+        } else {
+            gui.alert("No chat available");
         }
     }
 
@@ -181,30 +188,29 @@ public class App implements IGuiListener, IChatListener {
                 gui.removeChatFromGui(activeChat);
                 db.deleteChat(activeChat);
                 chatManager.removeChat(activeChat);
-                chatManager.setActiveChat((IChat) null);
+                gui.setActive(chatManager.setNextChat());
             } catch (IOException e) {
                 logger.logError(e);
             }
         }
     }
 
-    /**
-     * Load new chat data to the gui
-     *
-     * @param point - Location of chat in window
-     */
     @Override
-    public void loadChat(Point point) {
-
-        if (!chatManager.isCurrentChat(point)) {
-            chatManager.setActiveChat(point);
+    public void loadChat(int guiId) {
+        if (!chatManager.isCurrentChat(guiId)) {
+            chatManager.setActiveChat(guiId);
 
             if (loadChatThread != null && loadChatThread.isAlive()) {
                 loadChatThread.cancel();
             }
 
-            loadChatThread = new LoadChatThread(chatManager, db, gui, point);
+            loadChatThread = new LoadChatThread(chatManager, db, gui, guiId, logger);
             loadChatThread.run();
         }
+    }
+
+    @Override
+    public boolean IsChatAvailable() {
+        return chatManager.IsChatAvailable();
     }
 }

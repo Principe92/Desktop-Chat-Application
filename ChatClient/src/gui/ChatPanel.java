@@ -18,12 +18,9 @@ import java.awt.event.*;
 
 @SuppressWarnings("serial")
 public class ChatPanel extends JPanel {
-    public static final int MIN_WIDTH = 600;
     private final IGuiListener listener;
     private final ILogger logger;
     private JTextArea msgBox;
-    private int xcord;
-    private int ycord;
     private JPanel msgWindow;
 
     public ChatPanel(IGuiListener listener, ILogger logger) {
@@ -135,7 +132,10 @@ public class ChatPanel extends JPanel {
         IMessage message = MessageFactory.getMessage(text.trim());
 
         if (message != null) {
-            displayMessage(message, Constant.DOCK_EAST, Constant.USER_BG);
+            if (listener.IsChatAvailable()) {
+                displayMessage(message, Constant.DOCK_EAST, Constant.USER_BG);
+            }
+
             listener.sendMessage(message);
         }
     }
@@ -152,7 +152,6 @@ public class ChatPanel extends JPanel {
         msgWindow.add(panel, "wrap, spanx, growx");
 
         msgWindow.revalidate();
-        ycord++;
     }
 
     private void addListener(IMessage msg, Component ct) {
@@ -194,5 +193,7 @@ public class ChatPanel extends JPanel {
 
     public void clearMessageWindow() {
         msgWindow.removeAll();
+        msgWindow.revalidate();
+        msgWindow.repaint();
     }
 }

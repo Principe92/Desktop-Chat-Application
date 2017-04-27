@@ -1,12 +1,15 @@
 package gui;
 
 import listener.ChatListPanelListener;
+import listener.IGuiListener;
 import main.Constant;
 import net.miginfocom.swing.MigLayout;
 import type.IChat;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.ButtonUI;
+import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,10 +20,13 @@ import java.awt.event.MouseListener;
 public class ChatListPanel extends JPanel {
 
     private final ChatListPanelListener listener;
+    private final IGuiListener guiListener;
     private JPanel chatListPanel;
+    private JButton activeChat;
 
-    public ChatListPanel(ChatListPanelListener listener) {
+    public ChatListPanel(ChatListPanelListener listener, IGuiListener iGuiListener) {
         this.listener = listener;
+        guiListener = iGuiListener;
         this.setLayout(new MigLayout("fill, insets 0 0 4 0, wrap 1"));
 
         this.add(addMenuBar(), "growx");
@@ -62,9 +68,10 @@ public class ChatListPanel extends JPanel {
         return bar;
     }
 
-    public Point addChat(Integer id, String title) {
+    public int addChat(Integer id, String title) {
         JButton label = new JButton(title);
-        label.setBackground(Constant.CHAT_BG);
+        label.setUI((ButtonUI) BasicButtonUI.createUI(label));
+        label.setBackground(Constant.ACTIVE_CHAT);
         label.setOpaque(true);
         label.setCursor(new Cursor(Cursor.HAND_CURSOR));
         label.setBorder(BorderFactory.createCompoundBorder(label.getBorder(),
@@ -72,7 +79,7 @@ public class ChatListPanel extends JPanel {
         label.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                listener.loadChat(new Point(e.getComponent().getX(), e.getComponent().getY()));
+                guiListener.loadChat(e.getComponent().hashCode());
             }
 
             @Override
@@ -95,19 +102,61 @@ public class ChatListPanel extends JPanel {
 
             }
         });
+
+        changeActiveChat(label);
         chatListPanel.add(label, "growx");
         chatListPanel.revalidate();
 
-        return new Point(label.getX(), label.getY());
+        return label.hashCode();
     }
 
     public void removeChat(IChat chat) {
-        chatListPanel.remove(chatListPanel.getComponentAt(chat.getPosition()));
-        chatListPanel.revalidate();
+        int index = getChatGuiPosition(chat);
+
+        if (index >= 0) {
+            chatListPanel.remove(index);
+            chatListPanel.revalidate();
+            chatListPanel.repaint();
+        }
+    }
+
+    private int getChatGuiPosition(IChat chat) {
+        int size = chatListPanel.getComponentCount() - 1;
+
+        while (size >= 0) {
+            if (chatListPanel.getComponent(size).hashCode() == chat.getGuiId()) {
+                break;
+            }
+
+            size--;
+        }
+
+        return size;
     }
 
     public void changeChatTitle(String title, Point position) {
         JButton chat = (JButton) chatListPanel.getComponentAt(position);
         chat.setText(title);
+    }
+
+    public void setActive(IChat chat) {
+        if (chat == null) return;
+
+        int index = getChatGuiPosition(chat);
+
+        if (index >= 0) {
+            JButton gui = (JButton) chatListPanel.getComponent(index);
+            gui.setBackground(Constant.ACTIVE_CHAT);
+
+            changeActiveChat(gui);
+        }
+    }
+
+    private void changeActiveChat(JButton gui) {
+        if (activeChat != null) {
+            activeChat.setBackground(Constant.CHAT_BG);
+        }
+
+        activeChat = gui;
     }
 }

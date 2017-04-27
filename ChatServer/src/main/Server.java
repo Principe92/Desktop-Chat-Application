@@ -9,7 +9,6 @@ import type.ILogger;
 import type.IMessage;
 import type.ISocketProtocol;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.Date;
@@ -27,10 +26,11 @@ public class Server implements IClientListener, IChat {
     private Map<Integer, IClient> clients;
     private ServerSocket socket;
     private Integer chatId;
-    private Point position;
+    private int guiId;
     private String title;
     private int port;
     private boolean triggeredClose;
+    private String ip;
 
     public Server(Integer id, ILogger logger, IChatListener listener, ISocketProtocol protocol) {
         this.chatId = id;
@@ -44,6 +44,7 @@ public class Server implements IClientListener, IChat {
     void run(int port) throws IOException {
         this.port = port;
         socket = new ServerSocket(port);
+        this.ip = socket.getInetAddress().getHostAddress();
         listener.onChatStarted(this);
 
         while (!socket.isClosed()) {
@@ -86,7 +87,7 @@ public class Server implements IClientListener, IChat {
 
             }
 
-            listener.printToScreen(message);
+            listener.printToScreen(message, port);
         }
     }
 
@@ -126,7 +127,8 @@ public class Server implements IClientListener, IChat {
                     Server.this.run(Integer.parseInt(args[0]));
 
                 } catch (IOException e) {
-                    logger.logError(e);
+                    if (!triggeredClose)
+                        logger.logError(e);
                 }
             }
         });
@@ -136,13 +138,13 @@ public class Server implements IClientListener, IChat {
     }
 
     @Override
-    public void setGuiPosition(Point point) {
-        this.position = point;
+    public int getGuiId() {
+        return guiId;
     }
 
     @Override
-    public Point getPosition() {
-        return position;
+    public void setGuiId(int guiId) {
+        this.guiId = guiId;
     }
 
     @Override
@@ -158,5 +160,15 @@ public class Server implements IClientListener, IChat {
     @Override
     public int getPort() {
         return port;
+    }
+
+    @Override
+    public Date getCreationDate() {
+        return date;
+    }
+
+    @Override
+    public String getIp() {
+        return ip;
     }
 }

@@ -20,4 +20,3 @@ public interface IMessage {
 
     void setSender(String name);
 }
- 

@@ -2,8 +2,6 @@ package listener;
 
 import type.IMessage;
 
-import java.awt.*;
-
 public interface IGuiListener {
 
     void sendMessage(IMessage message);
@@ -14,5 +12,7 @@ public interface IGuiListener {
 
     void quitChat();
 
-    void loadChat(Point point);
+    void loadChat(int chatHash);
+
+    boolean IsChatAvailable();
 }

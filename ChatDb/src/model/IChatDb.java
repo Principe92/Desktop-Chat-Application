@@ -3,6 +3,7 @@ package model;
 import type.IChat;
 import type.IMessage;
 
+import java.io.IOException;
 import java.util.Collection;
 
 /**
@@ -16,5 +17,5 @@ public interface IChatDb {
 
     void saveMessage(IChat activeChat, IMessage msg);
 
-    Collection<IMessage> getMessages(IChat chat);
+    Collection<IMessage> getMessages(IChat chat) throws IOException;
 }

@@ -39,7 +39,7 @@ public class gui implements ChatListPanelListener {
         GridBagConstraints a = new GridBagConstraints();
         GridBagConstraints b = new GridBagConstraints();
 
-        chatListPanel = new ChatListPanel(this);
+        chatListPanel = new ChatListPanel(this, listener);
         chatPanel = new ChatPanel(listener, logger);
 
         frmChatApp = setUpChatFrame();
@@ -129,12 +129,7 @@ public class gui implements ChatListPanelListener {
         });
     }
 
-    @Override
-    public void loadChat(Point point) {
-        listener.loadChat(point);
-    }
-
-    public Point addChatToGui(Integer id, String title) {
+    public int addChatToGui(Integer id, String title) {
         return chatListPanel.addChat(id, title);
     }
 
@@ -156,5 +151,9 @@ public class gui implements ChatListPanelListener {
 
     public void alert(String msg) {
         JOptionPane.showMessageDialog(frmChatApp, msg);
+    }
+
+    public void setActive(IChat chat) {
+        chatListPanel.setActive(chat);
     }
 }

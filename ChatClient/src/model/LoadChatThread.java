@@ -2,9 +2,10 @@ package model;
 
 import gui.gui;
 import type.IChat;
+import type.ILogger;
 import type.IMessage;
 
-import java.awt.*;
+import java.io.IOException;
 import java.util.Collection;
 
 /**
@@ -15,15 +16,17 @@ public class LoadChatThread extends Thread {
     private final IChatManager chatManager;
     private final IChatDb db;
     private final gui gui;
-    private final Point point;
+    private final int point;
     private boolean cancel;
+    private ILogger logger;
 
-    public LoadChatThread(IChatManager chatManager, IChatDb db, gui gui, Point point) {
+    public LoadChatThread(IChatManager chatManager, IChatDb db, gui gui, int guiId, ILogger logger) {
 
         this.chatManager = chatManager;
         this.db = db;
         this.gui = gui;
-        this.point = point;
+        this.point = guiId;
+        this.logger = logger;
     }
 
     @Override
@@ -32,13 +35,19 @@ public class LoadChatThread extends Thread {
 
         if (chat != null) {
             gui.clearMessageWindow();
-            Collection<IMessage> messages = db.getMessages(chat);
+            gui.setActive(chat);
 
-            if (!cancel) {
-                for (IMessage msg :
-                        messages) {
-                    gui.displayMessage(msg);
+            try {
+                Collection<IMessage> messages = db.getMessages(chat);
+
+                if (!cancel) {
+                    for (IMessage msg :
+                            messages) {
+                        gui.displayMessage(msg);
+                    }
                 }
+            } catch (IOException e) {
+                logger.logError(e);
             }
         }
     }
