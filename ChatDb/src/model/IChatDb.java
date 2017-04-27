@@ -15,7 +15,7 @@ public interface IChatDb {
 
     void deleteChat(IChat activeChat);
 
-    void saveMessage(IChat activeChat, IMessage msg);
+    void saveMessage(IChat activeChat, IMessage msg, boolean fromUser);
 
     Collection<IMessage> getMessages(IChat chat) throws IOException;
 }

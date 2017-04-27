@@ -43,7 +43,7 @@ public class LoadChatThread extends Thread {
                 if (!cancel) {
                     for (IMessage msg :
                             messages) {
-                        gui.displayMessage(msg);
+                        gui.displayMessage(msg, msg.getSender().isEmpty());
                     }
                 }
             } catch (IOException e) {

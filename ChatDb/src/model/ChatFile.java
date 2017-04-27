@@ -63,9 +63,9 @@ public class ChatFile implements IChatFile {
     }
 
     @Override
-    public void write(IMessage msg) throws IOException {
+    public void write(IMessage msg, boolean fromUser) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
-        String sender = msg.getSender().isEmpty() ? "_" : msg.getSender();
+        String sender = fromUser ? "_" : msg.getSender();
         writer.write(String.format("%s ~ %d ~ %s", sender, msg.getType().getValue(), new String(msg.getData(), Util.getEncoding())));
         writer.newLine();
         writer.close();

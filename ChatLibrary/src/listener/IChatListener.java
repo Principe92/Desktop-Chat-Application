@@ -17,4 +17,6 @@ public interface IChatListener {
     User getUser();
 
     void onChatStarted(IChat chat);
+
+    void quitChat();
 }

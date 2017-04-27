@@ -78,13 +78,15 @@ public class ChatDb implements IChatDb {
     }
 
     @Override
-    public void saveMessage(IChat activeChat, IMessage msg) {
+    public void saveMessage(IChat activeChat, IMessage msg, boolean fromUser) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    IChatFile file = new ChatFile(activeChat.getCreationDate(), messagePath, logger);
-                    file.write(msg);
+                    if (activeChat != null) {
+                        IChatFile file = new ChatFile(activeChat.getCreationDate(), messagePath, logger);
+                        file.write(msg, fromUser);
+                    }
                 } catch (IOException e) {
                     logger.logError(e);
                 }

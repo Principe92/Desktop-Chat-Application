@@ -64,10 +64,10 @@ public class App implements IGuiListener, IChatListener {
     public void printToScreen(IMessage msg, int port) {
         if (msg != null) {
             if (chatManager.belongsToActiveChat(port)) {
-                gui.displayMessage(msg);
-                db.saveMessage(chatManager.getActiveChat(), msg);
+                gui.displayMessage(msg, false);
+                db.saveMessage(chatManager.getActiveChat(), msg, false);
             } else {
-                db.saveMessage(chatManager.getChatByPort(port), msg);
+                db.saveMessage(chatManager.getChatByPort(port), msg, false);
             }
         }
     }
@@ -87,6 +87,7 @@ public class App implements IGuiListener, IChatListener {
         int pos = gui.addChatToGui(chat.getChatId(), String.format("%s (Port: %s)", chat.getChatTitle(), chat.getPort()));
         chat.setGuiId(pos);
         gui.closeDialog();
+        gui.clearMessageWindow();
         db.createChat(chat);
         chatManager.addChat(chat);
         chatManager.setActiveChat(chat);
@@ -105,7 +106,7 @@ public class App implements IGuiListener, IChatListener {
             try {
                 message.setSender(user.getName());
                 activeChat.sendToUsers(message);
-                db.saveMessage(activeChat, message);
+                db.saveMessage(activeChat, message, true);
             } catch (IOException e) {
                 logger.logError(e);
             }
@@ -186,9 +187,14 @@ public class App implements IGuiListener, IChatListener {
             try {
                 activeChat.close();
                 gui.removeChatFromGui(activeChat);
+                gui.clearMessageWindow();
                 db.deleteChat(activeChat);
                 chatManager.removeChat(activeChat);
-                gui.setActive(chatManager.setNextChat());
+                IChat next = chatManager.setNextChat();
+
+                if (next != null) {
+                    loadChat(next.getGuiId());
+                }
             } catch (IOException e) {
                 logger.logError(e);
             }

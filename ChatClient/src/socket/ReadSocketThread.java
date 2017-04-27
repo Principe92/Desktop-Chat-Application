@@ -80,7 +80,6 @@ public class ReadSocketThread extends BaseThread implements IReadSocket {
 
     private void exitChat() throws IOException {
         end();
-
         listener.onChatExit();
     }
 

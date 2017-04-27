@@ -81,8 +81,12 @@ public class gui implements ChatListPanelListener {
         return frmChatApp;
     }
 
-    public void displayMessage(IMessage msg) {
-        chatPanel.displayMessage(msg, Constant.DOCK_WEST, Constant.OTHERS_BG);
+    public void displayMessage(IMessage msg, boolean fromUser) {
+        if (fromUser) {
+            chatPanel.displayMessage(msg, Constant.DOCK_EAST, Constant.USER_BG);
+        } else {
+            chatPanel.displayMessage(msg, Constant.DOCK_WEST, Constant.OTHERS_BG);
+        }
     }
 
     void close() {

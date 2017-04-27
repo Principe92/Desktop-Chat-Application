@@ -115,8 +115,9 @@ public class Chat implements IChat, IReadSocketListener {
 
     @Override
     public void onChatExit() throws IOException {
-        sendToUsers(new TextMessage(String.format("%s Quit chat room unexpectedly", listener.getUser().getName())));
+        sendToUsers(new TextMessage(String.format("%s quit chat room", listener.getUser().getName())));
         socket.close();
+        listener.quitChat();
     }
 
     @Override
