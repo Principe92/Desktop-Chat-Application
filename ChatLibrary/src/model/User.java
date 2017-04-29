@@ -6,6 +6,7 @@ public class User {
 	private String name;
 	private String nick;
 	private String email;
+    private boolean isLoggedIn;
 
     public User(int id) {
         this.id = id;
@@ -13,6 +14,7 @@ public class User {
         this.name = String.format("User %d", id);
         this.nick = "";
 		this.email = "";
+        this.isLoggedIn = false;
 	}
 
     public User(int id, String pwd, String name, String nick, String email) {
@@ -21,6 +23,7 @@ public class User {
 		this.name = name;
 		this.nick = nick;
 		this.email = email;
+        this.isLoggedIn = false;
 	}
 
     public User(String[] info) {
@@ -70,6 +73,14 @@ public class User {
 	public void setemail(String email) {
 		this.email = email;
 	}
+    
+    public boolean getIsLoggedIn() {
+        return isLoggedIn;
+    }
+    
+    public boolean setIsLoggedIn(boolean status) {
+        this.isLoggedIn=status;
+    }
 
 	public void setAll(String[] tmp) {
 		id = Integer.parseInt(tmp[0]);
