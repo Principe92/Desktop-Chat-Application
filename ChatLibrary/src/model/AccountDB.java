@@ -4,6 +4,10 @@ import java.io.*;
 import java.io.ObjectOutputStream;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * In-memory database of the accounts that have been created.
@@ -12,6 +16,7 @@ import java.util.ArrayList;
 public class AccountDB {
 	public AccountDB() {
 		accounts = new ArrayList<User>();
+        populateAccounts("AccountDB.txt");
 	}
 	
 	/**
@@ -23,6 +28,26 @@ public class AccountDB {
 	 * @return 	true	if the account is found
 	 * 			false	if the account is NOT found
 	 */
+    
+    private void populateAccounts(String filename) {
+        try {
+            File file = new File(filename);
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                String trimmed = line.trim()
+                String[] splitted = trimmed.split(" ");
+                u = new User(splitted[1], splitted[0], splitted[2], splitted[3]);
+                accounts.add(u);
+            }
+            fileReader.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
 	public boolean checkCredentials(String username, String password) {
 		for (User acct : accounts) {
 			if (acct.getName().equals(username) && acct.getPwd().equals(password)) {
@@ -34,18 +59,16 @@ public class AccountDB {
 	
 	
 	/**
-	 * Writes all accounts in the database to a file
+	 * Appends new accounts to file
 	 */
-	public void persist() {
+	private void addNewAccount(pwd, name, nick, email) {
 		try {
-			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("AccountDB.dat"));
-			out.writeObject(accounts);
-			out.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            BufferedWriter bw = new BufferedWriter(new FileWriter("AccountDB.txt", true));
+            bw.write(name+" "+pwd+" "+nick+" "+email);
+            bw.newline();
+            bw.flush();
+
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -70,10 +93,10 @@ public class AccountDB {
 	/**
 	 * Creates an account and adds it to the database.
 	 */
-	public synchronized void createAccount(int id, String pwd, String name, String nick, String email) {
-		User newAcct = new User(id, pwd, name, nick, email);
+	public synchronized void createAccount(String pwd, String name, String nick, String email) {
+		User newAcct = new User(pwd, name, nick, email);
 		accounts.add(newAcct);
-		// persist();
+		addNewAccount(pwd, name, nick, email);
 	}
 	
 	
