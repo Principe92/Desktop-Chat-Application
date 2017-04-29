@@ -32,16 +32,21 @@ public class AccountDB {
     private void populateAccounts(String filename) {
         try {
             File file = new File(filename);
-            FileReader fileReader = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                String trimmed = line.trim()
-                String[] splitted = trimmed.split(" ");
-                u = new User(splitted[1], splitted[0], splitted[2], splitted[3]);
-                accounts.add(u);
+            if (file.exists()) {
+                FileReader fileReader = new FileReader(file);
+                BufferedReader bufferedReader = new BufferedReader(fileReader);
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    String trimmed = line.trim()
+                    String[] splitted = trimmed.split(" ");
+                    u = new User(splitted[1], splitted[0], splitted[2], splitted[3]);
+                    accounts.add(u);
+                }
+                fileReader.close();
             }
-            fileReader.close();
+            else {
+                file.createNewFile();
+            }
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -67,7 +72,6 @@ public class AccountDB {
             bw.write(name+" "+pwd+" "+nick+" "+email);
             bw.newline();
             bw.flush();
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
