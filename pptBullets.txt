@@ -1,0 +1,14 @@
+1. Project description (general)
+2. Project requirements 
+3. Iterations
+	- Some functionality design
+	- Diagrams
+4. Burn down chart
+	- history 
+	- where you are behind
+	- way to make it catch up
+5. Running the software 
+
+20 min for presentation and 5 minutes for questions
+
+

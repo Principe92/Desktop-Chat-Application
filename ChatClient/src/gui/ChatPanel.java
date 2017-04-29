@@ -11,6 +11,7 @@ import type.ILogger;
 import type.IMessage;
 
 import javax.swing.*;
+import javax.swing.border.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -41,13 +42,20 @@ public class ChatPanel extends JPanel {
         JButton item = new ImageButton("Exit", "ic_power_settings_new_black_24dp.png");
         item.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {          	
                 listener.quitChat();
             }
         });
         bar.add(item);
 
         item = new ImageButton("Menu", "ic_more_horiz_black_24dp.png");
+        item.addActionListener(new ActionListener() {
+        	@Override
+        	public void actionPerformed(ActionEvent e){
+        		//Dropdown menu 
+        		
+        	}
+        });
         bar.add(item);
 
         return bar;
@@ -79,7 +87,7 @@ public class ChatPanel extends JPanel {
     }
 
     private JScrollPane addMessageWindow() {
-        msgWindow = new JPanel();
+        msgWindow = new JPanel();       
         msgWindow.setLayout(new MigLayout("fillx", "[grow]"));
         msgWindow.setBackground(Constant.MSG_BG);
         msgWindow.setBorder(new CompoundBorder(msgWindow.getBorder(), new EmptyBorder(Constant.MAG_16, Constant.MAG_16, Constant.MAG_16, Constant.MAG_16)));
@@ -92,10 +100,14 @@ public class ChatPanel extends JPanel {
 
     private JTextArea addMessageField() {
         msgBox = new JTextArea();
-        msgBox.setLineWrap(true);
+        msgBox.setLineWrap(true);       
         msgBox.setWrapStyleWord(true);
-        msgBox.addKeyListener(new KeyListener() {
 
+        Border border = BorderFactory.createLineBorder(Color.BLACK);
+        msgBox.setBorder(border);
+
+        msgBox.addKeyListener(new KeyListener() {
+        	
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -108,7 +120,7 @@ public class ChatPanel extends JPanel {
                         }
                     }).start();
 
-                    clearText();
+                    clearText(text);
                     setFocusToChatWindow();
                 }
             }
@@ -140,8 +152,10 @@ public class ChatPanel extends JPanel {
         }
     }
 
-    private void clearText() {
-        msgBox.setText(null);
+    private void clearText(String text) {
+        text.trim();
+    	msgBox.setText("");	
+    	msgBox.setVisible(true);
     }
 
     public void displayMessage(IMessage msg, String alignment, Color color) {

@@ -80,7 +80,8 @@ public class User {
     
     public boolean setIsLoggedIn(boolean status) {
         this.isLoggedIn=status;
-    }
+		return true;
+	}
 
 	public void setAll(String[] tmp) {
 		id = Integer.parseInt(tmp[0]);
