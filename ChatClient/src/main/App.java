@@ -16,7 +16,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
-public class App implements IGuiListener, IChatListener {
+public class App implements IGuiListener, IChatListener, accountListener {
     private final ILogger logger;
     private final ISocketProtocol protocol;
     private final IChatDb db;
@@ -27,19 +27,27 @@ public class App implements IGuiListener, IChatListener {
 
 
     App(ILogger logger, ISocketProtocol protocol, IChatDb db, IChatManager chatManager) {
+        
         this.logger = logger;
         this.protocol = protocol;
         this.db = db;
         this.chatManager = chatManager;
 
-        this.who = new User(Math.toIntExact(System.nanoTime() % 100));
-        loadUI();
+        //this.who = new User(Math.toIntExact(System.nanoTime() % 100));
+        loadAcctGUI();
     }
 
     /**
      * Start the GUI
      */
-    private void loadUI() {
+    
+    @Override
+    public void loginAccepted(User user) {
+        this.who = user;
+        loadGUI();
+    }
+    
+    private void loadAcctGUI() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -50,11 +58,30 @@ public class App implements IGuiListener, IChatListener {
                     e.printStackTrace();
                 }
 
+                AccountDB accounts = new AccountDB();
+                new LoginWindow(accounts, this);
+            }
+        });
+    }
+
+    private void loadGUI() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    UIManager.setLookAndFeel(UIManager
+                                             .getSystemLookAndFeelClassName());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                
                 gui = new gui(App.this, logger);
             }
         });
     }
 
+    
+    
     /**
      * Display an incoming message to this user's screen
      *
