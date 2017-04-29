@@ -17,7 +17,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
-public class App implements IGuiListener, IChatListener, accountListener {
+public class App implements IGuiListener, IChatListener, AccountListener {
     private final ILogger logger;
     private final ISocketProtocol protocol;
     private final IChatDb db;
@@ -34,7 +34,6 @@ public class App implements IGuiListener, IChatListener, accountListener {
         this.db = db;
         this.chatManager = chatManager;
 
-        //this.who = new User(Math.toIntExact(System.nanoTime() % 100));
         loadAcctGUI();
     }
 
