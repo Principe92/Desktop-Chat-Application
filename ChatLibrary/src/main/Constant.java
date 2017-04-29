@@ -37,6 +37,6 @@ public class Constant {
     public static final String MSG_FORMAT = "<html><span style=\"font-weight: bold\">%s</span><br>%s</html>";
 
     public static final String DEFAULT_PATH = String.format("%s/%s",
-            new JFileChooser().getFileSystemView().getDefaultDirectory().toString(), "ChatApp");
+            new JFileChooser().getFileSystemView().getDefaultDirectory().toString(), "ChatAppHome");
     public static final Color ACTIVE_CHAT = new Color(229, 72, 112);
 }
