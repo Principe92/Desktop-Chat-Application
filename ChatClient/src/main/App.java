@@ -7,6 +7,7 @@ import model.IChatDb;
 import model.IChatManager;
 import model.LoadChatThread;
 import model.User;
+import model.AccountDB;
 import type.IChat;
 import type.ILogger;
 import type.IMessage;
