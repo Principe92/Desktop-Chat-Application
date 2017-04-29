@@ -7,6 +7,7 @@ import model.IChatDb;
 import model.IChatManager;
 import model.LoadChatThread;
 import model.User;
+import model.AccountDB;
 import type.IChat;
 import type.ILogger;
 import type.IMessage;
@@ -16,18 +17,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
-import main.Main;
+public class App implements IGuiListener, IChatListener, AccountListener {
 
-public class App implements IGuiListener, IChatListener {
     private final ILogger logger;
     private final ISocketProtocol protocol;
     private final IChatDb db;
     private final IChatManager chatManager;
     private gui gui;
     private LoadChatThread loadChatThread;
-    private User user;
+    private User who;
     
     private Main main;
+
 
 
     public App(ILogger logger, ISocketProtocol protocol, IChatDb db, IChatManager chatManager) {
@@ -36,14 +37,22 @@ public class App implements IGuiListener, IChatListener {
         this.db = db;
         this.chatManager = chatManager;
 
-        this.user = new User(Math.toIntExact(System.nanoTime() % 100));
-        loadUI();
+        loadAcctGUI();
+
+
     }
 
     /**
      * Start the GUI
      */
-    private void loadUI() {
+    
+    @Override
+    public void loginAccepted(User user) {
+        this.who = user;
+        loadGUI();
+    }
+    
+    private void loadAcctGUI() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -53,11 +62,30 @@ public class App implements IGuiListener, IChatListener {
                     e.printStackTrace();
                 }
 
+                AccountDB accounts = new AccountDB();
+                new LoginWindow(accounts, this);
+            }
+        });
+    }
+
+    private void loadGUI() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    UIManager.setLookAndFeel(UIManager
+                                             .getSystemLookAndFeelClassName());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                
                 gui = new gui(App.this, logger);
             }
         });
     }
 
+    
+    
     /**
      * Display an incoming message to this user's screen
      *
