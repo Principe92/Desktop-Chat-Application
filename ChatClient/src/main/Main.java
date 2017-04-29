@@ -14,6 +14,8 @@ import main.Server;
 
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
 public class Main {
 	
 	private static final Main instance = new Main();
@@ -29,22 +31,39 @@ public class Main {
         ISocketProtocol protocol = AbstractFactory.getProtocol();
         
         Main.getInstance().startClient();
-        
-        
-        
+
         //If logged in then proceed to the app
         new App(logger, protocol, ChatDb.Instance(logger), ChatManager.instance());
     }
     
-    private static Main getInstance() {
+    private Main() {
+    	ILogger logger = AbstractFactory.getLogger();
+        ISocketProtocol protocol = AbstractFactory.getProtocol();
+        
+        app = new App(logger, protocol, ChatDb.Instance(logger), ChatManager.instance());
+    }
+    
+    public static Main getInstance() {
     	return instance;
     }
+    
     
     private void startClient() {
     	openLogin();
     }
     
     private void openLogin(){
-    	//Connect with socket 
+    	//Connect with socket
+    	try {
+    		loginPanel = new LoginPanel();
+    		//loginPanel.setVisible(true);
+    	} catch (Exception e){
+    		JOptionPane.showMessageDialog(null, "cannot connect to server");
+    	}
     }
+
+	public void requestLogin(String string) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -16,6 +16,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
+import main.Main;
+
 public class App implements IGuiListener, IChatListener {
     private final ILogger logger;
     private final ISocketProtocol protocol;
@@ -24,9 +26,11 @@ public class App implements IGuiListener, IChatListener {
     private gui gui;
     private LoadChatThread loadChatThread;
     private User user;
+    
+    private Main main;
 
 
-    App(ILogger logger, ISocketProtocol protocol, IChatDb db, IChatManager chatManager) {
+    public App(ILogger logger, ISocketProtocol protocol, IChatDb db, IChatManager chatManager) {
         this.logger = logger;
         this.protocol = protocol;
         this.db = db;
@@ -218,5 +222,9 @@ public class App implements IGuiListener, IChatListener {
     @Override
     public boolean IsChatAvailable() {
         return chatManager.IsChatAvailable();
+    }
+    
+    public void setHandler(Main main){
+    	this.main = main;
     }
 }
