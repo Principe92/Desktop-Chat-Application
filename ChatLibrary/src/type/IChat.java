@@ -1,7 +1,7 @@
 package type;
 
-import java.awt.*;
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * Created by okori on 06-Apr-17.
@@ -15,7 +15,17 @@ public interface IChat {
 
     boolean start(String[] args) throws IOException;
 
-    void setGuiPosition(Point point);
+    int getGuiId();
 
-    Point getPosition();
+    void setGuiId(int guiId);
+
+    String getChatTitle();
+
+    void setChatTitle(String title);
+
+    int getPort();
+
+    Date getCreationDate();
+
+    String getIp();
 }

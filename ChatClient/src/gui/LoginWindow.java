@@ -19,7 +19,7 @@ public class LoginWindow {
 	 */
 	public LoginWindow(AccountDB accounts, AccountListener acctListener) {
 		this.accounts = accounts;
-        this.acctListener = acctListener;
+     this.acctListener = acctListener;
 		frame = new JFrame();
 		frame.setLayout(new GridLayout(3,2));
 		

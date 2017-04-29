@@ -8,4 +8,5 @@ public interface ILogger {
 
 	void logInfo(String msg);
 
+    void logError(String msg);
 }

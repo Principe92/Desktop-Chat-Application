@@ -3,28 +3,25 @@ package gui;
 import factory.MessageFactory;
 import listener.IGuiListener;
 import main.Constant;
+import main.Util;
 import model.ImageFilter;
+import model.ImageMessage;
 import net.miginfocom.swing.MigLayout;
 import type.ILogger;
 import type.IMessage;
 
 import javax.swing.*;
+import javax.swing.border.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 
 @SuppressWarnings("serial")
 public class ChatPanel extends JPanel {
-    public static final int MIN_WIDTH = 600;
     private final IGuiListener listener;
     private final ILogger logger;
     private JTextArea msgBox;
-    private int xcord;
-    private int ycord;
     private JPanel msgWindow;
 
     public ChatPanel(IGuiListener listener, ILogger logger) {
@@ -36,7 +33,6 @@ public class ChatPanel extends JPanel {
         this.add(addMessageWindow(), "push, grow, wrap");
         this.add(addMessageField(), "growx, pushx, split");
         this.add(addSendButton());
-
     }
 
     private JMenuBar addMenuBar() {
@@ -46,13 +42,20 @@ public class ChatPanel extends JPanel {
         JButton item = new ImageButton("Exit", "ic_power_settings_new_black_24dp.png");
         item.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {          	
                 listener.quitChat();
             }
         });
         bar.add(item);
 
         item = new ImageButton("Menu", "ic_more_horiz_black_24dp.png");
+        item.addActionListener(new ActionListener() {
+        	@Override
+        	public void actionPerformed(ActionEvent e){
+        		//Dropdown menu 
+        		
+        	}
+        });
         bar.add(item);
 
         return bar;
@@ -84,7 +87,7 @@ public class ChatPanel extends JPanel {
     }
 
     private JScrollPane addMessageWindow() {
-        msgWindow = new JPanel();
+        msgWindow = new JPanel();       
         msgWindow.setLayout(new MigLayout("fillx", "[grow]"));
         msgWindow.setBackground(Constant.MSG_BG);
         msgWindow.setBorder(new CompoundBorder(msgWindow.getBorder(), new EmptyBorder(Constant.MAG_16, Constant.MAG_16, Constant.MAG_16, Constant.MAG_16)));
@@ -97,10 +100,14 @@ public class ChatPanel extends JPanel {
 
     private JTextArea addMessageField() {
         msgBox = new JTextArea();
-        msgBox.setLineWrap(true);
+        msgBox.setLineWrap(true);       
         msgBox.setWrapStyleWord(true);
-        msgBox.addKeyListener(new KeyListener() {
 
+        Border border = BorderFactory.createLineBorder(Color.BLACK);
+        msgBox.setBorder(border);
+
+        msgBox.addKeyListener(new KeyListener() {
+        	
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -113,7 +120,7 @@ public class ChatPanel extends JPanel {
                         }
                     }).start();
 
-                    clearText();
+                    clearText(text);
                     setFocusToChatWindow();
                 }
             }
@@ -137,23 +144,61 @@ public class ChatPanel extends JPanel {
         IMessage message = MessageFactory.getMessage(text.trim());
 
         if (message != null) {
-            displayMessage(message, Constant.DOCK_EAST, Constant.USER_BG);
+            if (listener.IsChatAvailable()) {
+                displayMessage(message, Constant.DOCK_EAST, Constant.USER_BG);
+            }
+
             listener.sendMessage(message);
         }
     }
 
-    private void clearText() {
-        msgBox.setText(null);
+    private void clearText(String text) {
+        text.trim();
+    	msgBox.setText("");	
+    	msgBox.setVisible(true);
     }
 
     public void displayMessage(IMessage msg, String alignment, Color color) {
         JPanel panel = new JPanel(new MigLayout("fill", "[grow]", "[]"));
         panel.add(msg.getMessagePanel(color), alignment);
         panel.setOpaque(false);
+        addListener(msg, panel);
         msgWindow.add(panel, "wrap, spanx, growx");
 
         msgWindow.revalidate();
-        ycord++;
+    }
+
+    private void addListener(IMessage msg, Component ct) {
+        if (msg instanceof ImageMessage) {
+            ct.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            ct.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    String path = new String(msg.getData(), Util.getEncoding());
+                    new ImageDialog(path);
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+
+                }
+            });
+        }
     }
 
     public void setFocusToChatWindow() {
@@ -162,5 +207,7 @@ public class ChatPanel extends JPanel {
 
     public void clearMessageWindow() {
         msgWindow.removeAll();
+        msgWindow.revalidate();
+        msgWindow.repaint();
     }
 }

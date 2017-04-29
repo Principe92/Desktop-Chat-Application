@@ -7,8 +7,8 @@ import type.IChat;
 import type.ILogger;
 import type.ISocketProtocol;
 
-import java.awt.*;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -40,8 +40,8 @@ public class ChatManager implements IChatManager {
     }
 
     @Override
-    public void setActiveChat(Point point) {
-        activeChat = getChat(point);
+    public void setActiveChat(int guiId) {
+        activeChat = getChat(guiId);
     }
 
     @Override
@@ -67,11 +67,11 @@ public class ChatManager implements IChatManager {
 
     @Override
     public @Nullable
-    IChat getChat(Point point) {
+    IChat getChat(int guiId) {
 
         for (Map.Entry<Integer, IChat> entry : chatMap.entrySet()) {
-            Point pt = entry.getValue().getPosition();
-            if (pt.getY() == point.getY()) {
+            int pt = entry.getValue().getGuiId();
+            if (pt == guiId) {
                 return entry.getValue();
             }
         }
@@ -80,8 +80,52 @@ public class ChatManager implements IChatManager {
     }
 
     @Override
-    public boolean isCurrentChat(Point point) {
-        Point activeChatPosition = activeChat.getPosition();
-        return activeChatPosition.getX() == point.getX() && activeChatPosition.getY() == activeChatPosition.getY();
+    public boolean isCurrentChat(int hash) {
+        int activeChatGuiId = activeChat.getGuiId();
+        return activeChatGuiId == hash;
+    }
+
+    @Override
+    public boolean chatExists(String port) {
+        for (Map.Entry<Integer, IChat> entry : chatMap.entrySet()) {
+            int pt = entry.getValue().getPort();
+            if (pt == Integer.parseInt(port)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public IChat getChatByPort(int port) {
+        for (Map.Entry<Integer, IChat> entry : chatMap.entrySet()) {
+            int pt = entry.getValue().getPort();
+            if (pt == port) {
+                return entry.getValue();
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public boolean belongsToActiveChat(int port) {
+        return activeChat != null && port == activeChat.getPort();
+    }
+
+    @Override
+    public boolean IsChatAvailable() {
+        return activeChat != null;
+    }
+
+    @Override
+    public IChat setNextChat() {
+        if (chatMap.isEmpty()) activeChat = null;
+        else {
+            Iterator<Map.Entry<Integer, IChat>> it = chatMap.entrySet().iterator();
+            activeChat = it.next().getValue();
+        }
+        return activeChat;
     }
 }

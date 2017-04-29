@@ -18,9 +18,9 @@ public class CreateAccountWindow {
 	 */
 	public CreateAccountWindow(AccountDB accounts, AccountListener acctListener) {
 		this.accounts = accounts;
-        this.acctListener = acctListener;
+    this.acctListener = acctListener;
 		frame = new JFrame();
-        frame.setLayout(new GridLayout(5,2));
+    frame.setLayout(new GridLayout(5,2));
 		
 		//create components
 		usernameField = new JTextField(20);
@@ -34,7 +34,7 @@ public class CreateAccountWindow {
 		submitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(!accouns.userIsAvailable(usernameField.getText())){
+				if(!accounts.userIsAvailable(usernameField.getText())){
 					JOptionPane.showMessageDialog(frame, "Username already exists.");
 				}
 				else {
@@ -77,5 +77,5 @@ public class CreateAccountWindow {
 	private JButton cancelButton;
 	@SuppressWarnings("unused")
 	private AccountDB accounts;
-    private AccountListener acctListener;
+  private AccountListener acctListener;
 }

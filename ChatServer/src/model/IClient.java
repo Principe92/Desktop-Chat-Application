@@ -8,7 +8,7 @@ public interface IClient {
 
     void sendToSocket(IMessage message) throws IOException;
 
-    void setUp() throws IOException;
+    void setUp(String title) throws IOException;
 
     int getChatId();
 
