@@ -4,7 +4,8 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-import ChatLibrary.User;
+import model.User;
+import model.AccountDB;
 
 /**
  * This class displays a window for the user to create a new account 
@@ -14,16 +15,12 @@ public class CreateAccountWindow {
 	private Jframe frame;
 	/**
 	 * Constructs a new CreateAccountWindow
-	 * @param user
 	 */
-	public CreateAccountWindow(final User user, AccountDB accounts) {
-		this.user = user;
+	public CreateAccountWindow(AccountDB accounts, AccountListener acctListener) {
 		this.accounts = accounts;
-		repaint();
-	}
-	
-	public void repaint() {
+        this.acctListener = acctListener;
 		frame = new JFrame();
+        frame.setLayout(new GridLayout(5,2));
 		
 		//create components
 		usernameField = new JTextField(20);
@@ -38,14 +35,14 @@ public class CreateAccountWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(!accouns.userIsAvailable(usernameField.getText())){
-					//PICK NEW USERNAME
+					JOptionPane.showMessageDialog(frame, "Username already exists.");
 				}
 				else {
 					frame.dispose();
-				//ID??
-					accounts.createAccount(passwordField.getPassword(), usernameField.getText(),
+					User newUser = accounts.createAccount(passwordField.getPassword(), usernameField.getText(),
 							nickField.getText(), emailField.getText());
-				}
+                    acctListener.loginAccepted(newUser);
+                }
 			}
 		});
 		cancelButton.addActionListener(new ActionListener() {
@@ -79,6 +76,6 @@ public class CreateAccountWindow {
 	private JButton submitButton;
 	private JButton cancelButton;
 	@SuppressWarnings("unused")
-	private User user;
 	private AccountDB accounts;
+    private AccountListener acctListener;
 }

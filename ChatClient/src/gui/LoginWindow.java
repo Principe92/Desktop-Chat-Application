@@ -4,7 +4,8 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-import ChatLibrary.User;
+import model.User;
+import model.AccountDB;
 
 /**
  * This class displays the login window
@@ -16,9 +17,9 @@ public class LoginWindow {
 	 * Constructs a new LoginWindow
 	 * @param user
 	 */
-	public LoginWindow(final User user, AccountDB, accounts) {
-		this.user = user;
+	public LoginWindow(AccountDB accounts, AccountListener acctListener) {
 		this.accounts = accounts;
+        this.acctListener = acctListener;
 		frame = new JFrame();
 		frame.setLayout(new GridLayout(3,2));
 		
@@ -32,11 +33,14 @@ public class LoginWindow {
 		loginButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				boolean exists = accounts.checkCredentials(usernameField.getText(), passwordField.getPassword());
-				//if true, isLoggedIn = true
-				if (exists) {
-					user.setisLoggedIn(true);
-				//if false, System.out.println("Login attempt failed");
+				User exists = accounts.checkCredentials(usernameField.getText(), passwordField.getPassword());
+				if (exists!=null) {
+                    frame.dispose();
+                    acctListener.loginAccepted(exists);
+                }
+                else{
+                    JOptionPane.showMessageDialog(frame, "Incorrect username or password.");
+                }
 			}
 		});
 		
@@ -44,8 +48,7 @@ public class LoginWindow {
 		createAccountButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//CREATE ACCOUNT WINDOW
-				//new CreateAccountWindow(user);
+				new CreateAccountWindow(accounts, acctListener);
 			}
 		});
 		
@@ -66,8 +69,12 @@ public class LoginWindow {
 	private JButton createAccountButton;
 	//suppress "user is unused" warning - it is used in an action listener
 	@SuppressWarnings("unused")
-	private User user;
 	private AccountDB accounts;
 	//suppress "user is unused" warning - it is used in an action listener
 	@SuppressWarnings("unused")
+    public interface AccountListener{
+        void loginAccepted(User user);
+    }
+    private AccountListener acctListener;
+    
 }
