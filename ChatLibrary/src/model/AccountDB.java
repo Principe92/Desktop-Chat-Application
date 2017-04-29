@@ -1,17 +1,15 @@
 package gui;
 
 import java.io.*;
-import java.io.ObjectOutputStream;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import model.User;
 
 /**
  * In-memory database of the accounts that have been created.
- * Accounts are persisted to a file on server shutdown.
  */
 public class AccountDB {
 	public AccountDB() {
@@ -53,13 +51,13 @@ public class AccountDB {
         }
     }
     
-	public boolean checkCredentials(String username, String password) {
+	public User checkCredentials(String username, String password) {
 		for (User acct : accounts) {
 			if (acct.getName().equals(username) && acct.getPwd().equals(password)) {
-				return true;
+				return acct;
 			}
 		}
-		return false;
+		return null;
 	}
 	
 	
@@ -97,10 +95,11 @@ public class AccountDB {
 	/**
 	 * Creates an account and adds it to the database.
 	 */
-	public synchronized void createAccount(String pwd, String name, String nick, String email) {
+	public User createAccount(String pwd, String name, String nick, String email) {
 		User newAcct = new User(pwd, name, nick, email);
 		accounts.add(newAcct);
 		addNewAccount(pwd, name, nick, email);
+        return newAcct
 	}
 	
 	
