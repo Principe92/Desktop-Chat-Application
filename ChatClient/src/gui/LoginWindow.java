@@ -1,23 +1,24 @@
 package gui;
-import java.awt.*;
-import java.awt.event.*;
-
-import javax.swing.*;
 
 import ChatLibrary.User;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * This class displays the login window
  */
 public class LoginWindow {
-	private Jframe frame;
+    private JFrame frame;
 
 	/**
 	 * Constructs a new LoginWindow
 	 * @param user
 	 */
-	public LoginWindow(final User user, AccountDB, accounts) {
-		this.user = user;
+    public LoginWindow(final User user, AccountDB accounts) {
+        this.user = user;
 		this.accounts = accounts;
 		frame = new JFrame();
 		frame.setLayout(new GridLayout(3,2));
@@ -30,37 +31,43 @@ public class LoginWindow {
 		
 		//add action listeners to buttons
 		loginButton.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
+            ActionListener() {
+                @Override
+                public void actionPerformed (ActionEvent e){
+                    //CREATE ACCOUNT WINDOW
+                    //new CreateAccountWindow(user);
+                }
+            })
+
+                    //action listener needs to be implemented
+                    createAccountButton.addActionListener(new
+
+            JLabel("Username"))
+
+                    //add components to frame
+                    frame.add(new
+
+            JLabel("Password"))
+                    frame.add(usernameField)
+                    frame.add(new
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
 				boolean exists = accounts.checkCredentials(usernameField.getText(), passwordField.getPassword());
 				//if true, isLoggedIn = true
 				if (exists) {
 					user.setisLoggedIn(true);
 				//if false, System.out.println("Login attempt failed");
 			}
-		});
-		
-		//action listener needs to be implemented
-		createAccountButton.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//CREATE ACCOUNT WINDOW
-				//new CreateAccountWindow(user);
-			}
-		});
-		
-		//add components to frame
-		frame.add(new JLabel("Username"));
-		frame.add(usernameField);
-		frame.add(new JLabel("Password"));
-		frame.add(passwordField);
-		frame.add(loginButton);
-		frame.add(createAccountButton);
-		frame.pack();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-	}
-	private JTextField usernameField;
+            })
+                    frame.add(passwordField)
+                    frame.add(loginButton)
+                    frame.add(createAccountButton)
+                    frame.pack()
+                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
+                    frame.setVisible(true)
+        }
+        private JTextField usernameField;
 	private JPasswordField passwordField;
 	private JButton loginButton;
 	private JButton createAccountButton;
