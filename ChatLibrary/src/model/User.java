@@ -1,59 +1,60 @@
 package model;
 
 public class User {
-	private String pwd;
-	private String name;
-	private String nick;
-	private String email;
-  private boolean isLoggedIn;
+    private String pwd;
+    private String username;
+    private String nick;
+    private String email;
+    private boolean isLoggedIn;
 
-  public User(String pwd, String name, String nick, String email) {
-		this.pwd = pwd;
-		this.name = name;
-		this.nick = nick;
-		this.email = email;
+    public User(String pwd, String username, String nick, String email) {
+        this.pwd = pwd;
+        this.username = username;
+        this.nick = nick;
+        this.email = email;
 
-    this.isLoggedIn = false;
-   }
+        this.isLoggedIn = false;
+    }
 
-   public User(String[] info) {
-		  pwd = info[1];
-		  name = info[2];
-		  nick = info[3];
-		  email = info[4];
-	  }
+    public User(String[] info) {
+        pwd = info[1];
+        username = info[2];
+        nick = info[3];
+        email = info[4];
+    }
 
-	public String getPwd() {
-		return pwd;
-	}
+    public String getPwd() {
+        return pwd;
+    }
 
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
-	}
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	public String getNick() {
-		return nick;
-	}
+    public String getNick() {
+        return nick;
+    }
 
-	public void setNick(String nick) {
-		this.nick = nick;
-	}
+    public void setNick(String nick) {
+        this.nick = nick;
+    }
 
-	public String getemail() {
-		return email;
-	}
+    public String getemail() {
+        return email;
+    }
 
-	public void setemail(String email) {
-		this.email = email;
-	}
+    public void setemail(String email) {
+        this.email = email;
+    }
+
     public boolean getIsLoggedIn() {
         return isLoggedIn;
     }
@@ -62,11 +63,16 @@ public class User {
         this.isLoggedIn = status;
         return true;
     }
-	public void setAll(String[] tmp) {
-		pwd = tmp[1];
-		name = tmp[2];
-		nick = tmp[3];
-		email = tmp[4];
-	}
+
+    public void setAll(String[] tmp) {
+        pwd = tmp[1];
+        username = tmp[2];
+        nick = tmp[3];
+        email = tmp[4];
+    }
+
+    public String getNameOrNick() {
+        return nick != null && !nick.isEmpty() ? nick : username;
+    }
 }
 

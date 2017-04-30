@@ -51,7 +51,7 @@ public class Chat implements IChat, IReadSocketListener {
         socket = new Socket(server, port);
         readThread = new ReadSocketThread(socket, this, logger, protocol);
         writeThread = new WriteSocketThread(socket, protocol);
-        writeThread.sendUserName(listener.getUser().getName());
+        writeThread.sendUserName(listener.getUser().getNameOrNick());
         readThread.start();
 
         return true;
@@ -115,7 +115,7 @@ public class Chat implements IChat, IReadSocketListener {
 
     @Override
     public void onChatExit() throws IOException {
-        sendToUsers(new TextMessage(String.format("%s quit chat room", listener.getUser().getName())));
+        sendToUsers(new TextMessage(String.format("%s quit chat room", listener.getUser().getNameOrNick())));
         socket.close();
         listener.quitChat();
     }

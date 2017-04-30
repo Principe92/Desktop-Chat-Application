@@ -1,13 +1,11 @@
 package main;
 
+import gui.LoginWindow;
 import gui.gui;
+import listener.AccountListener;
 import listener.IChatListener;
 import listener.IGuiListener;
-import model.IChatDb;
-import model.IChatManager;
-import model.LoadChatThread;
-import model.User;
-import model.AccountDB;
+import model.*;
 import type.IChat;
 import type.ILogger;
 import type.IMessage;
@@ -26,8 +24,6 @@ public class App implements IGuiListener, IChatListener, AccountListener {
     private gui gui;
     private LoadChatThread loadChatThread;
     private User who;
-    
-    private Main main;
 
 
 
@@ -38,20 +34,18 @@ public class App implements IGuiListener, IChatListener, AccountListener {
         this.chatManager = chatManager;
 
         loadAcctGUI();
-
-
     }
 
     /**
      * Start the GUI
      */
-    
+
     @Override
     public void loginAccepted(User user) {
         this.who = user;
         loadGUI();
     }
-    
+
     private void loadAcctGUI() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -63,7 +57,7 @@ public class App implements IGuiListener, IChatListener, AccountListener {
                 }
 
                 AccountDB accounts = new AccountDB();
-                new LoginWindow(accounts, this);
+                new LoginWindow(accounts, App.this);
             }
         });
     }
@@ -74,18 +68,17 @@ public class App implements IGuiListener, IChatListener, AccountListener {
             public void run() {
                 try {
                     UIManager.setLookAndFeel(UIManager
-                                             .getSystemLookAndFeelClassName());
+                            .getSystemLookAndFeelClassName());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                
+
                 gui = new gui(App.this, logger);
             }
         });
     }
 
-    
-    
+
     /**
      * Display an incoming message to this user's screen
      *
@@ -111,12 +104,13 @@ public class App implements IGuiListener, IChatListener, AccountListener {
 
     @Override
     public User getUser() {
-        return user;
+        return who;
     }
 
     @Override
     public void onChatStarted(IChat chat) {
-        int pos = gui.addChatToGui(chat.getChatId(), String.format("%s (Port: %s)", chat.getChatTitle(), chat.getPort()));
+        int pos = gui.addChatToGui(chat.getChatId(),
+                String.format("%s (Port: %s)", chat.getChatTitle(), chat.getPort()));
         chat.setGuiId(pos);
         gui.closeDialog();
         gui.clearMessageWindow();
@@ -136,7 +130,7 @@ public class App implements IGuiListener, IChatListener, AccountListener {
 
         if (activeChat != null) {
             try {
-                message.setSender(user.getName());
+                message.setSender(who.getNameOrNick());
                 activeChat.sendToUsers(message);
                 db.saveMessage(activeChat, message, true);
             } catch (IOException e) {
@@ -250,9 +244,5 @@ public class App implements IGuiListener, IChatListener, AccountListener {
     @Override
     public boolean IsChatAvailable() {
         return chatManager.IsChatAvailable();
-    }
-    
-    public void setHandler(Main main){
-    	this.main = main;
     }
 }
