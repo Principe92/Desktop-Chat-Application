@@ -3,6 +3,7 @@ package main;
 import listener.IChatListener;
 import listener.IClientListener;
 import model.IClient;
+import model.QuitMessage;
 import model.TextMessage;
 import type.IChat;
 import type.ILogger;
@@ -53,27 +54,19 @@ public class Server implements IClientListener, IChat {
             client.start();
             clients.put(client.getChatId(), client);
 
+            logger.logInfo("Added new client");
             advertise(client);
         }
     }
 
     private void advertise(IClient client) {
         String probe = String.format("%s has connected", client.getUserName());
-        String connected = "Connected to chat";
+        try {
+            msgFromUser(new TextMessage(probe), client.getChatId());
+        } catch (IOException e) {
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                try {
-                    client.sendToSocket(new TextMessage(connected));
-                    msgFromUser(new TextMessage(probe), client.getChatId());
-                } catch (IOException e) {
-
-                    if (!triggeredClose) logger.logError(e);
-                }
-            }
-        }).start();
+            if (!triggeredClose) logger.logError(e);
+        }
     }
 
     @Override
@@ -84,7 +77,6 @@ public class Server implements IClientListener, IChat {
             for (Entry<Integer, IClient> entry : clients.entrySet()) {
                 if (entry.getKey() != id)
                     entry.getValue().sendToSocket(message);
-
             }
 
             listener.printToScreen(message, port);
@@ -98,9 +90,17 @@ public class Server implements IClientListener, IChat {
 
     @Override
     public void close() throws IOException {
-        sendToUsers(new TextMessage("Closing chat room"));
+        sendToUsers(new QuitMessage("Closing chat room"));
+
         this.triggeredClose = true;
-        if (socket != null) socket.close();
+        if (socket != null) {
+
+            for (Entry<Integer, IClient> entry : clients.entrySet()) {
+                entry.getValue().close();
+            }
+
+            socket.close();
+        }
     }
 
     @Override

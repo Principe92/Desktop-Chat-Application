@@ -17,6 +17,7 @@ public class TextMessage implements IMessage {
     private String sender;
 
     public TextMessage() {
+        setData(Constant.EMPTY);
         this.sender = Constant.EMPTY;
     }
 
@@ -28,7 +29,6 @@ public class TextMessage implements IMessage {
     @Override
     public void setData(String text) {
         this.data = text;
-
     }
 
     @Override

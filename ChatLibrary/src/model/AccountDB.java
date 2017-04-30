@@ -1,25 +1,27 @@
 package model;
 
+import main.Constant;
+
 import java.io.*;
 import java.util.ArrayList;
 
 /**
  * In-memory database of the accounts that have been created.
- * Accounts are persisted to a file on server shutdown.
  */
 public class AccountDB {
+
+    private static final String ACCOUNT_PATH = String.format("%s/AccountDB.txt", Constant.DEFAULT_PATH);
     private ArrayList<User> accounts;
 
     public AccountDB() {
-        accounts = new ArrayList<User>();
-        populateAccounts("AccountDB.txt");
+        accounts = new ArrayList<>();
+        populateAccounts(ACCOUNT_PATH);
     }
 
     /**
      * Looks through the accounts database to find an account that matches the given information
      * If it finds one it returns true, if not it returns false.
      *
-     * @param filename the password of the account to find
      * @return true    if the account is found
      * false	if the account is NOT found
      */
@@ -27,28 +29,32 @@ public class AccountDB {
     private void populateAccounts(String filename) {
         try {
             File file = new File(filename);
-            FileReader fileReader = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                String trimmed = line.trim();
-                String[] splitted = trimmed.split(" ");
-                User u = new User(splitted[1], splitted[0], splitted[2], splitted[3]);
-                accounts.add(u);
+            if (file.exists()) {
+                FileReader fileReader = new FileReader(file);
+                BufferedReader bufferedReader = new BufferedReader(fileReader);
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    String trimmed = line.trim();
+                    String[] splitted = trimmed.split(" ");
+                    User u = new User(splitted[1], splitted[0], splitted[2], splitted[3]);
+                    accounts.add(u);
+                }
+                fileReader.close();
+            } else {
+                file.createNewFile();
             }
-            fileReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public boolean checkCredentials(String username, String password) {
+    public User checkCredentials(String username, String password) {
         for (User acct : accounts) {
-            if (acct.getName().equals(username) && acct.getPwd().equals(password)) {
-                return true;
+            if (acct.getUsername().equals(username) && acct.getPwd().equals(password)) {
+                return acct;
             }
         }
-        return false;
+        return null;
     }
 
     /**
@@ -56,11 +62,10 @@ public class AccountDB {
      */
     private void addNewAccount(String pwd, String name, String nick, String email) {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("AccountDB.txt", true));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(ACCOUNT_PATH, true));
             bw.write(name + " " + pwd + " " + nick + " " + email);
             bw.newLine();
             bw.flush();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -75,7 +80,7 @@ public class AccountDB {
      */
     public boolean userIsAvailable(String username) {
         for (User acct : accounts) {
-            if (acct.getName().equals(username)) {
+            if (acct.getUsername().equals(username)) {
                 return false;
             }
         }
@@ -86,9 +91,10 @@ public class AccountDB {
     /**
      * Creates an account and adds it to the database.
      */
-    public synchronized void createAccount(String pwd, String name, String nick, String email) {
+    public User createAccount(String pwd, String name, String nick, String email) {
         User newAcct = new User(pwd, name, nick, email);
         accounts.add(newAcct);
         addNewAccount(pwd, name, nick, email);
+        return newAcct;
     }
 }

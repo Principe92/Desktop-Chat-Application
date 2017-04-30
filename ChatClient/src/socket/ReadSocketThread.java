@@ -2,13 +2,12 @@ package socket;
 
 import factory.MessageFactory;
 import listener.IReadSocketListener;
-import main.Constant;
 import main.Util;
 import model.BaseThread;
-import model.TextMessage;
 import type.ILogger;
 import type.IMessage;
 import type.ISocketProtocol;
+import type.MessageType;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -30,7 +29,6 @@ public class ReadSocketThread extends BaseThread implements IReadSocket {
     @Override
     public void run() {
         try {
-
             IMessage msg = null;
 
             setUp();
@@ -52,17 +50,19 @@ public class ReadSocketThread extends BaseThread implements IReadSocket {
                     if (msg != null) {
                         msg.setData(data);
                         listener.printToScreen(msg);
+
+                        if (msg.getType() == MessageType.QUIT) exitChat();
+
                         msg = null;
                     }
                 }
             }
 
         } catch (IOException e) {
-            listener.printToScreen(new TextMessage(Constant.SERVER_ERROR));
-        } finally {
             try {
                 exitChat();
             } catch (IOException ignored) {
+
             }
         }
     }

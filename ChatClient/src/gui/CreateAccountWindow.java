@@ -1,5 +1,7 @@
 package gui;
 
+import listener.AccountListener;
+import main.Util;
 import model.AccountDB;
 import model.User;
 
@@ -7,7 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 
 /**
  * This class displays a window for the user to create a new account
@@ -22,22 +23,20 @@ public class CreateAccountWindow {
     private JButton submitButton;
     private JButton cancelButton;
     @SuppressWarnings("unused")
-    private User user;
     private AccountDB accounts;
+    private AccountListener acctListener;
 
     /**
      * Constructs a new CreateAccountWindow
-     *
-     * @param user
      */
-    public CreateAccountWindow(final User user, AccountDB accounts) {
-        this.user = user;
+    public CreateAccountWindow(AccountDB accounts, AccountListener acctListener) {
         this.accounts = accounts;
-        repaint();
-    }
-
-    public void repaint() {
+        this.acctListener = acctListener;
         frame = new JFrame();
+        frame.setLayout(new GridLayout(5, 2));
+        frame.setTitle("ChatApp");
+        frame.setIconImage(new ImageIcon(this.getClass().getResource(Util.fillIconPath("join.png"))).getImage());
+
 
         //create components
         usernameField = new JTextField(20);
@@ -52,12 +51,12 @@ public class CreateAccountWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!accounts.userIsAvailable(usernameField.getText())) {
-                    //PICK NEW USERNAME
+                    JOptionPane.showMessageDialog(frame, "Username already exists.");
                 } else {
                     frame.dispose();
-                    //ID??
-//                    accounts.createAccount(passwordField.getPassword(), usernameField.getText(),
-//                            nickField.getText(), emailField.getText());
+                    User newUser = accounts.createAccount(String.valueOf(passwordField.getPassword()), usernameField.getText(),
+                            nickField.getText(), emailField.getText());
+                    acctListener.loginAccepted(newUser);
                 }
             }
         });

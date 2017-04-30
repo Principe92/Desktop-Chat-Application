@@ -1,12 +1,13 @@
 package factory;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import model.ImageMessage;
+import model.QuitMessage;
 import model.TextMessage;
 import type.IMessage;
 import type.MessageType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MessageFactory {
 
@@ -15,8 +16,9 @@ public class MessageFactory {
 		
 		list.add(new ImageMessage(new ImageHandler()));
 		list.add(new TextMessage());
-		
-		return list;
+        list.add(new QuitMessage());
+
+        return list;
 	}
 
 	public static IMessage getMessage(String text) {

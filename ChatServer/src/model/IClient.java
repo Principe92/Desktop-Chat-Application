@@ -15,4 +15,6 @@ public interface IClient {
     String getUserName();
 
     void start();
+
+    void close() throws IOException;
 }

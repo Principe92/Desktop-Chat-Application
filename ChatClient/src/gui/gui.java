@@ -65,7 +65,7 @@ public class gui implements ChatListPanelListener {
 
     private JFrame setUpChatFrame() {
         JFrame frmChatApp = new JFrame();
-        frmChatApp.setTitle("ChatApp");
+        frmChatApp.setTitle(String.format("ChatApp | %s", listener.getUser().getNameOrNick()));
         frmChatApp.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frmChatApp.getContentPane().setLayout(new MigLayout("fill, insets 0", "[grow 25][grow 75]"));
         frmChatApp.setMinimumSize(new Dimension(Constant.MIN_WIDTH, Constant.MIN_HEIGHT));

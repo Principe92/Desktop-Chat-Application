@@ -1,5 +1,6 @@
 package listener;
 
+import model.User;
 import type.IMessage;
 
 public interface IGuiListener {
@@ -15,4 +16,6 @@ public interface IGuiListener {
     void loadChat(int chatHash);
 
     boolean IsChatAvailable();
+
+    User getUser();
 }

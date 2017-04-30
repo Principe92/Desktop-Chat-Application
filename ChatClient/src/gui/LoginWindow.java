@@ -1,5 +1,7 @@
 package gui;
 
+import listener.AccountListener;
+import main.Util;
 import model.AccountDB;
 import model.User;
 
@@ -17,19 +19,25 @@ public class LoginWindow {
     private JPasswordField passwordField;
     private JButton loginButton;
     private JButton createAccountButton;
-    private User user;
+    //suppress "user is unused" warning - it is used in an action listener
+    @SuppressWarnings("unused")
     private AccountDB accounts;
+    //suppress "user is unused" warning - it is used in an action listener
+    @SuppressWarnings("unused")
+
+
+    private AccountListener acctListener;
 
     /**
      * Constructs a new LoginWindow
-     *
-     * @param user
      */
-    public LoginWindow(final User user, AccountDB accounts) {
-        this.user = user;
+    public LoginWindow(AccountDB accounts, AccountListener acctListener) {
         this.accounts = accounts;
+        this.acctListener = acctListener;
         frame = new JFrame();
         frame.setLayout(new GridLayout(3, 2));
+        frame.setTitle("ChatApp");
+        frame.setIconImage(new ImageIcon(this.getClass().getResource(Util.fillIconPath("join.png"))).getImage());
 
         //create text fields, labels, and buttons
         usernameField = new JTextField(25);
@@ -41,33 +49,35 @@ public class LoginWindow {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //CREATE ACCOUNT WINDOW
-                //new CreateAccountWindow(user);
+                User exists = accounts.checkCredentials(usernameField.getText(), String.valueOf(passwordField.getPassword()));
+                if (exists != null) {
+                    frame.dispose();
+                    acctListener.loginAccepted(exists);
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Incorrect username or password.");
+                }
             }
         });
 
         //action listener needs to be implemented
         createAccountButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-               /* boolean exists = accounts.checkCredentials(usernameField.getText(), passwordField.getPassword());
-                //if true, isLoggedIn = true
-                if (exists) {
-                    //if false, System.out.println("Login attempt failed");
-                }
-               // user.setisLoggedIn(true);*/
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new CreateAccountWindow(accounts, acctListener);
             }
         });
 
         //add components to frame
-        frame.add(new JLabel("Password"));
+        frame.add(new JLabel("Username"));
         frame.add(usernameField);
-
+        frame.add(new JLabel("Password"));
         frame.add(passwordField);
         frame.add(loginButton);
         frame.add(createAccountButton);
         frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
+
 }

@@ -1,49 +1,30 @@
 package model;
 
 public class User {
-    private int id;
     private String pwd;
-    private String name;
+    private String username;
     private String nick;
     private String email;
     private boolean isLoggedIn;
 
-    public User(int id) {
-        this.id = id;
-        this.pwd = "";
-        this.name = String.format("User %d", id);
-        this.nick = "";
-        this.email = "";
-        this.isLoggedIn = false;
-    }
-
-    public User(int id, String pwd, String name, String nick, String email) {
-        this.id = id;
+    public User(String pwd, String username, String nick, String email) {
         this.pwd = pwd;
-        this.name = name;
+        this.username = username;
         this.nick = nick;
         this.email = email;
+
         this.isLoggedIn = false;
     }
 
     public User(String[] info) {
-        id = Integer.parseInt(info[0]);
         pwd = info[1];
-        name = info[2];
+        username = info[2];
         nick = info[3];
         email = info[4];
     }
 
-    public User(String pwd, String name, String nick, String email) {
-        this(0, pwd, name, nick, email);
-    }
+    public User() {
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getPwd() {
@@ -54,12 +35,12 @@ public class User {
         this.pwd = pwd;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getNick() {
@@ -88,11 +69,14 @@ public class User {
     }
 
     public void setAll(String[] tmp) {
-        id = Integer.parseInt(tmp[0]);
         pwd = tmp[1];
-        name = tmp[2];
+        username = tmp[2];
         nick = tmp[3];
         email = tmp[4];
+    }
+
+    public String getNameOrNick() {
+        return nick != null && !nick.isEmpty() ? nick : username;
     }
 }
 
