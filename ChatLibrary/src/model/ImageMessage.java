@@ -33,7 +33,6 @@ public class ImageMessage extends TextMessage implements IMessage {
             }
 
             this.path = text;
-
         }
     }
 
@@ -61,8 +60,10 @@ public class ImageMessage extends TextMessage implements IMessage {
 
     @Override
     public Component getMessagePanel(Color color) {
-        JLabel label = new JLabel(this.path);
-        label.setBorder(new CompoundBorder(new RoundedBorder(10), new EmptyBorder(Constant.MSG_PADDING, Constant.MSG_PADDING, Constant.MSG_PADDING, Constant.MSG_PADDING)));
+        String msg = !this.sender.isEmpty() ? String.format(Constant.MSG_FORMAT, this.sender, this.path) : this.path;
+        JLabel label = new JLabel(msg);
+        label.setBorder(new CompoundBorder(new RoundedBorder(Constant.ROUNDED_CORNER_RADIUS),
+                new EmptyBorder(Constant.MSG_PADDING, Constant.MSG_PADDING, Constant.MSG_PADDING, Constant.MSG_PADDING)));
         label.setBackground(color);
         label.setOpaque(true);
         return label;

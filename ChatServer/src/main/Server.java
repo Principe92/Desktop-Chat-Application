@@ -9,7 +9,6 @@ import type.ILogger;
 import type.IMessage;
 import type.ISocketProtocol;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.Date;
@@ -27,7 +26,11 @@ public class Server implements IClientListener, IChat {
     private Map<Integer, IClient> clients;
     private ServerSocket socket;
     private Integer chatId;
-    private Point position;
+    private int guiId;
+    private String title;
+    private int port;
+    private boolean triggeredClose;
+    private String ip;
 
     public Server(Integer id, ILogger logger, IChatListener listener, ISocketProtocol protocol) {
         this.chatId = id;
@@ -39,11 +42,14 @@ public class Server implements IClientListener, IChat {
     }
 
     void run(int port) throws IOException {
+        this.port = port;
         socket = new ServerSocket(port);
+        this.ip = socket.getInetAddress().getHostAddress();
+        listener.onChatStarted(this);
 
         while (!socket.isClosed()) {
             IClient client = new Client(socket.accept(), counter++, this, logger, protocol);
-            client.setUp();
+            client.setUp(title);
             client.start();
             clients.put(client.getChatId(), client);
 
@@ -63,7 +69,8 @@ public class Server implements IClientListener, IChat {
                     client.sendToSocket(new TextMessage(connected));
                     msgFromUser(new TextMessage(probe), client.getChatId());
                 } catch (IOException e) {
-                    logger.logError(e);
+
+                    if (!triggeredClose) logger.logError(e);
                 }
             }
         }).start();
@@ -80,7 +87,7 @@ public class Server implements IClientListener, IChat {
 
             }
 
-            listener.printToScreen(message);
+            listener.printToScreen(message, port);
         }
     }
 
@@ -92,7 +99,7 @@ public class Server implements IClientListener, IChat {
     @Override
     public void close() throws IOException {
         sendToUsers(new TextMessage("Closing chat room"));
-
+        this.triggeredClose = true;
         if (socket != null) socket.close();
     }
 
@@ -116,9 +123,12 @@ public class Server implements IClientListener, IChat {
             @Override
             public void run() {
                 try {
+
                     Server.this.run(Integer.parseInt(args[0]));
+
                 } catch (IOException e) {
-                    logger.logError(e);
+                    if (!triggeredClose)
+                        logger.logError(e);
                 }
             }
         });
@@ -128,12 +138,37 @@ public class Server implements IClientListener, IChat {
     }
 
     @Override
-    public void setGuiPosition(Point point) {
-        this.position = point;
+    public int getGuiId() {
+        return guiId;
     }
 
     @Override
-    public Point getPosition() {
-        return position;
+    public void setGuiId(int guiId) {
+        this.guiId = guiId;
+    }
+
+    @Override
+    public String getChatTitle() {
+        return title;
+    }
+
+    @Override
+    public void setChatTitle(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public int getPort() {
+        return port;
+    }
+
+    @Override
+    public Date getCreationDate() {
+        return date;
+    }
+
+    @Override
+    public String getIp() {
+        return ip;
     }
 }

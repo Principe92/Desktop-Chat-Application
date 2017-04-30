@@ -1,43 +1,27 @@
 package model;
 
 public class User {
-    private int id;
 	private String pwd;
 	private String name;
 	private String nick;
 	private String email;
+  private boolean isLoggedIn;
 
-    public User(int id) {
-        this.id = id;
-		this.pwd = "";
-        this.name = String.format("User %d", id);
-        this.nick = "";
-		this.email = "";
-	}
-
-    public User(int id, String pwd, String name, String nick, String email) {
-        this.id = id;
+  public User(String pwd, String name, String nick, String email) {
 		this.pwd = pwd;
 		this.name = name;
 		this.nick = nick;
 		this.email = email;
-	}
 
-    public User(String[] info) {
-        id = Integer.parseInt(info[0]);
-		pwd = info[1];
-		name = info[2];
-		nick = info[3];
-		email = info[4];
-	}
+    this.isLoggedIn = false;
+   }
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
+   public User(String[] info) {
+		  pwd = info[1];
+		  name = info[2];
+		  nick = info[3];
+		  email = info[4];
+	  }
 
 	public String getPwd() {
 		return pwd;
@@ -70,9 +54,15 @@ public class User {
 	public void setemail(String email) {
 		this.email = email;
 	}
+    public boolean getIsLoggedIn() {
+        return isLoggedIn;
+    }
 
+    public boolean setIsLoggedIn(boolean status) {
+        this.isLoggedIn = status;
+        return true;
+    }
 	public void setAll(String[] tmp) {
-		id = Integer.parseInt(tmp[0]);
 		pwd = tmp[1];
 		name = tmp[2];
 		nick = tmp[3];

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="ChatClient/src"/>
+	<classpathentry kind="src" path="ChatDb/src"/>
+	<classpathentry kind="src" path="ChatLibrary/src"/>
+	<classpathentry kind="src" path="ChatServer/src"/>
+	<classpathentry kind="lib" path="lib/miglayout-core-5.0-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/miglayout-core-5.0-sources.jar"/>
+	<classpathentry kind="lib" path="lib/miglayout-core-5.0.jar"/>
+	<classpathentry kind="lib" path="lib/miglayout-swing-5.0-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/miglayout-swing-5.0-sources.jar"/>
+	<classpathentry kind="lib" path="lib/miglayout-swing-5.0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="ChatClient/bin"/>
+</classpath>

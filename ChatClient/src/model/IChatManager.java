@@ -6,15 +6,13 @@ import type.IChat;
 import type.ILogger;
 import type.ISocketProtocol;
 
-import java.awt.*;
-
 /**
  * Created by okori on 19-Apr-17.
  */
 public interface IChatManager {
     IChat getActiveChat();
 
-    void setActiveChat(Point point);
+    void setActiveChat(int point);
 
     void setActiveChat(IChat chat);
 
@@ -27,7 +25,17 @@ public interface IChatManager {
     void addChat(IChat chat);
 
     @Nullable
-    IChat getChat(Point point);
+    IChat getChat(int guiId);
 
-    boolean isCurrentChat(Point point);
+    boolean isCurrentChat(int hash);
+
+    boolean chatExists(String port);
+
+    IChat getChatByPort(int port);
+
+    boolean belongsToActiveChat(int port);
+
+    boolean IsChatAvailable();
+
+    IChat setNextChat();
 }

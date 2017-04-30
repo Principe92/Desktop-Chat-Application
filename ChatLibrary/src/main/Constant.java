@@ -1,5 +1,6 @@
 package main;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class Constant {
@@ -18,7 +19,7 @@ public class Constant {
     public static final int MIN_CHAR_WIDTH = 30;
     public static final int MIN_CHAR_HEIGHT = 100;
     public static final int MAG_2 = 2;
-    public static final int MSG_PADDING = 12;
+    public static final int MSG_PADDING = 8;
     public static final int MAG_16 = 16;
     public static final Color MSG_BG = new Color(244, 244, 244);
     public static final Color USER_BG = new Color(255, 255, 255);
@@ -32,4 +33,10 @@ public class Constant {
     public static final Color CHAT_LIST_BG = new Color(255, 162, 112);
     public static final int MAG_24 = 24;
     public static final int HANDSHAKE_MSG_SIZE = 3;
+    public static final int ROUNDED_CORNER_RADIUS = 4;
+    public static final String MSG_FORMAT = "<html><span style=\"font-weight: bold\">%s</span><br>%s</html>";
+
+    public static final String DEFAULT_PATH = String.format("%s/%s",
+            new JFileChooser().getFileSystemView().getDefaultDirectory().toString(), "ChatAppHome");
+    public static final Color ACTIVE_CHAT = new Color(229, 72, 112);
 }

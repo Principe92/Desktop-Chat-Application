@@ -3,6 +3,7 @@ package socket;
 import factory.MessageFactory;
 import listener.IReadSocketListener;
 import main.Constant;
+import main.Util;
 import model.BaseThread;
 import model.TextMessage;
 import type.ILogger;
@@ -31,6 +32,8 @@ public class ReadSocketThread extends BaseThread implements IReadSocket {
         try {
 
             IMessage msg = null;
+
+            setUp();
 
             while (!socket.isClosed() && run) {
 
@@ -64,19 +67,24 @@ public class ReadSocketThread extends BaseThread implements IReadSocket {
         }
     }
 
+    private void setUp() {
+        // Get chat title
+        try {
+            byte[] data = fetch();
+            listener.setChatTitle(new java.lang.String(data, Util.getEncoding()));
+            listener.onChatStarted();
+        } catch (IOException e) {
+            logger.logError(e);
+        }
+    }
+
     private void exitChat() throws IOException {
         end();
-
         listener.onChatExit();
     }
 
     @Override
     public void end() {
         run = false;
-    }
-
-    @Override
-    public void begin() {
-        this.start();
     }
 }

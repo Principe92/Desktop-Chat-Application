@@ -8,4 +8,8 @@ public interface IReadSocketListener {
     void printToScreen(IMessage msg);
 
     void onChatExit() throws IOException;
+
+    void setChatTitle(String title);
+
+    void onChatStarted();
 }

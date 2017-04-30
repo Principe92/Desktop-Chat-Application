@@ -53,9 +53,10 @@ public class TextMessage implements IMessage {
 
     @Override
     public Component getMessagePanel(Color color) {
-        String msg = !this.sender.isEmpty() ? String.format("<html>%s<br>%s</html>", this.sender, this.data) : this.data;
+        String msg = !this.sender.isEmpty() ? String.format(Constant.MSG_FORMAT, this.sender, this.data) : this.data;
         JLabel label = new JLabel(msg);
-        label.setBorder(new CompoundBorder(new RoundedBorder(10), new EmptyBorder(Constant.MSG_PADDING, Constant.MSG_PADDING, Constant.MSG_PADDING, Constant.MSG_PADDING)));
+        label.setBorder(new CompoundBorder(new RoundedBorder(Constant.ROUNDED_CORNER_RADIUS),
+                new EmptyBorder(Constant.MSG_PADDING, Constant.MSG_PADDING, Constant.MSG_PADDING, Constant.MSG_PADDING)));
         label.setBackground(color);
         label.setOpaque(true);
         return label;

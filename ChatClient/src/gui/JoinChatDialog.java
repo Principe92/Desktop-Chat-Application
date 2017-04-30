@@ -41,6 +41,11 @@ public class JoinChatDialog extends BaseDialog {
         return panel;
     }
 
+    @Override
+    protected void onEnterKeyPressed() {
+        join();
+    }
+
     private JLabel buildPortLabel() {
         return new JLabel("# Port");
     }
@@ -54,13 +59,17 @@ public class JoinChatDialog extends BaseDialog {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                boolean joined = listener.joinChat(ip.getText(), port.getText());
-                if (joined) {
-                    close();
-                }
+                join();
             }
         });
         return button;
+    }
+
+    private void join() {
+        boolean joined = listener.joinChat(ip.getText(), port.getText());
+        if (joined) {
+            //  close();
+        }
     }
 
     private JTextField buildIPBox() {
