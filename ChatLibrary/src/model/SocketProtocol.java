@@ -55,7 +55,7 @@ public class SocketProtocol implements ISocketProtocol {
         try {
             type = MessageType.getType(Integer.parseInt(format[1]));
 
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ignored) {
 
         }
 

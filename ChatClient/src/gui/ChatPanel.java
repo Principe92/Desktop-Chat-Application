@@ -11,7 +11,7 @@ import type.ILogger;
 import type.IMessage;
 
 import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -45,16 +45,6 @@ public class ChatPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {          	
                 listener.quitChat();
             }
-        });
-        bar.add(item);
-
-        item = new ImageButton("Menu", "ic_more_horiz_black_24dp.png");
-        item.addActionListener(new ActionListener() {
-        	@Override
-        	public void actionPerformed(ActionEvent e){
-        		//Dropdown menu 
-        		
-        	}
         });
         bar.add(item);
 

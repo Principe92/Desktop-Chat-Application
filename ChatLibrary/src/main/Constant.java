@@ -26,7 +26,7 @@ public class Constant {
     public static final Color OTHERS_BG = new Color(102, 187, 106);
     public static final String DOCK_EAST = "dock east";
     public static final String DOCK_WEST = "dock west";
-    public static final String SERVER_ERROR = "Chat room has closed unexpectedly";
+    public static final String SERVER_ERROR = "Chat room has closed";
     public static final Color CHAT_BG = Color.WHITE;
     public static final Color MENU_BG = new Color(229, 72, 25);
     public static final int MAG_32 = 32;

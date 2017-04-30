@@ -9,6 +9,7 @@ import model.TextMessage;
 import type.ILogger;
 import type.IMessage;
 import type.ISocketProtocol;
+import type.MessageType;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -19,6 +20,7 @@ class Client extends BaseThread implements IClient {
     private final int chatId;
     private ILogger logger;
     private String who;
+    private boolean triggeredClose;
 
     Client(Socket socket, int id, IClientListener listener, ILogger logger, ISocketProtocol protocol) {
         super(socket, protocol);
@@ -51,8 +53,13 @@ class Client extends BaseThread implements IClient {
 
                     if (msg != null) {
                         msg.setData(data);
-                        listener.msgFromUser(msg, chatId);
+
+                        if (msg.getType() == MessageType.QUIT) exitChat();
+                        else
+                            listener.msgFromUser(msg, chatId);
+
                         msg = null;
+
                     }
                 }
             }
@@ -77,11 +84,13 @@ class Client extends BaseThread implements IClient {
     }
 
     private void exitChat() throws IOException {
-        socket.close();
+        if (!triggeredClose) {
+            socket.close();
 
-        String msg = String.format("%s has disconnected", who);
-        listener.msgFromUser(new TextMessage(msg), chatId);
-        listener.removeClient(chatId);
+            String msg = String.format("%s has quit chat room", who);
+            listener.msgFromUser(new TextMessage(msg), chatId);
+            listener.removeClient(chatId);
+        }
     }
 
 
@@ -94,6 +103,13 @@ class Client extends BaseThread implements IClient {
     @Override
     public String getUserName() {
         return who;
+    }
+
+    @Override
+    public void close() throws IOException {
+        triggeredClose = true;
+
+        socket.close();
     }
 
 }

@@ -2,6 +2,7 @@ package model;
 
 import listener.IChatListener;
 import listener.IReadSocketListener;
+import main.Constant;
 import socket.IReadSocket;
 import socket.IWriteSocket;
 import socket.ReadSocketThread;
@@ -32,6 +33,7 @@ public class Chat implements IChat, IReadSocketListener {
     private String user;
     private int port;
     private String ip;
+    private boolean triggeredClose;
 
     public Chat(int chatId, ILogger logger, ISocketProtocol protocol, IChatListener listener) {
         this.logger = logger;
@@ -39,7 +41,6 @@ public class Chat implements IChat, IReadSocketListener {
         this.protocol = protocol;
         this.listener = listener;
         this.date = new Date();
-
     }
 
     @Override
@@ -54,6 +55,7 @@ public class Chat implements IChat, IReadSocketListener {
         writeThread.sendUserName(listener.getUser().getNameOrNick());
         readThread.start();
 
+        printToScreen(new TextMessage("Connected to chat"));
         return true;
     }
 
@@ -94,6 +96,9 @@ public class Chat implements IChat, IReadSocketListener {
 
     @Override
     public void close() throws IOException {
+        sendToUsers(new QuitMessage());
+        triggeredClose = true;
+
         writeThread.end();
         readThread.end();
         socket.close();
@@ -115,9 +120,12 @@ public class Chat implements IChat, IReadSocketListener {
 
     @Override
     public void onChatExit() throws IOException {
-        sendToUsers(new TextMessage(String.format("%s quit chat room", listener.getUser().getNameOrNick())));
-        socket.close();
-        listener.quitChat();
+        if (!triggeredClose) {
+            printToScreen(new TextMessage(Constant.SERVER_ERROR));
+
+            socket.close();
+            listener.onServerClosed();
+        }
     }
 
     @Override

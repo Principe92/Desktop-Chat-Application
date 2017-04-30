@@ -23,6 +23,10 @@ public class User {
         email = info[4];
     }
 
+    public User() {
+
+    }
+
     public String getPwd() {
         return pwd;
     }

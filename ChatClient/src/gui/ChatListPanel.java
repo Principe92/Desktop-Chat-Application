@@ -61,10 +61,6 @@ public class ChatListPanel extends JPanel {
         });
         bar.add(item);
 
-        // menu
-        item = new ImageButton("Menu", "ic_more_horiz_black_24dp.png");
-        bar.add(item);
-
         return bar;
     }
 

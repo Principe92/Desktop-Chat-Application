@@ -12,7 +12,6 @@ import type.IMessage;
 import type.ISocketProtocol;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
 
 public class App implements IGuiListener, IChatListener, AccountListener {
@@ -26,14 +25,16 @@ public class App implements IGuiListener, IChatListener, AccountListener {
     private User who;
 
 
-
     public App(ILogger logger, ISocketProtocol protocol, IChatDb db, IChatManager chatManager) {
         this.logger = logger;
         this.protocol = protocol;
         this.db = db;
         this.chatManager = chatManager;
 
-        loadAcctGUI();
+        this.who = new User();
+        this.who.setNick(String.format("User: %d", Math.toIntExact(System.nanoTime() % 100)));
+        loadGUI();
+        //loadAcctGUI();
     }
 
     /**
@@ -95,11 +96,6 @@ public class App implements IGuiListener, IChatListener, AccountListener {
                 db.saveMessage(chatManager.getChatByPort(port), msg, false);
             }
         }
-    }
-
-    @Override
-    public void changeChatTitle(String title, Point position) {
-        gui.changeChatTitle(title, position);
     }
 
     @Override
@@ -223,6 +219,24 @@ public class App implements IGuiListener, IChatListener, AccountListener {
                 }
             } catch (IOException e) {
                 logger.logError(e);
+            }
+        }
+    }
+
+    @Override
+    public void onServerClosed() {
+        IChat activeChat = chatManager.getActiveChat();
+
+        if (activeChat != null) {
+            gui.alert(String.format("Chat Room: %s has closed", activeChat.getChatTitle()));
+            gui.removeChatFromGui(activeChat);
+            gui.clearMessageWindow();
+            db.deleteChat(activeChat);
+            chatManager.removeChat(activeChat);
+            IChat next = chatManager.setNextChat();
+
+            if (next != null) {
+                loadChat(next.getGuiId());
             }
         }
     }
