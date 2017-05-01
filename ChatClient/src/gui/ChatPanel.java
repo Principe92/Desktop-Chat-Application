@@ -100,6 +100,10 @@ public class ChatPanel extends JPanel {
         	
             @Override
             public void keyPressed(KeyEvent e) {
+            	if (e.getKeyCode() == KeyEvent.VK_ALT + KeyEvent.VK_ENTER){
+            		
+            	}
+            	
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     String text = msgBox.getText();
 
