@@ -1,4 +1,2 @@
 # Desktop-Chat-Application
-A simple chat application with a GUI.
-
-Meeting time FRIDAY 4PM Linux Lab
+A simple chat application with a GUI for Software Engineering Project

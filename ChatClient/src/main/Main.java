@@ -14,8 +14,6 @@ public class Main {
         ILogger logger = AbstractFactory.getLogger();
         ISocketProtocol protocol = AbstractFactory.getProtocol();
 
-        //  Main.getInstance().startClient();
-
         //If logged in then proceed to the app
         new App(logger, protocol, ChatDb.Instance(logger), ChatManager.instance());
     }
