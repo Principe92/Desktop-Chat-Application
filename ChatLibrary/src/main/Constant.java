@@ -37,7 +37,7 @@ public class Constant {
     public static final String MSG_FORMAT = "<html><span style=\"font-weight: bold\">%s</span><br>%s</html>";
 
     public static final String INVALID_EMAIL = "Invalid email address";
-    public static final String INVALID_PWD = "Invalid Password: Password should be over 8 characters with at least one upper case letter and special letter";
+    public static final String INVALID_PWD = "Invalid Password: Password should be over 4 characters with at least one upper case letter and special letter";
     public static final int PWDLEN = 4; //change to 8 if ensured working to perfectness
 
     public static final String EXISTING_USERNAME = "Username already exists.";
