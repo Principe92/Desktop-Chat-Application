@@ -63,7 +63,7 @@ public class AccountDB {
     private void addNewAccount(String pwd, String name, String nick, String email) {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(ACCOUNT_PATH, true));
-            bw.write(name + " " + pwd + " " + nick + " " + email);
+            bw.write("username: " + name + "password: " + pwd + "nickname: " + nick + "email: " + email);
             bw.newLine();
             bw.flush();
         } catch (IOException e) {

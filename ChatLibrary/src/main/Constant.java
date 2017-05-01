@@ -36,6 +36,18 @@ public class Constant {
     public static final int ROUNDED_CORNER_RADIUS = 4;
     public static final String MSG_FORMAT = "<html><span style=\"font-weight: bold\">%s</span><br>%s</html>";
 
+    public static final String INVALID_EMAIL = "Invalid email address";
+    public static final String INVALID_PWD = "Invalid Password: Password should be over 8 characters with at least one upper case letter and special letter";
+    public static final int PWDLEN = 4; //change to 8 if ensured working to perfectness
+
+    public static final String EXISTING_USERNAME = "Username already exists.";
+    
+    public static final String EMAIL_ATTRIBUTE = "@";
+    public static final String EMAIL_DOM1 = ".net";
+    public static final String EMAIL_DOM2 = ".com";
+    
+
+
     public static final String DEFAULT_PATH = String.format("%s/%s",
             new JFileChooser().getFileSystemView().getDefaultDirectory().toString(), "ChatAppHome");
     public static final Color ACTIVE_CHAT = new Color(229, 72, 112);
