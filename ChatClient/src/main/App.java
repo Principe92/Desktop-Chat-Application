@@ -30,11 +30,7 @@ public class App implements IGuiListener, IChatListener, AccountListener {
         this.protocol = protocol;
         this.db = db;
         this.chatManager = chatManager;
-
-        this.who = new User();
-        this.who.setNick(String.format("User: %d", Math.toIntExact(System.nanoTime() % 100)));
-        loadGUI();
-        //loadAcctGUI();
+        loadAcctGUI();
     }
 
     /**
