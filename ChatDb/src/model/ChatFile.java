@@ -14,6 +14,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+
+import javax.swing.JOptionPane;
+
 import java.util.Calendar;
 import java.time.format.*;
 
@@ -69,7 +72,7 @@ public class ChatFile implements IChatFile {
     @Override
     public void write(IMessage msg, boolean fromUser) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
-        String sender = fromUser ? "SELF" : msg.getSender();
+        String sender = fromUser ? "_" : msg.getSender();
         DateFormat dateFormat = new SimpleDateFormat("HH:MM:ss");
         Calendar cal = Calendar.getInstance();
                 
@@ -94,12 +97,12 @@ public class ChatFile implements IChatFile {
         String line = reader.readLine();
 
         while (line != null && !line.isEmpty()) {
-            String[] msg = line.split("~");
-
-            IMessage message = MessageFactory.getMessage(MessageType.getType(Integer.parseInt(msg[1].trim())));
+            String[] msg = line.split(" ~ ");
+            
+            IMessage message = MessageFactory.getMessage(MessageType.getType(Integer.parseInt(msg[2].trim())));
 
             if (message != null) {
-                String sender = msg[0].trim().equals("_") ? Constant.EMPTY : msg[0];
+                String sender = msg[1].trim().equals("_") ? Constant.EMPTY : msg[1];
                 message.setSender(sender.trim());
                 message.setData(msg[2].trim());
                 messages.add(message);
