@@ -14,7 +14,8 @@ import java.awt.event.ActionListener;
  * Created by okori on 05-Apr-17.
  */
 public class JoinChatDialog extends BaseDialog {
-    private final JoinChatDialogListener listener;
+	
+	private final JoinChatDialogListener listener;
     private JTextField ip;
     private JTextField port;
 
@@ -23,8 +24,8 @@ public class JoinChatDialog extends BaseDialog {
         this.listener = listener;
         this.setLocation(point);
     }
-
-
+    
+    
     @Override
     protected JPanel buildLayout() {
         JPanel panel = new JPanel(new MigLayout("insets 32, nogrid"));
@@ -68,7 +69,7 @@ public class JoinChatDialog extends BaseDialog {
     private void join() {
         boolean joined = listener.joinChat(ip.getText(), port.getText());
         if (joined) {
-            //  close();
+            close();
         }
     }
 

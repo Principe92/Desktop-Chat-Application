@@ -23,13 +23,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 */
 public class gui implements ChatListPanelListener {
-    private final IGuiListener listener;
+	private final IGuiListener listener;
     private final ILogger logger;
     private JFrame frmChatApp;
     private ChatListPanel chatListPanel;
     private ChatPanel chatPanel;
     private IDialog currentDialog;
-    //private Date time;
     
     public gui(IGuiListener listener, ILogger logger) {
         this.listener = listener;
@@ -166,4 +165,6 @@ public class gui implements ChatListPanelListener {
     public void setActive(IChat chat) {
         chatListPanel.setActive(chat);
     }
+    
+    
 }

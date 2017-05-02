@@ -1,7 +1,6 @@
 package gui;
 
 import listener.AccountListener;
-import main.Constant;
 import main.Util;
 import model.AccountDB;
 import model.User;
@@ -10,8 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 /**
  * This class displays the login window
@@ -38,7 +35,7 @@ public class LoginWindow {
         this.accounts = accounts;
         this.acctListener = acctListener;
         frame = new JFrame();
-        frame.setLayout(new GridLayout(3, 2));
+        frame.setLayout(new GridLayout(4, 2));
         frame.setTitle("ChatApp");
         frame.setIconImage(new ImageIcon(this.getClass().getResource(Util.fillIconPath("join.png"))).getImage());
 
@@ -71,6 +68,9 @@ public class LoginWindow {
             }
         });       
         
+        JPanel panel = new ImagePanel("./res/icons/join.png");
+        panel.setBounds(0, 0, 1995, 211);
+        
         //add components to frame
         frame.add(new JLabel("Username"));
         frame.add(usernameField);
@@ -78,9 +78,9 @@ public class LoginWindow {
         frame.add(passwordField);
         frame.add(loginButton);
         frame.add(createAccountButton);
+        frame.add(panel);
         frame.pack();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
-
 }

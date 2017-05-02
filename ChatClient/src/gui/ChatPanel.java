@@ -17,20 +17,21 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 
+/*
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-
+*/
 @SuppressWarnings("serial")
 public class ChatPanel extends JPanel {
     private final IGuiListener listener;
     private final ILogger logger;
     private JTextArea msgBox;
     private JPanel msgWindow;
-    
+    /*
     private Date timestamp;
     private DateFormat sdf;
-    
+    */
     public ChatPanel(IGuiListener listener, ILogger logger) {
         this.listener = listener;
         this.logger = logger;
