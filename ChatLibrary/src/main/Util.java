@@ -3,6 +3,8 @@ package main;
 import java.awt.*;
 import java.io.File;
 import java.nio.charset.Charset;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Util {
 
@@ -36,4 +38,17 @@ public class Util {
     public static String fillIconPath(String file) {
         return String.format("/icons/%s", file);
     }
+    
+    public static boolean hasUpperCase(String str) {
+    	boolean b = !str.equals(str.toLowerCase());
+    	return b;
+    }
+    
+    public static boolean hasSpecialChar(String str){
+    	Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(str);
+        boolean b = (m.find())? true : false;
+        return b;
+    }
+    
 }

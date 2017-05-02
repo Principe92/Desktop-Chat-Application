@@ -17,13 +17,20 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 @SuppressWarnings("serial")
 public class ChatPanel extends JPanel {
     private final IGuiListener listener;
     private final ILogger logger;
     private JTextArea msgBox;
     private JPanel msgWindow;
-
+    
+    private Date timestamp;
+    private DateFormat sdf;
+    
     public ChatPanel(IGuiListener listener, ILogger logger) {
         this.listener = listener;
         this.logger = logger;
@@ -42,7 +49,11 @@ public class ChatPanel extends JPanel {
         JButton item = new ImageButton("Exit", "ic_power_settings_new_black_24dp.png");
         item.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {          	
+            public void actionPerformed(ActionEvent e) {   
+            	if(!listener.IsChatAvailable()){
+            		System.exit(0); //exit when there is no chat available
+            	}
+            	
                 listener.quitChat();
             }
         });
@@ -100,9 +111,20 @@ public class ChatPanel extends JPanel {
         	
             @Override
             public void keyPressed(KeyEvent e) {
-            	if (e.getKeyCode() == KeyEvent.VK_ALT + KeyEvent.VK_ENTER){
+            	/*
+            	 * On-fix
+            	 * ALT+ENTER to add a new line in the msgBox without sending the text
+            	 * */
+            	if (e.getKeyCode() == KeyEvent.VK_ENTER && e.getModifiers() == KeyEvent.ALT_MASK) {
+            		/*
+            		String text = msgBox.getText();
+            		text = text.concat("\n");
+            		msgBox.setText(text);
+            		*/
+            		//JOptionPane.showMessageDialog(msgBox, "ENTER?");
             		
             	}
+            	/////////////////
             	
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     String text = msgBox.getText();
@@ -154,11 +176,20 @@ public class ChatPanel extends JPanel {
 
     public void displayMessage(IMessage msg, String alignment, Color color) {
         JPanel panel = new JPanel(new MigLayout("fill", "[grow]", "[]"));
+        /*
+        //timestamp addition
+        JTextPane time = new JTextPane();
+        timestamp = new Date();
+        time.setText(sdf.format(timestamp).toString());
+        */
+        
         panel.add(msg.getMessagePanel(color), alignment);
         panel.setOpaque(false);
-        addListener(msg, panel);
+        addListener(msg, panel);        
+        
+        //msgWindow.add(time, "wrap, spanx, growx");
         msgWindow.add(panel, "wrap, spanx, growx");
-
+        
         msgWindow.revalidate();
     }
 

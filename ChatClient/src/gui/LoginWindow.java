@@ -1,6 +1,7 @@
 package gui;
 
 import listener.AccountListener;
+import main.Constant;
 import main.Util;
 import model.AccountDB;
 import model.User;
@@ -9,6 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  * This class displays the login window
@@ -66,8 +69,8 @@ public class LoginWindow {
                 frame.dispose();
                 new CreateAccountWindow(accounts, acctListener);
             }
-        });
-
+        });       
+        
         //add components to frame
         frame.add(new JLabel("Username"));
         frame.add(usernameField);

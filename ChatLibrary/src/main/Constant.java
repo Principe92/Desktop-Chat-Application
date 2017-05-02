@@ -46,6 +46,7 @@ public class Constant {
     public static final String EMAIL_DOM1 = ".net";
     public static final String EMAIL_DOM2 = ".com";
     
+    public static final String ENTRY_CHECK = "Enter the data before login";
 
 
     public static final String DEFAULT_PATH = String.format("%s/%s",

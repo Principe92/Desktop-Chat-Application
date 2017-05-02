@@ -16,7 +16,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
+/*
+import java.util.Date;
+import java.util.Calendar;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+*/
 public class gui implements ChatListPanelListener {
     private final IGuiListener listener;
     private final ILogger logger;
@@ -24,7 +29,8 @@ public class gui implements ChatListPanelListener {
     private ChatListPanel chatListPanel;
     private ChatPanel chatPanel;
     private IDialog currentDialog;
-
+    //private Date time;
+    
     public gui(IGuiListener listener, ILogger logger) {
         this.listener = listener;
         this.logger = logger;

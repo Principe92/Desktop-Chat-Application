@@ -106,11 +106,9 @@ public class CreateAccountWindow {
     * checking the validity (length and special characters of the pwd entered
     * */
     private boolean checkPwdValidity(String pwdField) {
-        Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
-        Matcher m = p.matcher(pwdField);
-        boolean b = (pwdField.length() < Constant.PWDLEN || !m.find()) ? false : true;
-        
-        
+        boolean b = (pwdField.length() < Constant.PWDLEN 
+        		|| 	!Util.hasUpperCase(pwdField) 
+        		|| 	!Util.hasSpecialChar(pwdField)) ? false : true;
         return b;
     }
     
