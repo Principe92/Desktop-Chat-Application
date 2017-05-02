@@ -99,12 +99,13 @@ public class ChatFile implements IChatFile {
         while (line != null && !line.isEmpty()) {
             String[] msg = line.split(" ~ ");
             
+            JOptionPane.showMessageDialog(null,msg[3]);
             IMessage message = MessageFactory.getMessage(MessageType.getType(Integer.parseInt(msg[2].trim())));
 
             if (message != null) {
                 String sender = msg[1].trim().equals("_") ? Constant.EMPTY : msg[1];
                 message.setSender(sender.trim());
-                message.setData(msg[2].trim());
+                message.setData(msg[3].trim());
                 messages.add(message);
             }
 
