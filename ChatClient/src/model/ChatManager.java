@@ -11,9 +11,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-/**
- * Created by okori on 19-Apr-17.
- */
+
 public class ChatManager implements IChatManager {
     private static ChatManager manager;
 

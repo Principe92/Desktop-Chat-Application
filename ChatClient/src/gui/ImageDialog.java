@@ -2,9 +2,7 @@ package gui;
 
 import javax.swing.*;
 
-/**
- * Created by okori on 21-Apr-17.
- */
+
 public class ImageDialog {
 
     public ImageDialog(String path) {

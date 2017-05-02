@@ -6,9 +6,6 @@ import type.IChat;
 import type.ILogger;
 import type.ISocketProtocol;
 
-/**
- * Created by okori on 19-Apr-17.
- */
 public interface IChatManager {
     IChat getActiveChat();
 

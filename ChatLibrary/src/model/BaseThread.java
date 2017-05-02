@@ -8,9 +8,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-/**
- * Created by okori on 06-Apr-17.
- */
 public class BaseThread extends Thread {
     protected final Socket socket;
     private final ISocketProtocol protocol;

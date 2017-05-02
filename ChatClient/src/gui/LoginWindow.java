@@ -37,6 +37,7 @@ public class LoginWindow {
         frame = new JFrame();
         frame.setLayout(new GridLayout(4, 2));
         frame.setTitle("ChatApp");
+        frame.setPreferredSize(new Dimension(256,156));
         frame.setIconImage(new ImageIcon(this.getClass().getResource(Util.fillIconPath("join.png"))).getImage());
 
         //create text fields, labels, and buttons
@@ -68,7 +69,7 @@ public class LoginWindow {
             }
         });       
         
-        JPanel panel = new ImagePanel("./res/icons/join.png");
+        JPanel panel = new ImagePanel("./res/icons/chatlogo.png");
         panel.setBounds(0, 0, 1995, 211);
         
         //add components to frame

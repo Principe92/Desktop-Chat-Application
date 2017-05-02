@@ -3,9 +3,6 @@ package type;
 import java.io.IOException;
 import java.util.Date;
 
-/**
- * Created by okori on 06-Apr-17.
- */
 public interface IChat {
     void close() throws IOException;
 

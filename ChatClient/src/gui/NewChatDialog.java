@@ -10,9 +10,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * Created by okori on 06-Apr-17.
- */
 public class NewChatDialog extends BaseDialog {
     private final NewChatDialogListener listener;
     private JTextField port;

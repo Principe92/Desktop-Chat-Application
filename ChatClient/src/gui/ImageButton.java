@@ -6,9 +6,6 @@ import main.Util;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * Created by okori on 05-Apr-17.
- */
 public class ImageButton extends JButton {
     public ImageButton(String hoverText, String icon) {
         super(Constant.EMPTY);

@@ -10,9 +10,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * Created by okori on 05-Apr-17.
- */
 public class JoinChatDialog extends BaseDialog {
 	
 	private final JoinChatDialogListener listener;

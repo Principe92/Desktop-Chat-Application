@@ -6,9 +6,6 @@ import type.IMessage;
 import java.io.IOException;
 import java.util.Collection;
 
-/**
- * Created by okori on 26-Apr-17.
- */
 public interface IChatFile {
     boolean delete();
 

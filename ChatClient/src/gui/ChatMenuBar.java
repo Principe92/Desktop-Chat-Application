@@ -5,9 +5,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicMenuBarUI;
 import java.awt.*;
 
-/**
- * Created by okori on 07-Apr-17.
- */
 public class ChatMenuBar extends JMenuBar {
 
     public ChatMenuBar(Color bg) {

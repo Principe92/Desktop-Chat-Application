@@ -16,9 +16,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.Date;
 
-/**
- * Created by okori on 06-Apr-17.
- */
+
 public class Chat implements IChat, IReadSocketListener {
     private final ILogger logger;
     private final ISocketProtocol protocol;

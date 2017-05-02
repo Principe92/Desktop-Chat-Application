@@ -9,9 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 
-/**
- * Created by okori on 19-Apr-17.
- */
 public class ChatDb implements IChatDb {
 
     private static IChatDb db;

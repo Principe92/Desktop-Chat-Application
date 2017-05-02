@@ -4,9 +4,6 @@ import javax.swing.border.AbstractBorder;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
-/**
- * Created by okori on 31-Mar-17.
- */
 public class RoundedBorder extends AbstractBorder {
 
     private int gap;

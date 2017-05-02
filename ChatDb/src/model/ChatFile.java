@@ -13,9 +13,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-/**
- * Created by okori on 26-Apr-17.
- */
 public class ChatFile implements IChatFile {
 
     private final String filePath;

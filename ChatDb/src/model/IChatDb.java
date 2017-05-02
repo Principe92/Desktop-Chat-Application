@@ -6,9 +6,6 @@ import type.IMessage;
 import java.io.IOException;
 import java.util.Collection;
 
-/**
- * Created by okori on 19-Apr-17.
- */
 public interface IChatDb {
 
     void createChat(IChat chat);
