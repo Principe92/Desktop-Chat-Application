@@ -9,9 +9,13 @@ import type.IMessage;
 import type.MessageType;
 
 import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Calendar;
+import java.time.format.*;
 
 public class ChatFile implements IChatFile {
 
@@ -54,7 +58,10 @@ public class ChatFile implements IChatFile {
         writer.newLine();
         writer.write(String.format("Port: %d", chat.getPort()));
         writer.newLine();
-        writer.write(String.format("Date: %d", chat.getCreationDate().getTime()));
+        
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:MM:ss");
+        Calendar cal = Calendar.getInstance();
+        writer.write(String.format("Date: %s", dateFormat.format(cal.getTime()).toString()));
         writer.newLine();
         writer.close();
     }
@@ -62,8 +69,16 @@ public class ChatFile implements IChatFile {
     @Override
     public void write(IMessage msg, boolean fromUser) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
-        String sender = fromUser ? "_" : msg.getSender();
-        writer.write(String.format("%s ~ %d ~ %s", sender, msg.getType().getValue(), new String(msg.getData(), Util.getEncoding())));
+        String sender = fromUser ? "SELF" : msg.getSender();
+        DateFormat dateFormat = new SimpleDateFormat("HH:MM:ss");
+        Calendar cal = Calendar.getInstance();
+                
+        writer.write(String.format("%s ~ %s ~ %d ~ %s", 
+        		dateFormat.format(cal.getTime()).toString(),
+        		sender,
+        		msg.getType().getValue(), 
+        		new String(msg.getData(), Util.getEncoding())
+        		));
         writer.newLine();
         writer.close();
     }
