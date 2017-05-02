@@ -1,6 +1,7 @@
 package gui;
 
 import listener.AccountListener;
+import main.Constant;
 import main.Util;
 import model.AccountDB;
 import model.User;
@@ -72,6 +73,14 @@ public class LoginWindow {
         JPanel panel = new ImagePanel("./res/icons/chatlogo.png");
         panel.setBounds(0, 0, 1995, 211);
         
+        JButton infoButton = new JButton("Info");
+        infoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(frame, Constant.INFORMATION);
+            }
+        });
+        
         //add components to frame
         frame.add(new JLabel("Username"));
         frame.add(usernameField);
@@ -80,6 +89,7 @@ public class LoginWindow {
         frame.add(loginButton);
         frame.add(createAccountButton);
         frame.add(panel);
+        frame.add(infoButton);
         frame.pack();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);

@@ -48,6 +48,7 @@ public class Constant {
     
     public static final String ENTRY_CHECK = "Enter the data before login";
 
+    public static final String INFORMATION = "Created by Group 1:\n Roberto Ayuso, \nMary Hogan, \nPrincewill Okorie, \nWoo Seok Yang";
 
     public static final String DEFAULT_PATH = String.format("%s/%s",
             new JFileChooser().getFileSystemView().getDefaultDirectory().toString(), "ChatAppHome");
