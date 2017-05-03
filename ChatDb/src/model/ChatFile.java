@@ -99,7 +99,7 @@ public class ChatFile implements IChatFile {
         while (line != null && !line.isEmpty()) {
             String[] msg = line.split(" ~ ");
             
-            JOptionPane.showMessageDialog(null,msg[3]);
+            
             IMessage message = MessageFactory.getMessage(MessageType.getType(Integer.parseInt(msg[2].trim())));
 
             if (message != null) {
