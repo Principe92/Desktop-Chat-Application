@@ -112,6 +112,7 @@ public class ChatFile implements IChatFile {
             line = reader.readLine();
         }
 
+        reader.close();
         return messages;
     }
 }
