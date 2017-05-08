@@ -12,9 +12,9 @@ import type.ISocketProtocol;
 public interface IChatManager {
     IChat getActiveChat();
 
-    void setActiveChat(int point);
-
     void setActiveChat(IChat chat);
+
+    void setActiveChat(int point);
 
     void removeChat(IChat activeChat);
 
@@ -37,5 +37,5 @@ public interface IChatManager {
 
     boolean IsChatAvailable();
 
-    IChat setNextChat();
+    IChat getNextChat();
 }

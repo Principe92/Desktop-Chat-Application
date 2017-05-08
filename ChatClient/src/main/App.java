@@ -30,6 +30,7 @@ public class App implements IGuiListener, IChatListener, AccountListener {
         this.protocol = protocol;
         this.db = db;
         this.chatManager = chatManager;
+
         loadAcctGUI();
     }
 
@@ -101,11 +102,15 @@ public class App implements IGuiListener, IChatListener, AccountListener {
 
     @Override
     public void onChatStarted(IChat chat) {
-        int pos = gui.addChatToGui(chat.getChatId(),
-                String.format("%s (Port: %s)", chat.getChatTitle(), chat.getPort()));
-        chat.setGuiId(pos);
+        String title = chat instanceof Server
+                ? String.format("%s (Host | Port: %s)", chat.getChatTitle(), chat.getPort())
+                : String.format("%s (Port: %s)", chat.getChatTitle(), chat.getPort());
+
+        int guiId = gui.addChatToGui(chat.getChatId(), title);
+        chat.setGuiId(guiId);
         gui.closeDialog();
         gui.clearMessageWindow();
+        gui.setFocus();
         db.createChat(chat);
         chatManager.addChat(chat);
         chatManager.setActiveChat(chat);
@@ -208,7 +213,7 @@ public class App implements IGuiListener, IChatListener, AccountListener {
                 gui.clearMessageWindow();
                 db.deleteChat(activeChat);
                 chatManager.removeChat(activeChat);
-                IChat next = chatManager.setNextChat();
+                IChat next = chatManager.getNextChat();
 
                 if (next != null) {
                     loadChat(next.getGuiId());
@@ -224,12 +229,12 @@ public class App implements IGuiListener, IChatListener, AccountListener {
         IChat activeChat = chatManager.getActiveChat();
 
         if (activeChat != null) {
-            gui.alert(String.format("Chat Room: %s has closed", activeChat.getChatTitle()));
+            gui.alert(String.format("Chat Room \"%s\" has closed", activeChat.getChatTitle()));
             gui.removeChatFromGui(activeChat);
             gui.clearMessageWindow();
             db.deleteChat(activeChat);
             chatManager.removeChat(activeChat);
-            IChat next = chatManager.setNextChat();
+            IChat next = chatManager.getNextChat();
 
             if (next != null) {
                 loadChat(next.getGuiId());

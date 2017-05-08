@@ -57,8 +57,8 @@ public class gui implements ChatListPanelListener {
         b.gridy = 0;
 
 
-        frmChatApp.getContentPane().add(chatListPanel, "grow, shrink 0");
-        frmChatApp.getContentPane().add(chatPanel, "grow");
+        frmChatApp.getContentPane().add(chatListPanel, "growy 100, growx 25");
+        frmChatApp.getContentPane().add(chatPanel, "growy 100, growx 75");
         frmChatApp.pack();
         frmChatApp.setVisible(true);
     }
@@ -67,14 +67,14 @@ public class gui implements ChatListPanelListener {
         JFrame frmChatApp = new JFrame();
         frmChatApp.setTitle(String.format("ChatApp | %s", listener.getUser().getNameOrNick()));
         frmChatApp.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frmChatApp.getContentPane().setLayout(new MigLayout("fill, insets 0", "[grow 25][grow 75]"));
+        frmChatApp.getContentPane().setLayout(new MigLayout("fill, insets 0"));
         frmChatApp.setMinimumSize(new Dimension(Constant.MIN_WIDTH, Constant.MIN_HEIGHT));
         frmChatApp.setIconImage(new ImageIcon(this.getClass().getResource(Util.fillIconPath("join.png"))).getImage());
 
         // make the message box get focus
         frmChatApp.addWindowListener(new WindowAdapter() {
             public void windowOpened(WindowEvent e) {
-                chatPanel.setFocusToChatWindow();
+                setFocus();
             }
         });
 
@@ -89,9 +89,6 @@ public class gui implements ChatListPanelListener {
         }
     }
 
-    void close() {
-        frmChatApp.dispatchEvent(new WindowEvent(frmChatApp, WindowEvent.WINDOW_CLOSING));
-    }
 
     /**
      * Open a dialog to join a chat
@@ -159,5 +156,9 @@ public class gui implements ChatListPanelListener {
 
     public void setActive(IChat chat) {
         chatListPanel.setActive(chat);
+    }
+
+    public void setFocus() {
+        chatPanel.setFocusToChatWindow();
     }
 }

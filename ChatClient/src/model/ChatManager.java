@@ -35,13 +35,13 @@ public class ChatManager implements IChatManager {
     }
 
     @Override
-    public void setActiveChat(IChat chat) {
-        activeChat = chat;
+    public void setActiveChat(int guiId) {
+        activeChat = getChat(guiId);
     }
 
     @Override
-    public void setActiveChat(int guiId) {
-        activeChat = getChat(guiId);
+    public void setActiveChat(IChat chat) {
+        activeChat = chat;
     }
 
     @Override
@@ -120,12 +120,11 @@ public class ChatManager implements IChatManager {
     }
 
     @Override
-    public IChat setNextChat() {
-        if (chatMap.isEmpty()) activeChat = null;
+    public IChat getNextChat() {
+        if (chatMap.isEmpty()) return null;
         else {
             Iterator<Map.Entry<Integer, IChat>> it = chatMap.entrySet().iterator();
-            activeChat = it.next().getValue();
+            return it.next().getValue();
         }
-        return activeChat;
     }
 }

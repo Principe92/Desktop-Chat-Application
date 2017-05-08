@@ -36,6 +36,7 @@ public class LoadChatThread extends Thread {
         if (chat != null) {
             gui.clearMessageWindow();
             gui.setActive(chat);
+            gui.setFocus();
 
             try {
                 Collection<IMessage> messages = db.getMessages(chat);

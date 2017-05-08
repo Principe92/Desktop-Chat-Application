@@ -55,7 +55,6 @@ public class Chat implements IChat, IReadSocketListener {
         writeThread.sendUserName(listener.getUser().getNameOrNick());
         readThread.start();
 
-        printToScreen(new TextMessage("Connected to chat"));
         return true;
     }
 
@@ -72,6 +71,7 @@ public class Chat implements IChat, IReadSocketListener {
     @Override
     public void onChatStarted() {
         listener.onChatStarted(this);
+        printToScreen(new TextMessage("Connected to chat"));
     }
 
     @Override
